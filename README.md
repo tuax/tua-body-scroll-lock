@@ -36,10 +36,6 @@ unlock()
 ```
 
 ## 测试
-[测试链接](https://sports.qq.com/mviptest/bodyscrolllock.htm)
+[测试链接](https://tuateam.github.io/tua-body-scroll-lock)
 
-![bodyScrollLock](http://img1.gtimg.com/sports/pics/hv1/49/61/2305/149898229.png)
-
-
-
-
+![bodyScrollLock](./tua-bsl.png)
