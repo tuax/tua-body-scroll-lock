@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>滚动穿透测试页面</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        user-select: none;
+      }
+      html, body {
+        width: 100%;
+        counter-reset: my-awesome-counter;
+      }
+      ul, li {
+        list-style: none;
+      }
+      ul {
+        margin: 0 20px;
+        width: 80%;
+        text-align: center;
+      }
+      #btn {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: block;
+        padding: 3px 6px;
+        background-color: blue;
+        color: #fff;
+        border-radius: 5px;
+      }
+      .modal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        display: none;
+        padding-top: 40px;
+
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      h2 {
+        margin: 0 auto;
+        width: 80%;
+        color: #000;
+        background-color: #fff;
+      }
+      #target {
+        margin: 0 auto;
+        width: 80%;
+        text-align: center;
+        height: 400px;
+        overflow: scroll;
+        color: #000;
+        background-color: #fff;
+        -webkit-overflow-scrolling: touch;
+      }
+      li {
+        counter-increment: my-awesome-counter;
+      }
+      li:before {
+        content: counter(my-awesome-counter);
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn">点击弹出一个浮层</button>
+    <div id="modal" class="modal">
+      <h2>这是一个浮层</h2>
+      <p id="target">
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
+      </p>
+    </div>
+    <ul>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+      <li>页面主体</li>
+    </ul>
+
+    <script src="./tua-bsl.umd.js"></script>
+    <script>
+      var btn = document.getElementById('btn')
+      var modal = document.getElementById('modal')
+      var targetElement = document.getElementById('target')
+
+      btn.onclick = function() {
+        modal.style.display = 'block'
+        bodyScrollLock.lock(targetElement)
+      }
+
+      modal.onclick = function(event) {
+        if (event.target.id == 'target') return
+        modal.style.display = 'none'
+        bodyScrollLock.unlock(targetElement)
+      }
+    </script>
+  </body>
+</html>
