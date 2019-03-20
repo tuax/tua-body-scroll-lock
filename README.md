@@ -1,5 +1,7 @@
 # tua-body-scroll-lock
 
+> inspired by [body-scroll-lock](https://github.com/willmcpo/body-scroll-lock)
+
 ## 介绍
 顾名思义 `tua-body-scroll-lock` 是用来锁住 `body` 滚动的包。并且针对`PC端`和移动端 `ios` 和 `android` 做了不同的处理，保证在各个端都可以完美使用。
 
