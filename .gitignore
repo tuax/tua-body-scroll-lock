@@ -1,0 +1,6 @@
+lib
+*.log
+coverage
+.DS_Store
+node_modules
+docs/.vuepress/dist/
