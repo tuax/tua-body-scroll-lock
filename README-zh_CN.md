@@ -12,7 +12,15 @@
 [English](./README.md) | 简体中文
 
 ## 介绍
-顾名思义 `tua-body-scroll-lock` 是用来锁住 `body` 滚动的包。并且针对`PC端`、移动端 `ios` 和 `android` 做了不同的处理，保证在各个端都可以完美使用。
+`tua-body-scroll-lock` 解决了所有场景下滚动穿透的问题。
+
+### 为什么不用 [body-scroll-lock](https://github.com/willmcpo/body-scroll-lock)？
+* 低版本安卓下失效
+* PC 端滚轮行为失效
+* iOS 端触摸非 targetElement 时失效
+* 使用时必须传 targetElement（即使并不需要）
+
+[点击尝试](https://codepen.io/buptsteve/pen/EJoKQK)
 
 ## 安装
 
@@ -23,21 +31,7 @@ $ yarn add tua-body-scroll-lock
 ```
 
 ## 使用
-
-### 移动端
-
-```js
-import { lock, unlock } from 'tua-body-scroll-lock'
-
-// 禁止滑动后还需要内部可以滚动的元素(针对移动端ios处理)
-const targetElement = document.querySelector("#someElementId");
-
-lock(targetElement)
-unlock(targetElement)
-```
-### PC端
-
-> tips: PC端不需要targetElement; 不传targetElement也不想要控制台提示可以传`null`
+### 常规操作
 
 ```js
 import { lock, unlock } from 'tua-body-scroll-lock'
@@ -45,6 +39,20 @@ import { lock, unlock } from 'tua-body-scroll-lock'
 lock()
 unlock()
 ```
+
+### 目标元素需要滚动（iOS only）
+在某些场景下，禁止滚动穿透时，仍然有些元素需要滚动行为，此时传入目标 DOM 元素即可。
+
+```js
+import { lock, unlock } from 'tua-body-scroll-lock'
+
+const targetElement = document.querySelector("#someElementId")
+
+lock(targetElement)
+unlock(targetElement)
+```
+
+> PC 端和安卓端不需要传 targetElement。
 
 ## 测试
 [测试链接](https://tuateam.github.io/tua-body-scroll-lock)

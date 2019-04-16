@@ -12,9 +12,17 @@
 English | [简体中文](./README-zh_CN.md)
 
 ## Introduction
-As the name suggests, the tua-body-scroll-lock is used to lock the body scrolling package. And for the PC, mobile ios and android have done different processing, to ensure that they can be used perfectly on each end.
+`tua-body-scroll-lock` enables body scroll locking for everything.
 
-## install
+### Why not [body-scroll-lock](https://github.com/willmcpo/body-scroll-lock)?
+* Doesn't work on Android webview
+* Doesn't work on PC with mouse wheel
+* Doesn't work on iOS, if you touch somewhere instead of targetElement
+* Must pass targetElement, even if it's not necessary
+
+[Try This](https://codepen.io/buptsteve/pen/EJoKQK)
+
+## Install
 
 ```bash
 $ npm i -S tua-body-scroll-lock
@@ -22,22 +30,8 @@ $ npm i -S tua-body-scroll-lock
 $ yarn add tua-body-scroll-lock
 ```
 
-## use
-
-### mobile
-
-```js
-import { lock, unlock } from 'tua-body-scroll-lock'
-
-// After the lock is scroll, you still need internal scrollable elements (for mobile ios processing)
-const targetElement = document.querySelector("#someElementId");
-
-lock(targetElement)
-unlock(targetElement)
-```
-### PC
-
-> tips: The `targetElement` is not required on the PC side; you can passed of `null`, if you not need `targetElement` and the console prompt.
+## Usage
+### normal
 
 ```js
 import { lock, unlock } from 'tua-body-scroll-lock'
@@ -46,7 +40,22 @@ lock()
 unlock()
 ```
 
-## test
+### targetElement need scrolling（iOS only）
+
+In some scenarios, when scrolling is prohibited, some elements still need to scroll, at this point, pass the targetElement.
+
+```js
+import { lock, unlock } from 'tua-body-scroll-lock'
+
+const targetElement = document.querySelector("#someElementId")
+
+lock(targetElement)
+unlock(targetElement)
+```
+
+> The `targetElement` is not required on the PC and Android.
+
+## Test
 [testLink](https://tuateam.github.io/tua-body-scroll-lock)
 
 ![bodyScrollLock](./tua-bsl.png)
