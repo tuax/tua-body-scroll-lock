@@ -46,7 +46,7 @@ lock()
 unlock()
 ```
 
-## 测试
+## test
 [testLink](https://tuateam.github.io/tua-body-scroll-lock)
 
 ![bodyScrollLock](./tua-bsl.png)
