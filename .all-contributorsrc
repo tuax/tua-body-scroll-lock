@@ -1,0 +1,25 @@
+{
+  "projectName": "tua-body-scroll-lock",
+  "projectOwner": "tuateam",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "evinma",
+      "name": "evinma",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/16096567?v=4",
+      "profile": "https://github.com/evinma",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
