@@ -9,20 +9,20 @@
     <img src="https://img.shields.io/npm/l/tua-body-scroll-lock.svg" alt="License">
 </a>
 
-English | [简体中文](./README-zh_CN.md)
+[English](./README.md) | 简体中文
 
-## Introduction
-`tua-body-scroll-lock` enables body scroll locking for everything.
+## 介绍
+`tua-body-scroll-lock` 解决了所有场景下滚动穿透的问题。
 
-### Why not [body-scroll-lock](https://github.com/willmcpo/body-scroll-lock)?
-* Doesn't work on Android webview
-* Doesn't work on PC with mouse wheel
-* Doesn't work on iOS, if you touch somewhere instead of targetElement
-* Must pass targetElement, even if it's not necessary
+### 为什么不用 [body-scroll-lock](https://github.com/willmcpo/body-scroll-lock)？
+* 低版本安卓下失效
+* PC 端滚轮行为失效
+* iOS 端触摸非 targetElement 时失效
+* 使用时必须传 targetElement（即使并不需要）
 
-[Try This](https://codepen.io/buptsteve/pen/EJoKQK)
+[点击尝试](https://codepen.io/buptsteve/pen/EJoKQK)
 
-## Install
+## 安装
 
 ```bash
 $ npm i -S tua-body-scroll-lock
@@ -30,8 +30,8 @@ $ npm i -S tua-body-scroll-lock
 $ yarn add tua-body-scroll-lock
 ```
 
-## Usage
-### normal
+## 使用
+### 常规操作
 
 ```js
 import { lock, unlock } from 'tua-body-scroll-lock'
@@ -40,9 +40,8 @@ lock()
 unlock()
 ```
 
-### targetElement need scrolling（iOS only）
-
-In some scenarios, when scrolling is prohibited, some elements still need to scroll, at this point, pass the targetElement.
+### 目标元素需要滚动（iOS only）
+在某些场景下，禁止滚动穿透时，仍然有些元素需要滚动行为，此时传入目标 DOM 元素即可。
 
 ```js
 import { lock, unlock } from 'tua-body-scroll-lock'
@@ -53,9 +52,9 @@ lock(targetElement)
 unlock(targetElement)
 ```
 
-> The `targetElement` is not required on the PC and Android.
+> PC 端和安卓端不需要传 targetElement。
 
-## Test
-[testLink](https://tuateam.github.io/tua-body-scroll-lock)
+## 测试
+[测试链接](https://tuateam.github.io/tua-body-scroll-lock)
 
 ![bodyScrollLock](./tua-bsl.png)

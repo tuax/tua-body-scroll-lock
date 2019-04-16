@@ -4,155 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>滚动穿透测试页面</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        user-select: none;
-      }
-      html, body {
-        width: 100%;
-        counter-reset: my-awesome-counter;
-      }
-      ul, li {
-        list-style: none;
-      }
-      ul {
-        margin: 0 20px;
-        width: 80%;
-        text-align: center;
-      }
-      #btn {
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: block;
-        padding: 3px 6px;
-        background-color: blue;
-        color: #fff;
-        border-radius: 5px;
-      }
-      .modal {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-
-        display: none;
-        padding-top: 40px;
-
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-      h2 {
-        margin: 0 auto;
-        width: 80%;
-        color: #000;
-        background-color: #fff;
-      }
-      #target {
-        margin: 0 auto;
-        width: 80%;
-        text-align: center;
-        height: 400px;
-        overflow: scroll;
-        color: #000;
-        background-color: #fff;
-        -webkit-overflow-scrolling: touch;
-      }
-      li {
-        counter-increment: my-awesome-counter;
-      }
-      li:before {
-        content: counter(my-awesome-counter);
-      }
-    </style>
+    <title>tua-body-scroll-lock Test</title>
   </head>
   <body>
-    <button id="btn">点击弹出一个浮层</button>
+    <button id="btn">click me to show the dialog</button>
     <div id="modal" class="modal">
-      <h2>这是一个浮层</h2>
-      <p id="target">
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-        这是一段可滚动的文字 这是一段可滚动的文字 这是一段可滚动的文字
-      </p>
+      <h2>this is a dialog</h2>
+      <p id="target"></p>
     </div>
-    <ul>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-      <li>页面主体</li>
-    </ul>
+
+    <div id="list"></div>
 
     <script src="./tua-bsl.umd.js"></script>
     <script>
       var btn = document.getElementById('btn')
+      var list = document.getElementById('list')
       var modal = document.getElementById('modal')
       var targetElement = document.getElementById('target')
+
+      var someText = ''
+      for (var i = 0; i < 100; i++) {
+        someText += `<p>${i}</p>`
+      }
+      list.innerHTML = someText
+      target.innerHTML = someText
 
       btn.onclick = function() {
         modal.style.display = 'block'
@@ -165,5 +40,68 @@
         bodyScrollLock.unlock(targetElement)
       }
     </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+
+        user-select: none;
+      }
+      html, body {
+        width: 100%;
+      }
+      #btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+
+        display: block;
+
+        padding: 6px;
+
+        color: #fff;
+        border-radius: 5px;
+        background-color: blue;
+      }
+      .modal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        display: none;
+
+        padding-top: 40px;
+
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      h2 {
+        width: 80%;
+        margin: 0 auto;
+
+        color: #000;
+        background-color: #fff;
+      }
+      #target {
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+
+        width: 80%;
+        height: 400px;
+        margin: 0 auto;
+
+        text-align: center;
+
+        color: #000;
+        background-color: #fff;
+      }
+      #list {
+        width: 80%;
+        margin: 0 20px;
+
+        text-align: center;
+      }
+    </style>
   </body>
 </html>
