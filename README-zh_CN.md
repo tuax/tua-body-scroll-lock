@@ -9,12 +9,12 @@
     <img src="https://img.shields.io/npm/l/tua-body-scroll-lock.svg" alt="License">
 </a>
 
-English | [简体中文](./README-zh_CN.md)
+[English](./README.md) | 简体中文
 
-## Introduction
-As the name suggests, the tua-body-scroll-lock is used to lock the body scrolling package. And for the PC, mobile ios and android have done different processing, to ensure that they can be used perfectly on each end.
+## 介绍
+顾名思义 `tua-body-scroll-lock` 是用来锁住 `body` 滚动的包。并且针对`PC端`、移动端 `ios` 和 `android` 做了不同的处理，保证在各个端都可以完美使用。
 
-## install
+## 安装
 
 ```bash
 $ npm i -S tua-body-scroll-lock
@@ -22,22 +22,22 @@ $ npm i -S tua-body-scroll-lock
 $ yarn add tua-body-scroll-lock
 ```
 
-## use
+## 使用
 
-### mobile
+### 移动端
 
 ```js
 import { lock, unlock } from 'tua-body-scroll-lock'
 
-// After the lock is scroll, you still need internal scrollable elements (for mobile ios processing)
+// 禁止滑动后还需要内部可以滚动的元素(针对移动端ios处理)
 const targetElement = document.querySelector("#someElementId");
 
 lock(targetElement)
 unlock(targetElement)
 ```
-### PC
+### PC端
 
-> tips: The `targetElement` is not required on the PC side; you can passed of `null`, if you not need `targetElement` and the console prompt.
+> tips: PC端不需要targetElement; 不传targetElement也不想要控制台提示可以传`null`
 
 ```js
 import { lock, unlock } from 'tua-body-scroll-lock'
@@ -47,6 +47,6 @@ unlock()
 ```
 
 ## 测试
-[testLink](https://tuateam.github.io/tua-body-scroll-lock)
+[测试链接](https://tuateam.github.io/tua-body-scroll-lock)
 
 ![bodyScrollLock](./tua-bsl.png)
