@@ -40,11 +40,13 @@ const setOverflowHiddenPc = () => {
     $body.style.overflow = 'hidden'
     $body.style.paddingRight = scrollBarWidth + 'px'
     $body.style.boxSizing = 'border-box'
+    $body.style.position = 'fixed'
 
     return () => {
         $body.style.overflow = bodyStyle.overflow || ''
         $body.style.paddingRight = bodyStyle.paddingRight || ''
         $body.style.boxSizing = bodyStyle.boxSizing || ''
+        $body.style.position = bodyStyle.position || ''
     }
 }
 
@@ -73,8 +75,8 @@ const setOverflowHiddenMobile = () => {
         $body.style.overflow = bodyStyle.overflow || ''
         $body.style.height = bodyStyle.height || ''
         $body.style.width = bodyStyle.width || ''
-        $body.style.position = ''
-        $body.style.top = ''
+        $body.style.position = bodyStyle.position || ''
+        $body.style.top = bodyStyle.top || ''
         window.scrollTo(0, scrollTop)
     }
 }
