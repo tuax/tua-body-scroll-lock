@@ -1,3 +1,7 @@
+Fork of https://github.com/tuateam/tua-body-scroll-lock
+
+Fixes the scroll locking on desktop
+
 # tua-body-scroll-lock
 
 > inspired by [body-scroll-lock](https://github.com/willmcpo/body-scroll-lock)
