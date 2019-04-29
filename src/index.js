@@ -149,6 +149,6 @@ export const unlock = (targetElement) => {
             documentListenerAdded = false
         }
     } else {
-        lockedNum <= 0 && unLockCallback()
+        lockedNum <= 0 && typeof unLockCallback === "function" && unLockCallback()
     }
 }
