@@ -23,11 +23,33 @@
 [点击尝试](https://codepen.io/buptsteve/pen/EJoKQK)
 
 ## 安装
+### Node Package Manager(recommended)
 
 ```bash
 $ npm i -S tua-body-scroll-lock
 # OR
 $ yarn add tua-body-scroll-lock
+```
+
+### CDN
+* umd
+
+```html
+<!-- unpkg -->
+<script src="https://unpkg.com/tua-body-scroll-lock"></script>
+
+<!-- jsdelivr -->
+<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/lib/tua-bsl.umd.js"></script>
+```
+
+* umd.min
+
+```html
+<!-- unpkg -->
+<script src="https://unpkg.com/tua-body-scroll-lock/lib/tua-bsl.umd.min.js"></script>
+
+<!-- jsdelivr -->
+<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/lib/tua-bsl.umd.min.js"></script>
 ```
 
 ## 使用
@@ -46,7 +68,7 @@ unlock()
 ```js
 import { lock, unlock } from 'tua-body-scroll-lock'
 
-const targetElement = document.querySelector("#someElementId")
+const targetElement = document.querySelector('#someElementId')
 
 lock(targetElement)
 unlock(targetElement)
