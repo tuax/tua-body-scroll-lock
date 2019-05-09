@@ -1,4 +1,4 @@
-lib
+dist
 *.log
 coverage
 .DS_Store

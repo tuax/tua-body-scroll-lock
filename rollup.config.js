@@ -1,64 +1,63 @@
-// import json from 'rollup-plugin-json'
 import babel from 'rollup-plugin-babel'
 import replace from 'rollup-plugin-replace'
 import { eslint } from 'rollup-plugin-eslint'
-import commonjs from 'rollup-plugin-commonjs'
 import { uglify } from 'rollup-plugin-uglify'
-import nodeResolve from 'rollup-plugin-node-resolve'
 
 const pkg = require('./package.json')
 
-const plugins = [
-    // json(),
-    eslint(),
-    babel(),
-    commonjs(),
-    nodeResolve({ jsnext: true, main: true, browser: true }),
-]
+const banner =
+`/**
+ * ${pkg.name} v${pkg.version}
+ * (c) ${new Date().getFullYear()} ${pkg.author}
+ * @license ${pkg.license}
+ */
+`
+const plugins = [ eslint(), babel() ]
 
-export default [
-    {
-        input: 'src/index.js',
-        output: [
-            {
-                file: pkg.module,
-                // exports: 'named',
-                format: 'es',
-            },
-        ],
-        plugins,
+const configMap = {
+    esm: {
+        file: pkg.module,
+        format: 'esm',
     },
-    {
-        input: 'src/index.js',
-        output: [
-            {
-                file: pkg.main,
-                format: 'umd',
-                exports: 'named',
-                name: 'bodyScrollLock',
-            },
-        ],
-        plugins: [
-            ...plugins,
-            replace({
-                'process.env.NODE_ENV': true,
-            }),
-        ],
+    umdDev: {
+        file: pkg.main,
+        format: 'umd',
+        env: 'development',
     },
-    {
+    umdProd: {
+        file: `dist/tua-bsl.umd.min.js`,
+        format: 'umd',
+        env: 'production',
+    },
+}
+
+const genConfig = (opts) => {
+    const isProd = /min\.js$/.test(opts.file)
+
+    const config = {
         input: 'src/index.js',
+        plugins: plugins.slice(),
         output: {
-            file: `lib/tua-bsl.umd.min.js`,
-            format: 'umd',
-            exports: 'named',
+            file: opts.file,
+            format: opts.format,
+            banner,
             name: 'bodyScrollLock',
         },
-        plugins: [
-            ...plugins,
-            replace({
-                'process.env.NODE_ENV': false,
-            }),
-            uglify(),
-        ],
-    },
-]
+    }
+
+    if (opts.env) {
+        config.plugins.push(replace({
+            'process.env.NODE_ENV': JSON.stringify(opts.env),
+        }))
+    }
+
+    if (isProd) {
+        config.plugins.push(uglify())
+    }
+
+    return config
+}
+
+export default Object.keys(configMap)
+    .map(key => configMap[key])
+    .map(genConfig)
