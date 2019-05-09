@@ -125,7 +125,7 @@ export const lock = (targetElement) => {
             document.addEventListener('touchmove', preventDefault, hasPassiveEvents ? { passive: false } : undefined)
             documentListenerAdded = true
         }
-    } else {
+    } else if (lockedNum <= 0) {
         unLockCallback = detectOS().android ? setOverflowHiddenMobile() : setOverflowHiddenPc()
     }
     lockedNum += 1
