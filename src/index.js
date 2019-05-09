@@ -113,6 +113,7 @@ const lock = (targetElement) => {
     checkTargetElement(targetElement)
 
     if (detectOS().ios) {
+        // iOS
         if (targetElement && lockedElements.indexOf(targetElement) === -1) {
             targetElement.ontouchstart = (event) => {
                 initialClientY = event.targetTouches[0].clientY
@@ -143,13 +144,12 @@ const unlock = (targetElement) => {
     lockedNum -= 1
 
     if (lockedNum > 0) return
-    if (!targetElement) return
-
     if (!detectOS().ios) {
         lockedNum <= 0 && typeof unLockCallback === 'function' && unLockCallback()
         return
     }
 
+    // iOS
     const index = lockedElements.indexOf(targetElement)
     if (index !== -1) {
         targetElement.ontouchmove = null
@@ -157,7 +157,7 @@ const unlock = (targetElement) => {
         lockedElements.splice(index, 1)
     }
 
-    if (documentListenerAdded && lockedNum <= 0) {
+    if (documentListenerAdded) {
         document.removeEventListener('touchmove', preventDefault, eventListenerOptions)
         documentListenerAdded = false
     }
