@@ -30,6 +30,15 @@
         "doc",
         "infra"
       ]
+    },
+    {
+      "login": "li2go",
+      "name": "li2go",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/11485337?v=4",
+      "profile": "https://github.com/li2go",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7
