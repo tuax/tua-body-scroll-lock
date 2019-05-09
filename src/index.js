@@ -39,23 +39,21 @@ const setOverflowHiddenPc = () => {
 
     $body.style.overflow = 'hidden'
     $body.style.boxSizing = 'border-box'
-    $body.style.paddingRight = scrollBarWidth + 'px'
+    $body.style.paddingRight = `${scrollBarWidth}px`
 
     return () => {
-        $body.style.overflow = bodyStyle.overflow || ''
-        $body.style.boxSizing = bodyStyle.boxSizing || ''
-        $body.style.paddingRight = bodyStyle.paddingRight || ''
+        ;['overflow', 'boxSizing', 'paddingRight'].forEach((x) => {
+            $body.style[x] = bodyStyle[x] || ''
+        })
     }
 }
 
 const setOverflowHiddenMobile = () => {
     const $html = $('html')
     const $body = $('body')
-
+    const scrollTop = $html.scrollTop || $body.scrollTop
     const htmlStyle = { ...$html.style }
     const bodyStyle = { ...$body.style }
-
-    const scrollTop = $html.scrollTop || $body.scrollTop
 
     $html.style.height = '100%'
     $html.style.overflow = 'hidden'
@@ -69,11 +67,9 @@ const setOverflowHiddenMobile = () => {
         $html.style.height = htmlStyle.height || ''
         $html.style.overflow = htmlStyle.overflow || ''
 
-        $body.style.top = ''
-        $body.style.width = bodyStyle.width || ''
-        $body.style.height = bodyStyle.height || ''
-        $body.style.position = ''
-        $body.style.overflow = bodyStyle.overflow || ''
+        ;['top', 'width', 'height', 'overflow', 'position'].forEach((x) => {
+            $body.style[x] = bodyStyle[x] || ''
+        })
 
         window.scrollTo(0, scrollTop)
     }
