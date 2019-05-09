@@ -32,28 +32,32 @@ $ yarn add tua-body-scroll-lock
 ```
 
 ### CDN
-* umd
+* UMD(`tua-bsl.umd.js`)
+  * [unpkg](https://unpkg.com/tua-body-scroll-lock)
+  * [jsdelivr](https://cdn.jsdelivr.net/npm/tua-body-scroll-lock)
 
 ```html
 <!-- unpkg -->
 <script src="https://unpkg.com/tua-body-scroll-lock"></script>
 
 <!-- jsdelivr -->
-<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/lib/tua-bsl.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock"></script>
 ```
 
-* umd.min
+* Minified UMD(`tua-bsl.umd.min.js`)
+  * [unpkg](https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.min.js)
+  * [jsdelivr](https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js)
 
 ```html
 <!-- unpkg -->
-<script src="https://unpkg.com/tua-body-scroll-lock/lib/tua-bsl.umd.min.js"></script>
+<script src="https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.min.js"></script>
 
 <!-- jsdelivr -->
-<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/lib/tua-bsl.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js"></script>
 ```
 
 ## Usage
-### normal
+### Normal
 
 ```js
 import { lock, unlock } from 'tua-body-scroll-lock'
@@ -62,8 +66,7 @@ lock()
 unlock()
 ```
 
-### targetElement need scrolling（iOS only）
-
+### TargetElement needs scrolling（iOS only）
 In some scenarios, when scrolling is prohibited, some elements still need to scroll, at this point, pass the targetElement.
 
 ```js

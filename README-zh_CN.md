@@ -32,24 +32,28 @@ $ yarn add tua-body-scroll-lock
 ```
 
 ### CDN
-* umd
+* UMD(`tua-bsl.umd.js`)
+  * [unpkg](https://unpkg.com/tua-body-scroll-lock)
+  * [jsdelivr](https://cdn.jsdelivr.net/npm/tua-body-scroll-lock)
 
 ```html
 <!-- unpkg -->
 <script src="https://unpkg.com/tua-body-scroll-lock"></script>
 
 <!-- jsdelivr -->
-<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/lib/tua-bsl.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock"></script>
 ```
 
-* umd.min
+* Minified UMD(`tua-bsl.umd.min.js`)
+  * [unpkg](https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.min.js)
+  * [jsdelivr](https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js)
 
 ```html
 <!-- unpkg -->
-<script src="https://unpkg.com/tua-body-scroll-lock/lib/tua-bsl.umd.min.js"></script>
+<script src="https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.min.js"></script>
 
 <!-- jsdelivr -->
-<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/lib/tua-bsl.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js"></script>
 ```
 
 ## 使用
