@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "experimentalDecorators": true,
         "allowJs": true,
         "baseUrl": ".",
+        "experimentalDecorators": true,
         "paths":{
             "@/*": ["src/*"],
         }
