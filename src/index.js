@@ -110,6 +110,8 @@ const checkTargetElement = (targetElement) => {
 }
 
 const lock = (targetElement) => {
+    if (isServer) return
+
     checkTargetElement(targetElement)
 
     if (detectOS().ios) {
@@ -140,6 +142,8 @@ const lock = (targetElement) => {
 }
 
 const unlock = (targetElement) => {
+    if (isServer) return
+
     checkTargetElement(targetElement)
     lockedNum -= 1
 
