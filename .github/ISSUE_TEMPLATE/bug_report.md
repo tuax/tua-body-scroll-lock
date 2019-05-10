@@ -20,13 +20,11 @@ Steps to reproduce the behavior:
 3. Scroll down to '....'
 4. See error
 
-If it's convenient:
+Providing a reproduction demo will be better(you can pick a platform below and **fork** the demo):
 
-* Add an online address to reproduce：
-  * codepen: https://codepen.io/
-  * jsfiddle: https://jsfiddle.net/
-  * codesandbox: https://codesandbox.io/
-* Add a repository to reproduce：https://github.com/new
+* codepen: https://codepen.io/buptsteve/pen/PvNQjP
+* jsfiddle: https://jsfiddle.net/buptsteve/6u8g3Lf5/
+* codesandbox: https://codesandbox.io/s/o73z4jy5q9
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
