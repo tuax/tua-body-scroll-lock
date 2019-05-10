@@ -18,7 +18,9 @@
       "profile": "https://github.com/evinma",
       "contributions": [
         "code",
-        "doc"
+        "doc",
+        "infra",
+        "translation"
       ]
     },
     {
@@ -27,8 +29,10 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/11501493?v=4",
       "profile": "https://buptsteve.github.io",
       "contributions": [
+        "code",
         "doc",
-        "infra"
+        "infra",
+        "translation"
       ]
     },
     {
@@ -37,6 +41,7 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/11485337?v=4",
       "profile": "https://github.com/li2go",
       "contributions": [
+        "code",
         "bug"
       ]
     },
@@ -46,6 +51,7 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/7125157?v=4",
       "profile": "https://github.com/feitiange",
       "contributions": [
+        "code",
         "bug"
       ]
     }
