@@ -22,6 +22,7 @@ Steps to reproduce the behavior:
 
 Providing a reproduction demo will be better(you can pick a platform below and **fork** the demo):
 
+* jsbin: https://jsbin.com/cafiful/edit?output
 * codepen: https://codepen.io/buptsteve/pen/PvNQjP
 * jsfiddle: https://jsfiddle.net/buptsteve/6u8g3Lf5/
 * codesandbox: https://codesandbox.io/s/o73z4jy5q9

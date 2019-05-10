@@ -23,6 +23,7 @@ Version [e.g. 0.1.0]
 
 建议 **fork** 以下某个平台的 demo 复现一下：
 
+* jsbin: https://jsbin.com/cafiful/edit?output
 * codepen: https://codepen.io/buptsteve/pen/PvNQjP
 * jsfiddle: https://jsfiddle.net/buptsteve/6u8g3Lf5/
 * codesandbox: https://codesandbox.io/s/o73z4jy5q9
