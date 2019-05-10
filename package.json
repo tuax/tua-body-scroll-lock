@@ -8,9 +8,13 @@
     "jsdelivr": "dist/tua-bsl.umd.js",
     "typings": "src/index.d.ts",
     "scripts": {
+        "lint": "eslint --fix ./",
         "start": "rollup -c -w",
         "build": "npm run lint && rollup -c && cp index.html dist/index.html",
-        "lint": "eslint --fix ./",
+        "next": "npm --no-git-tag-version version prerelease",
+        "next:m": "npm --no-git-tag-version version preminor",
+        "pub": "npm run build && npm publish",
+        "pub:n": "npm run build && npm publish --tag next",
         "deploy": "npm run build && gh-pages -d dist"
     },
     "eslintIgnore": [
