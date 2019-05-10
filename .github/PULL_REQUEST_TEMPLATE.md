@@ -19,19 +19,17 @@
 
 - [ ] When resolving a specific issue, it's referenced in the PR's title (e.g. `fix #xxx[,#xxx]`, where "xxx" is the issue number)
 
-You have tested in the following platforms: (Providing a detailed version will be better.)
+You have tested in the following platforms:
 
 - [ ] PC
 - [ ] iOS
 - [ ] Android
 
-If it's convenient:
+Providing a reproduction demo will be better(you can pick a platform below and **fork** the demo):
 
-* Add an online address:
-  * codepen: https://codepen.io/
-  * jsfiddle: https://jsfiddle.net/
-  * codesandbox: https://codesandbox.io/
-* Add a repository：https://github.com/new
+* codepen: https://codepen.io/buptsteve/pen/PvNQjP
+* jsfiddle: https://jsfiddle.net/buptsteve/6u8g3Lf5/
+* codesandbox: https://codesandbox.io/s/o73z4jy5q9
 
 To avoid wasting your time, it's best to open a **feature request issue** first and wait for approval before working on it.
 

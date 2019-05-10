@@ -21,13 +21,11 @@ Version [e.g. 0.1.0]
 3. 滚动到了 '...'
 4. 看到了错误
 
-如果方便的话：
+建议 **fork** 以下某个平台的 demo 复现一下：
 
-* 复现 bug 的在线地址：
-  * codepen: https://codepen.io/
-  * jsfiddle: https://jsfiddle.net/
-  * codesandbox: https://codesandbox.io/
-* 复现 bug 的仓库地址：https://github.com/new
+* codepen: https://codepen.io/buptsteve/pen/PvNQjP
+* jsfiddle: https://jsfiddle.net/buptsteve/6u8g3Lf5/
+* codesandbox: https://codesandbox.io/s/o73z4jy5q9
 
 **预期行为**
 简洁清晰地描述一下预期行为。

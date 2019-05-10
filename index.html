@@ -4,43 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.2/gh-fork-ribbon.min.css" />
     <title>tua-body-scroll-lock demo</title>
-</head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.2/gh-fork-ribbon.min.css" />
+  </head>
   <body>
-    <a class="github-fork-ribbon right-bottom fixed" target="_blank" href="https://github.com/tuateam/tua-body-scroll-lock"
-    title="Fork me on GitHub" data-ribbon="Fork me on GitHub">
-        Fork me on GitHub
+    <a
+      class="github-fork-ribbon right-bottom fixed"
+      target="_blank"
+      href="https://github.com/tuateam/tua-body-scroll-lock"
+      title="Fork me on GitHub"
+      data-ribbon="Fork me on GitHub"
+    >
+      Fork me on GitHub
     </a>
 
     <header>
-        <h1>tua-body-scroll-lock demo</h1>
-        <img src="https://img.shields.io/badge/dependencies-none-green.svg" alt="dependencies">
-        <a href="https://www.npmjs.com/package/tua-body-scroll-lock" target="_blank">
-            <img src="https://badgen.net/npm/dm/tua-body-scroll-lock" alt="Downloads per month">
-            <img src="https://img.shields.io/npm/v/tua-body-scroll-lock.svg" alt="Version">
-            <img src="https://img.shields.io/npm/v/tua-body-scroll-lock/next.svg" alt="Next Version">
-            <img src="https://img.shields.io/npm/l/tua-body-scroll-lock.svg" alt="License">
-        </a>
+      <h1>tua-body-scroll-lock demo</h1>
+      <img src="https://img.shields.io/badge/dependencies-none-green.svg" alt="dependencies">
+      <a href="https://www.npmjs.com/package/tua-body-scroll-lock" target="_blank">
+        <img src="https://badgen.net/npm/dm/tua-body-scroll-lock" alt="Downloads per month">
+        <img src="https://img.shields.io/npm/v/tua-body-scroll-lock.svg" alt="Version">
+        <img src="https://img.shields.io/npm/v/tua-body-scroll-lock/next.svg" alt="Next Version">
+        <img src="https://img.shields.io/npm/l/tua-body-scroll-lock.svg" alt="License">
+      </a>
     </header>
 
     <section class="content">
-        <button id="btn">click me to show dialog one</button>
+      <button id="btn">click me to show dialog one</button>
 
-        <div id="modalOne" class="modal">
-            <h2>
-                dialog one
-                <button id="modalBtn">click me to show dialog two</button>
-            </h2>
-            <p id="targetOne" class="target"></p>
-        </div>
+      <div id="modalOne" class="modal">
+        <h2>
+          dialog one
+          <button id="modalBtn">click me to show dialog two</button>
+        </h2>
+        <p id="targetOne" class="target"></p>
+      </div>
 
-        <div id="modalTwo" class="modal">
-            <h2>dialog two</h2>
-            <p id="targetTwo" class="target"></p>
-        </div>
+      <div id="modalTwo" class="modal">
+        <h2>dialog two</h2>
+        <p id="targetTwo" class="target"></p>
+      </div>
 
-        <div id="list"></div>
+      <div id="list"></div>
     </section>
 
     <script src="./tua-bsl.umd.js"></script>
@@ -51,6 +56,7 @@
       var $targetOne = $('#targetOne')
       var $targetTwo = $('#targetTwo')
 
+      // add content
       var someText = ''
       for (var i = 0; i < 50; i++) {
         someText += `<p>${i}</p>`
