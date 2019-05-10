@@ -1,3 +1,9 @@
+/**
+ * tua-body-scroll-lock v0.2.0
+ * (c) 2019 Evinma, BuptStEve
+ * @license MIT
+ */
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -32,33 +38,38 @@ function _objectSpread(target) {
   return target;
 }
 
-var locksElement = [];
 var lockedNum = 0;
-var initialClientY;
-var unLockCallback;
-var documentListenerAdded;
-var hasPassiveEvents = false;
+var initialClientY = 0;
+var unLockCallback = null;
+var documentListenerAdded = false;
+var isServer = typeof window === 'undefined';
+var lockedElements = [];
+var $ = !isServer && document.querySelector.bind(document);
+var eventListenerOptions;
 
-if (typeof window !== 'undefined') {
+if (!isServer) {
+  var testEvent = '__TUA_BSL_TEST_PASSIVE__';
   var passiveTestOptions = {
     get passive() {
-      hasPassiveEvents = true;
-      return undefined;
+      eventListenerOptions = {
+        passive: false
+      };
     }
 
   };
-  window.addEventListener('testPassive', null, passiveTestOptions);
-  window.removeEventListener('testPassive', null, passiveTestOptions);
+  window.addEventListener(testEvent, null, passiveTestOptions);
+  window.removeEventListener(testEvent, null, passiveTestOptions);
 }
 
 var detectOS = function detectOS() {
   var ua = navigator.userAgent;
-  var android = /(Android);?[\s/]+([\d.]+)?/.test(ua);
   var ipad = /(iPad).*OS\s([\d_]+)/.test(ua);
   var iphone = !ipad && /(iPhone\sOS)\s([\d_]+)/.test(ua);
+  var android = /(Android);?[\s/]+([\d.]+)?/.test(ua);
+  var os = android ? 'android' : 'ios';
   var ios = iphone || ipad;
   return {
-    os: android ? 'android' : 'ios',
+    os: os,
     ios: ios,
     ipad: ipad,
     iphone: iphone,
@@ -67,69 +78,64 @@ var detectOS = function detectOS() {
 };
 
 var setOverflowHiddenPc = function setOverflowHiddenPc() {
-  var _context;
-
-  var $ = (_context = document, document.querySelector).bind(_context);
   var $body = $('body');
 
   var bodyStyle = _objectSpread({}, $body.style);
 
   var scrollBarWidth = window.innerWidth - document.body.clientWidth;
   $body.style.overflow = 'hidden';
-  $body.style.paddingRight = scrollBarWidth + 'px';
   $body.style.boxSizing = 'border-box';
+  $body.style.paddingRight = "".concat(scrollBarWidth, "px");
   return function () {
-    $body.style.overflow = bodyStyle.overflow || '';
-    $body.style.paddingRight = bodyStyle.paddingRight || '';
-    $body.style.boxSizing = bodyStyle.boxSizing || '';
+    ['overflow', 'boxSizing', 'paddingRight'].forEach(function (x) {
+      $body.style[x] = bodyStyle[x] || '';
+    });
   };
 };
 
 var setOverflowHiddenMobile = function setOverflowHiddenMobile() {
-  var _context2;
-
-  var $ = (_context2 = document, document.querySelector).bind(_context2);
   var $html = $('html');
   var $body = $('body');
+  var scrollTop = $html.scrollTop || $body.scrollTop;
 
   var htmlStyle = _objectSpread({}, $html.style);
 
   var bodyStyle = _objectSpread({}, $body.style);
 
-  var scrollTop = $html.scrollTop || $body.scrollTop;
-  $html.style.overflow = 'hidden';
   $html.style.height = '100%';
-  $body.style.overflow = 'hidden';
+  $html.style.overflow = 'hidden';
   $body.style.top = "-".concat(scrollTop, "px");
   $body.style.width = '100%';
   $body.style.position = 'fixed';
+  $body.style.overflow = 'hidden';
   return function () {
-    $html.style.overflow = htmlStyle.overflow || '';
     $html.style.height = htmlStyle.height || '';
-    $body.style.overflow = bodyStyle.overflow || '';
-    $body.style.height = bodyStyle.height || '';
-    $body.style.width = bodyStyle.width || '';
-    $body.style.position = '';
-    $body.style.top = '';
+    $html.style.overflow = htmlStyle.overflow || '';
+    ['top', 'width', 'height', 'overflow', 'position'].forEach(function (x) {
+      $body.style[x] = bodyStyle[x] || '';
+    });
     window.scrollTo(0, scrollTop);
   };
 };
 
 var preventDefault = function preventDefault(event) {
-  if (event.cancelable) {
-    event.preventDefault();
-  }
+  if (!event.cancelable) return;
+  event.preventDefault();
 };
 
 var handleScroll = function handleScroll(event, targetElement) {
   var clientY = event.targetTouches[0].clientY - initialClientY;
 
-  if (targetElement && targetElement.scrollTop === 0 && clientY > 0) {
-    return preventDefault(event);
-  }
+  if (targetElement) {
+    var scrollTop = targetElement.scrollTop,
+        scrollHeight = targetElement.scrollHeight,
+        clientHeight = targetElement.clientHeight;
+    var isOnTop = clientY > 0 && scrollTop === 0;
+    var isOnBottom = clientY < 0 && scrollTop + clientHeight + 1 >= scrollHeight;
 
-  if (targetElement && targetElement.scrollHeight - 1 - targetElement.scrollTop <= targetElement.clientHeight && clientY < 0) {
-    return preventDefault(event);
+    if (isOnTop || isOnBottom) {
+      return preventDefault(event);
+    }
   }
 
   event.stopPropagation();
@@ -137,63 +143,65 @@ var handleScroll = function handleScroll(event, targetElement) {
 };
 
 var checkTargetElement = function checkTargetElement(targetElement) {
-  if (!targetElement && targetElement !== null && process.env.NODE_ENV !== 'production') {
-    console.warn('If scrolling is also required in the floating layer, the target element must be provided');
-  }
+  if (targetElement) return;
+  if (targetElement === null) return;
+  if (process.env.NODE_ENV === 'production') return;
+  console.warn("If scrolling is also required in the floating layer, " + "the target element must be provided.");
 };
 
 var lock = function lock(targetElement) {
+  if (isServer) return;
   checkTargetElement(targetElement);
 
   if (detectOS().ios) {
-    if (targetElement && locksElement.indexOf(targetElement) < 0) {
+    // iOS
+    if (targetElement && lockedElements.indexOf(targetElement) === -1) {
       targetElement.ontouchstart = function (event) {
         initialClientY = event.targetTouches[0].clientY;
       };
 
       targetElement.ontouchmove = function (event) {
-        if (event.targetTouches.length === 1) {
-          handleScroll(event, targetElement);
-        }
+        if (event.targetTouches.length !== 1) return;
+        handleScroll(event, targetElement);
       };
 
-      locksElement.push(targetElement);
+      lockedElements.push(targetElement);
     }
 
     if (!documentListenerAdded) {
-      document.addEventListener('touchmove', preventDefault, hasPassiveEvents ? {
-        passive: false
-      } : undefined);
+      document.addEventListener('touchmove', preventDefault, eventListenerOptions);
       documentListenerAdded = true;
     }
-  } else {
+  } else if (lockedNum <= 0) {
     unLockCallback = detectOS().android ? setOverflowHiddenMobile() : setOverflowHiddenPc();
   }
 
   lockedNum += 1;
 };
+
 var unlock = function unlock(targetElement) {
+  if (isServer) return;
   checkTargetElement(targetElement);
   lockedNum -= 1;
-  if (lockedNum > 0 && !targetElement) return;
+  if (lockedNum > 0) return;
 
-  if (detectOS().ios) {
-    var targetElementIndex = locksElement.indexOf(targetElement);
+  if (!detectOS().ios) {
+    lockedNum <= 0 && typeof unLockCallback === 'function' && unLockCallback();
+    return;
+  } // iOS
 
-    if (targetElementIndex > -1) {
-      targetElement.ontouchstart = null;
-      targetElement.ontouchmove = null;
-      locksElement.splice(targetElementIndex, 1);
-    }
 
-    if (documentListenerAdded && lockedNum <= 0) {
-      document.removeEventListener('touchmove', preventDefault, hasPassiveEvents ? {
-        passive: false
-      } : undefined);
-      documentListenerAdded = false;
-    }
-  } else {
-    lockedNum <= 0 && unLockCallback();
+  var index = lockedElements.indexOf(targetElement);
+
+  if (index !== -1) {
+    targetElement.ontouchmove = null;
+    targetElement.ontouchstart = null;
+    lockedElements.splice(index, 1);
+  }
+
+  if (documentListenerAdded) {
+    document.removeEventListener('touchmove', preventDefault, eventListenerOptions);
+    documentListenerAdded = false;
   }
 };
 
