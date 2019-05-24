@@ -4,43 +4,82 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>tua-body-scroll-lock Test</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.2/gh-fork-ribbon.min.css" />
-  </head>
+    <title>tua-body-scroll-lock demo</title>
+</head>
   <body>
-    <a class="github-fork-ribbon" target="_blank" href="https://github.com/tuateam/tua-body-scroll-lock" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+    <a class="github-fork-ribbon right-bottom fixed" target="_blank" href="https://github.com/tuateam/tua-body-scroll-lock"
+    title="Fork me on GitHub" data-ribbon="Fork me on GitHub">
+        Fork me on GitHub
+    </a>
 
-    <button id="btn">click me to show the dialog</button>
-    <div id="modal" class="modal">
-      <h2>this is a dialog</h2>
-      <p id="target"></p>
-    </div>
+    <header>
+        <h1>tua-body-scroll-lock demo</h1>
+        <img src="https://img.shields.io/badge/dependencies-none-green.svg" alt="dependencies">
+        <a href="https://www.npmjs.com/package/tua-body-scroll-lock" target="_blank">
+            <img src="https://badgen.net/npm/dm/tua-body-scroll-lock" alt="Downloads per month">
+            <img src="https://img.shields.io/npm/v/tua-body-scroll-lock.svg" alt="Version">
+            <img src="https://img.shields.io/npm/v/tua-body-scroll-lock/next.svg" alt="Next Version">
+            <img src="https://img.shields.io/npm/l/tua-body-scroll-lock.svg" alt="License">
+        </a>
+    </header>
 
-    <div id="list"></div>
+    <section class="content">
+        <button id="btn">click me to show dialog one</button>
+
+        <div id="modalOne" class="modal">
+            <h2>
+                dialog one
+                <button id="modalBtn">click me to show dialog two</button>
+            </h2>
+            <p id="targetOne" class="target"></p>
+        </div>
+
+        <div id="modalTwo" class="modal">
+            <h2>dialog two</h2>
+            <p id="targetTwo" class="target"></p>
+        </div>
+
+        <div id="list"></div>
+    </section>
 
     <script src="./tua-bsl.umd.js"></script>
     <script>
-      var btn = document.getElementById('btn')
-      var list = document.getElementById('list')
-      var modal = document.getElementById('modal')
-      var targetElement = document.getElementById('target')
+      var $ = document.querySelector.bind(document)
+      var $modalOne = $('#modalOne')
+      var $modalTwo = $('#modalTwo')
+      var $targetOne = $('#targetOne')
+      var $targetTwo = $('#targetTwo')
 
       var someText = ''
-      for (var i = 0; i < 100; i++) {
+      for (var i = 0; i < 50; i++) {
         someText += `<p>${i}</p>`
       }
-      list.innerHTML = someText
-      target.innerHTML = someText
+      $('#list').innerHTML = someText
+      $targetOne.innerHTML = someText
+      $targetTwo.innerHTML = someText
 
-      btn.onclick = function() {
-        modal.style.display = 'block'
-        bodyScrollLock.lock(targetElement)
+      $('#btn').onclick = function () {
+        $modalOne.style.display = 'block'
+        bodyScrollLock.lock($targetOne)
+      }
+      $('#modalBtn').onclick = function () {
+        $modalTwo.style.display = 'block'
+        bodyScrollLock.lock($targetTwo)
       }
 
-      modal.onclick = function(event) {
-        if (event.target.id == 'target') return
-        modal.style.display = 'none'
-        bodyScrollLock.unlock(targetElement)
+      $modalOne.onclick = function (event) {
+        if (event.target.id === 'targetOne') return
+        if (event.target.id === 'modalBtn') return
+
+        $modalOne.style.display = 'none'
+        bodyScrollLock.unlock($targetOne)
+      }
+      $modalTwo.onclick = function (event) {
+        if (event.target.id === 'targetTwo') return
+
+        $modalTwo.style.display = 'none'
+        bodyScrollLock.unlock($targetTwo)
       }
     </script>
     <style>
@@ -50,16 +89,36 @@
 
         user-select: none;
       }
-      html, body {
+      html,
+      body {
         width: 100%;
+
+        text-align: center;
       }
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+      }
+      .content {
+        margin-top: 80px;
+      }
+
       #btn {
         position: fixed;
-        top: 20px;
+        top: 80px;
         left: 20px;
+      }
+      #list {
+        margin: 0 20px;
+      }
+      #modalTwo > h2 {
+        margin-top: 50px;
+      }
 
-        display: block;
-
+      button {
         padding: 6px;
 
         color: #fff;
@@ -86,24 +145,18 @@
         color: #000;
         background-color: #fff;
       }
-      #target {
+      .target {
         overflow: scroll;
         -webkit-overflow-scrolling: touch;
 
         width: 80%;
-        height: 400px;
+        height: 60%;
         margin: 0 auto;
 
         text-align: center;
 
         color: #000;
         background-color: #fff;
-      }
-      #list {
-        width: 80%;
-        margin: 0 20px;
-
-        text-align: center;
       }
     </style>
   </body>
