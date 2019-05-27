@@ -54,6 +54,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "Grawl",
+      "name": "Даниил Пронин",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/846774?v=4",
+      "profile": "https://grawl.ru/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7
