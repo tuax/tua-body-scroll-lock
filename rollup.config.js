@@ -1,7 +1,8 @@
 import babel from 'rollup-plugin-babel'
 import replace from 'rollup-plugin-replace'
 import { eslint } from 'rollup-plugin-eslint'
-import { uglify } from 'rollup-plugin-uglify'
+import { terser } from 'rollup-plugin-terser'
+import { DEFAULT_EXTENSIONS } from '@babel/core'
 
 const pkg = require('./package.json')
 
@@ -12,8 +13,8 @@ const banner =
  * @license ${pkg.license}
  */
 `
-const plugins = [ eslint(), babel() ]
 
+const extensions = [...DEFAULT_EXTENSIONS, 'ts', 'tsx']
 const configMap = {
     esm: {
         file: pkg.module,
@@ -29,6 +30,18 @@ const configMap = {
         format: 'umd',
         env: 'production',
     },
+    esmBrowserDev: {
+        env: 'development',
+        file: 'dist/tua-bsl.esm.browser.js',
+        format: 'esm',
+        transpile: false,
+    },
+    esmBrowserProd: {
+        env: 'production',
+        file: 'dist/tua-bsl.esm.browser.min.js',
+        format: 'esm',
+        transpile: false,
+    },
 }
 
 const genConfig = (opts) => {
@@ -36,12 +49,12 @@ const genConfig = (opts) => {
 
     const config = {
         input: 'src/index.js',
-        plugins: plugins.slice(),
+        plugins: [eslint({ include: '**/*.js' })],
         output: {
             file: opts.file,
-            format: opts.format,
-            banner,
             name: 'bodyScrollLock',
+            banner,
+            format: opts.format,
         },
     }
 
@@ -50,9 +63,17 @@ const genConfig = (opts) => {
             'process.env.NODE_ENV': JSON.stringify(opts.env),
         }))
     }
+    if (opts.transpile !== false) {
+        config.plugins.push(babel({ extensions }))
+    }
 
     if (isProd) {
-        config.plugins.push(uglify())
+        config.plugins.push(terser({
+            output: {
+                /* eslint-disable */
+                ascii_only: true,
+            },
+        }))
     }
 
     return config

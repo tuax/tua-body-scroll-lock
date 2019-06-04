@@ -34,8 +34,11 @@ $ yarn add tua-body-scroll-lock
 
 ### CDN
 * UMD(`tua-bsl.umd.js`)
-  * [unpkg](https://unpkg.com/tua-body-scroll-lock)
-  * [jsdelivr](https://cdn.jsdelivr.net/npm/tua-body-scroll-lock)
+  * unpkg: https://unpkg.com/tua-body-scroll-lock
+  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock
+
+<details>
+<summary>example code</summary>
 
 ```html
 <!-- unpkg -->
@@ -45,9 +48,14 @@ $ yarn add tua-body-scroll-lock
 <script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock"></script>
 ```
 
+</details>
+
 * Minified UMD(`tua-bsl.umd.min.js`)
-  * [unpkg](https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.min.js)
-  * [jsdelivr](https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js)
+  * unpkg: https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.min.js
+  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js
+
+<details>
+<summary>example code</summary>
 
 ```html
 <!-- unpkg -->
@@ -56,6 +64,62 @@ $ yarn add tua-body-scroll-lock
 <!-- jsdelivr -->
 <script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js"></script>
 ```
+
+</details>
+
+* ESM in browser(`tua-bsl.esm.browser.js`)
+  * unpkg: https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js
+  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js
+
+<details>
+<summary>example code</summary>
+
+```html
+<!-- unpkg -->
+<script type="module">
+    import { lock, unlock } from 'https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js'
+
+    lock()
+    unlock()
+</script>
+
+<!-- jsdelivr -->
+<script type="module">
+    import { lock, unlock } from 'https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js'
+
+    lock()
+    unlock()
+</script>
+```
+
+</details>
+
+* Minified ESM in browser(`tua-bsl.esm.browser.min.js`)
+  * unpkg: https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js
+  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js
+
+<details>
+<summary>example code</summary>
+
+```html
+<!-- unpkg -->
+<script type="module">
+    import { lock, unlock } from 'https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js'
+
+    lock()
+    unlock()
+</script>
+
+<!-- jsdelivr -->
+<script type="module">
+    import { lock, unlock } from 'https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js'
+
+    lock()
+    unlock()
+</script>
+```
+
+</details>
 
 ## 使用
 ### 常规操作
