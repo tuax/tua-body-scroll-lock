@@ -1,6 +1,6 @@
 {
     "name": "tua-body-scroll-lock",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "🔐Body scroll locking that just works with everything",
     "main": "dist/tua-bsl.umd.js",
     "module": "dist/tua-bsl.esm.js",
@@ -17,6 +17,10 @@
         "pub:n": "npm run build && npm publish --tag next",
         "deploy": "npm run build && gh-pages -d dist"
     },
+    "files": [
+        "src/",
+        "dist/"
+    ],
     "eslintIgnore": [
         "dist/"
     ],
