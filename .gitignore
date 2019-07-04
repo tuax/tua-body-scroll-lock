@@ -6,3 +6,4 @@ node_modules
 docs/.vuepress/dist/
 
 yarn.lock
+package-lock.json

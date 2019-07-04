@@ -60,6 +60,7 @@ const setOverflowHiddenMobile = () => {
 
     $body.style.top = `-${scrollTop}px`
     $body.style.width = '100%'
+    $body.style.height = 'auto'
     $body.style.position = 'fixed'
     $body.style.overflow = 'hidden'
 
