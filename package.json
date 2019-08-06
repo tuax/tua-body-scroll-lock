@@ -1,6 +1,6 @@
 {
     "name": "tua-body-scroll-lock",
-    "version": "0.2.2",
+    "version": "0.3.0",
     "description": "🔐Body scroll locking that just works with everything",
     "main": "dist/tua-bsl.umd.js",
     "module": "dist/tua-bsl.esm.js",
@@ -8,6 +8,8 @@
     "jsdelivr": "dist/tua-bsl.umd.js",
     "typings": "src/index.d.ts",
     "scripts": {
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "npm run type-check -- --watch",
         "lint": "eslint --fix ./",
         "start": "rollup -c -w",
         "build": "npm run lint && rollup -c && cp index.html dist/index.html",
@@ -42,6 +44,8 @@
         "@babel/preset-env": "^7.3.1",
         "@commitlint/cli": "^7.5.2",
         "@commitlint/config-conventional": "^7.5.0",
+        "@typescript-eslint/eslint-plugin": "^1.13.0",
+        "@typescript-eslint/parser": "^1.13.0",
         "all-contributors-cli": "^6.3.0",
         "babel-eslint": "^10.0.1",
         "eslint-config-standard": "^12.0.0",
@@ -57,7 +61,9 @@
         "rollup-plugin-eslint": "^5.0.0",
         "rollup-plugin-json": "^3.1.0",
         "rollup-plugin-replace": "^2.1.0",
-        "rollup-plugin-terser": "^5.0.0"
+        "rollup-plugin-terser": "^5.0.0",
+        "rollup-plugin-typescript2": "^0.22.1",
+        "typescript": "^3.5.3"
     },
     "repository": {
         "type": "git",

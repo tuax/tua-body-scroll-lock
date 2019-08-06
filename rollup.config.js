@@ -3,6 +3,7 @@ import replace from 'rollup-plugin-replace'
 import { eslint } from 'rollup-plugin-eslint'
 import { terser } from 'rollup-plugin-terser'
 import { DEFAULT_EXTENSIONS } from '@babel/core'
+import typescript from 'rollup-plugin-typescript2'
 
 const pkg = require('./package.json')
 
@@ -48,8 +49,14 @@ const genConfig = (opts) => {
     const isProd = /min\.js$/.test(opts.file)
 
     const config = {
-        input: 'src/index.js',
-        plugins: [eslint({ include: '**/*.js' })],
+        input: 'src/index.ts',
+        plugins: [
+            typescript({
+                cacheRoot: `${require('os').tmpdir()}/.rpt2_cache`,
+                useTsconfigDeclarationDir: true,
+            }),
+            eslint({ include: '**/*.js' }),
+        ],
         output: {
             file: opts.file,
             name: 'bodyScrollLock',
