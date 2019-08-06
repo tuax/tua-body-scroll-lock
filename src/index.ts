@@ -1,42 +1,20 @@
+import {
+    $,
+    isServer,
+    detectOS,
+    getEventListenerOptions,
+} from './utils'
+
 type OverflowHiddenPcStyleType = 'overflow' | 'boxSizing' | 'paddingRight'
 type OverflowHiddenMobileStyleType = 'top' | 'width' | 'height' | 'overflow' | 'position'
-
-interface DetectOSResult { ios: boolean, android: boolean }
 
 let lockedNum = 0
 let initialClientY = 0
 let unLockCallback: any = null
 let documentListenerAdded = false
 
-const isServer = typeof window === 'undefined'
 const lockedElements: HTMLElement[] = []
-
-const $ = (selector: string) => <HTMLElement>document.querySelector(selector)
-
-let eventListenerOptions: AddEventListenerOptions
-if (!isServer) {
-    const noop = () => {}
-    const testEvent = '__TUA_BSL_TEST_PASSIVE__'
-    const passiveTestOptions = <AddEventListenerOptions>{
-        get passive () {
-            eventListenerOptions = { passive: false }
-            return false
-        },
-    }
-
-    window.addEventListener(testEvent, noop, passiveTestOptions)
-    window.removeEventListener(testEvent, noop, passiveTestOptions)
-}
-
-const detectOS = (): DetectOSResult => {
-    const ua = navigator.userAgent
-    const ipad = /(iPad).*OS\s([\d_]+)/.test(ua)
-    const iphone = !ipad && /(iPhone\sOS)\s([\d_]+)/.test(ua)
-    const android = /(Android);?[\s/]+([\d.]+)?/.test(ua)
-    const ios = iphone || ipad
-
-    return { ios, android }
-}
+const eventListenerOptions = getEventListenerOptions({ passive: false })
 
 const setOverflowHiddenPc = () => {
     const $body = $('body')
@@ -117,7 +95,7 @@ const checkTargetElement = (targetElement?: HTMLElement) => {
 }
 
 const lock = (targetElement?: HTMLElement) => {
-    if (isServer) return
+    if (isServer()) return
 
     checkTargetElement(targetElement)
 
@@ -151,7 +129,7 @@ const lock = (targetElement?: HTMLElement) => {
 }
 
 const unlock = (targetElement?: HTMLElement) => {
-    if (isServer) return
+    if (isServer()) return
 
     checkTargetElement(targetElement)
     lockedNum -= 1
