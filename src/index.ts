@@ -1,3 +1,8 @@
+type OverflowHiddenPcStyleType = 'overflow' | 'boxSizing' | 'paddingRight'
+type OverflowHiddenMobileStyleType = 'top' | 'width' | 'height' | 'overflow' | 'position'
+
+interface DetectOSResult { ios: boolean, android: boolean }
+
 let lockedNum = 0
 let initialClientY = 0
 let unLockCallback: any = null
@@ -6,22 +11,19 @@ let documentListenerAdded = false
 const isServer = typeof window === 'undefined'
 const lockedElements: HTMLElement[] = []
 
-interface DetectOSResult {
-    ios: boolean
-    android: boolean
-}
-
 const $ = (selector: string) => <HTMLElement>document.querySelector(selector)
 
-let eventListenerOptions: object
+let eventListenerOptions: AddEventListenerOptions
 if (!isServer) {
-    const testEvent = '__TUA_BSL_TEST_PASSIVE__'
-    const passiveTestOptions = Object.defineProperty({}, 'passive', {
-        get () {
-            eventListenerOptions = { passive: false }
-        },
-    })
     const noop = () => {}
+    const testEvent = '__TUA_BSL_TEST_PASSIVE__'
+    const passiveTestOptions = <AddEventListenerOptions>{
+        get passive () {
+            eventListenerOptions = { passive: false }
+            return false
+        },
+    }
+
     window.addEventListener(testEvent, noop, passiveTestOptions)
     window.removeEventListener(testEvent, noop, passiveTestOptions)
 }
@@ -31,7 +33,6 @@ const detectOS = (): DetectOSResult => {
     const ipad = /(iPad).*OS\s([\d_]+)/.test(ua)
     const iphone = !ipad && /(iPhone\sOS)\s([\d_]+)/.test(ua)
     const android = /(Android);?[\s/]+([\d.]+)?/.test(ua)
-
     const ios = iphone || ipad
 
     return { ios, android }
@@ -47,8 +48,7 @@ const setOverflowHiddenPc = () => {
     $body.style.paddingRight = `${scrollBarWidth}px`
 
     return () => {
-        ;['overflow', 'boxSizing', 'paddingRight'].forEach((x) => {
-            // @ts-ignore
+        ;['overflow', 'boxSizing', 'paddingRight'].forEach((x: OverflowHiddenPcStyleType) => {
             $body.style[x] = bodyStyle[x] || ''
         })
     }
@@ -74,8 +74,7 @@ const setOverflowHiddenMobile = () => {
         $html.style.height = htmlStyle.height || ''
         $html.style.overflow = htmlStyle.overflow || ''
 
-        ;['top', 'width', 'height', 'overflow', 'position'].forEach((x) => {
-            // @ts-ignore
+        ;['top', 'width', 'height', 'overflow', 'position'].forEach((x: OverflowHiddenMobileStyleType) => {
             $body.style[x] = bodyStyle[x] || ''
         })
 
@@ -143,7 +142,9 @@ const lock = (targetElement?: HTMLElement) => {
             documentListenerAdded = true
         }
     } else if (lockedNum <= 0) {
-        unLockCallback = detectOS().android ? setOverflowHiddenMobile() : setOverflowHiddenPc()
+        unLockCallback = detectOS().android
+            ? setOverflowHiddenMobile()
+            : setOverflowHiddenPc()
     }
 
     lockedNum += 1
@@ -156,17 +157,23 @@ const unlock = (targetElement?: HTMLElement) => {
     lockedNum -= 1
 
     if (lockedNum > 0) return
-    if (!detectOS().ios) {
-        lockedNum <= 0 && typeof unLockCallback === 'function' && unLockCallback()
+    if (
+        !detectOS().ios &&
+        typeof unLockCallback === 'function'
+    ) {
+        unLockCallback()
         return
     }
 
     // iOS
     if (targetElement) {
-        const index: number = lockedElements.indexOf(targetElement)
-        targetElement.ontouchmove = null
-        targetElement.ontouchstart = null
-        lockedElements.splice(index, 1)
+        const index = lockedElements.indexOf(targetElement)
+
+        if (index !== -1) {
+            targetElement.ontouchmove = null
+            targetElement.ontouchstart = null
+            lockedElements.splice(index, 1)
+        }
     }
 
     if (documentListenerAdded) {

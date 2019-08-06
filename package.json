@@ -6,7 +6,7 @@
     "module": "dist/tua-bsl.esm.js",
     "unpkg": "dist/tua-bsl.umd.js",
     "jsdelivr": "dist/tua-bsl.umd.js",
-    "typings": "src/index.d.ts",
+    "typings": "dist/index.d.ts",
     "scripts": {
         "type-check": "tsc --noEmit",
         "type-check:watch": "npm run type-check -- --watch",
