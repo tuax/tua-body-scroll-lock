@@ -41,12 +41,14 @@ const setOverflowHiddenPc = () => {
     $body.style.paddingRight = scrollBarWidth + 'px'
     $body.style.boxSizing = 'border-box'
     $body.style.position = 'fixed'
+    $body.style.width = '100%'
 
     return () => {
         $body.style.overflow = bodyStyle.overflow || ''
         $body.style.paddingRight = bodyStyle.paddingRight || ''
         $body.style.boxSizing = bodyStyle.boxSizing || ''
         $body.style.position = bodyStyle.position || ''
+        $body.style.width = bodyStyle.width || ''
     }
 }
 
