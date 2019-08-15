@@ -3,8 +3,8 @@ export const isServer = () => typeof window === 'undefined'
 export const $ = (selector: string) => <HTMLElement>document.querySelector(selector)
 
 export interface DetectOSResult { ios: boolean, android: boolean }
-export const detectOS = (): DetectOSResult => {
-    const ua = navigator.userAgent
+export const detectOS = (ua?: string): DetectOSResult => {
+    ua = ua || navigator.userAgent
     const ipad = /(iPad).*OS\s([\d_]+)/.test(ua)
     const iphone = !ipad && /(iPhone\sOS)\s([\d_]+)/.test(ua)
     const android = /(Android);?[\s/]+([\d.]+)?/.test(ua)
@@ -14,8 +14,12 @@ export const detectOS = (): DetectOSResult => {
 }
 
 export function getEventListenerOptions (options: AddEventListenerOptions): AddEventListenerOptions | boolean {
+    /* istanbul ignore if */
     if (isServer()) return false
 
+    if (!options) {
+        throw new Error('options must be provided')
+    }
     let isSupportOptions = false
     const listenerOptions = <AddEventListenerOptions>{
         get passive () {
@@ -24,6 +28,7 @@ export function getEventListenerOptions (options: AddEventListenerOptions): AddE
         },
     }
 
+    /* istanbul ignore next */
     const noop = () => {}
     const testEvent = '__TUA_BSL_TEST_PASSIVE__'
     window.addEventListener(testEvent, noop, listenerOptions)
@@ -31,6 +36,7 @@ export function getEventListenerOptions (options: AddEventListenerOptions): AddE
 
     const { capture } = options
 
+    /* istanbul ignore next */
     return isSupportOptions
         ? options
         : typeof capture !== 'undefined'
