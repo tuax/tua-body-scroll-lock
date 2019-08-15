@@ -1,36 +1,20 @@
+import {
+    $,
+    isServer,
+    detectOS,
+    getEventListenerOptions,
+} from './utils'
+
+type OverflowHiddenPcStyleType = 'overflow' | 'boxSizing' | 'paddingRight'
+type OverflowHiddenMobileStyleType = 'top' | 'width' | 'height' | 'overflow' | 'position'
+
 let lockedNum = 0
 let initialClientY = 0
-let unLockCallback = null
+let unLockCallback: any = null
 let documentListenerAdded = false
 
-const isServer = typeof window === 'undefined'
-const lockedElements = []
-
-const $ = !isServer && document.querySelector.bind(document)
-
-let eventListenerOptions
-if (!isServer) {
-    const testEvent = '__TUA_BSL_TEST_PASSIVE__'
-    const passiveTestOptions = {
-        get passive () {
-            eventListenerOptions = { passive: false }
-        },
-    }
-    window.addEventListener(testEvent, null, passiveTestOptions)
-    window.removeEventListener(testEvent, null, passiveTestOptions)
-}
-
-const detectOS = () => {
-    const ua = navigator.userAgent
-    const ipad = /(iPad).*OS\s([\d_]+)/.test(ua)
-    const iphone = !ipad && /(iPhone\sOS)\s([\d_]+)/.test(ua)
-    const android = /(Android);?[\s/]+([\d.]+)?/.test(ua)
-
-    const os = android ? 'android' : 'ios'
-    const ios = iphone || ipad
-
-    return { os, ios, ipad, iphone, android }
-}
+const lockedElements: HTMLElement[] = []
+const eventListenerOptions = getEventListenerOptions({ passive: false })
 
 const setOverflowHiddenPc = () => {
     const $body = $('body')
@@ -42,7 +26,7 @@ const setOverflowHiddenPc = () => {
     $body.style.paddingRight = `${scrollBarWidth}px`
 
     return () => {
-        ;['overflow', 'boxSizing', 'paddingRight'].forEach((x) => {
+        ;['overflow', 'boxSizing', 'paddingRight'].forEach((x: OverflowHiddenPcStyleType) => {
             $body.style[x] = bodyStyle[x] || ''
         })
     }
@@ -68,7 +52,7 @@ const setOverflowHiddenMobile = () => {
         $html.style.height = htmlStyle.height || ''
         $html.style.overflow = htmlStyle.overflow || ''
 
-        ;['top', 'width', 'height', 'overflow', 'position'].forEach((x) => {
+        ;['top', 'width', 'height', 'overflow', 'position'].forEach((x: OverflowHiddenMobileStyleType) => {
             $body.style[x] = bodyStyle[x] || ''
         })
 
@@ -76,13 +60,13 @@ const setOverflowHiddenMobile = () => {
     }
 }
 
-const preventDefault = (event) => {
+const preventDefault = (event: TouchEvent) => {
     if (!event.cancelable) return
 
     event.preventDefault()
 }
 
-const handleScroll = (event, targetElement) => {
+const handleScroll = (event: TouchEvent, targetElement: HTMLElement) => {
     const clientY = event.targetTouches[0].clientY - initialClientY
 
     if (targetElement) {
@@ -99,7 +83,7 @@ const handleScroll = (event, targetElement) => {
     return true
 }
 
-const checkTargetElement = (targetElement) => {
+const checkTargetElement = (targetElement?: HTMLElement) => {
     if (targetElement) return
     if (targetElement === null) return
     if (process.env.NODE_ENV === 'production') return
@@ -110,8 +94,8 @@ const checkTargetElement = (targetElement) => {
     )
 }
 
-const lock = (targetElement) => {
-    if (isServer) return
+const lock = (targetElement?: HTMLElement) => {
+    if (isServer()) return
 
     checkTargetElement(targetElement)
 
@@ -136,30 +120,38 @@ const lock = (targetElement) => {
             documentListenerAdded = true
         }
     } else if (lockedNum <= 0) {
-        unLockCallback = detectOS().android ? setOverflowHiddenMobile() : setOverflowHiddenPc()
+        unLockCallback = detectOS().android
+            ? setOverflowHiddenMobile()
+            : setOverflowHiddenPc()
     }
 
     lockedNum += 1
 }
 
-const unlock = (targetElement) => {
-    if (isServer) return
+const unlock = (targetElement?: HTMLElement) => {
+    if (isServer()) return
 
     checkTargetElement(targetElement)
     lockedNum -= 1
 
     if (lockedNum > 0) return
-    if (!detectOS().ios) {
-        lockedNum <= 0 && typeof unLockCallback === 'function' && unLockCallback()
+    if (
+        !detectOS().ios &&
+        typeof unLockCallback === 'function'
+    ) {
+        unLockCallback()
         return
     }
 
     // iOS
-    const index = lockedElements.indexOf(targetElement)
-    if (index !== -1) {
-        targetElement.ontouchmove = null
-        targetElement.ontouchstart = null
-        lockedElements.splice(index, 1)
+    if (targetElement) {
+        const index = lockedElements.indexOf(targetElement)
+
+        if (index !== -1) {
+            targetElement.ontouchmove = null
+            targetElement.ontouchstart = null
+            lockedElements.splice(index, 1)
+        }
     }
 
     if (documentListenerAdded) {
