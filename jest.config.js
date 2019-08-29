@@ -2,7 +2,7 @@ module.exports = {
     verbose: false,
     testURL: 'http://localhost',
     collectCoverage: true,
-    collectCoverageFrom: ['src/**'],
+    collectCoverageFrom: ['src/utils.ts'],
     transform: {
         '^.+\\.[j|t]sx?$': 'babel-jest',
     },
