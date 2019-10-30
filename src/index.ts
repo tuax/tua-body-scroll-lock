@@ -10,6 +10,7 @@ type OverflowHiddenMobileStyleType = 'top' | 'width' | 'height' | 'overflow' | '
 
 let lockedNum = 0
 let initialClientY = 0
+let initialClientX = 0
 let unLockCallback: any = null
 let documentListenerAdded = false
 
@@ -67,14 +68,28 @@ const preventDefault = (event: TouchEvent) => {
 }
 
 const handleScroll = (event: TouchEvent, targetElement: HTMLElement) => {
-    const clientY = event.targetTouches[0].clientY - initialClientY
-
     if (targetElement) {
-        const { scrollTop, scrollHeight, clientHeight } = targetElement
+        const {
+            scrollTop,
+            scrollLeft,
+            scrollWidth,
+            scrollHeight,
+            clientWidth,
+            clientHeight,
+        } = targetElement
+        const clientX = event.targetTouches[0].clientX - initialClientX
+        const clientY = event.targetTouches[0].clientY - initialClientY
+        const isVertical = Math.abs(clientY) > Math.abs(clientX)
+
         const isOnTop = clientY > 0 && scrollTop === 0
+        const isOnLeft = clientX > 0 && scrollLeft === 0
+        const isOnRight = clientX < 0 && scrollLeft + clientWidth + 1 >= scrollWidth
         const isOnBottom = clientY < 0 && scrollTop + clientHeight + 1 >= scrollHeight
 
-        if (isOnTop || isOnBottom) {
+        if (
+            (isVertical && (isOnTop || isOnBottom)) ||
+            (!isVertical && (isOnLeft || isOnRight))
+        ) {
             return preventDefault(event)
         }
     }
@@ -104,6 +119,7 @@ const lock = (targetElement?: HTMLElement) => {
         if (targetElement && lockedElements.indexOf(targetElement) === -1) {
             targetElement.ontouchstart = (event) => {
                 initialClientY = event.targetTouches[0].clientY
+                initialClientX = event.targetTouches[0].clientX
             }
 
             targetElement.ontouchmove = (event) => {
