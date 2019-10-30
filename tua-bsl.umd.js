@@ -1,5 +1,5 @@
 /**
- * tua-body-scroll-lock v0.3.0-0
+ * tua-body-scroll-lock v1.0.0
  * (c) 2019 Evinma, BuptStEve
  * @license MIT
  */
@@ -10,17 +10,21 @@
     (global = global || self, factory(global.bodyScrollLock = {}));
 }(this, function (exports) { 'use strict';
 
-    const isServer = () => typeof window === 'undefined';
-    const $ = selector => document.querySelector(selector);
-    const detectOS = ua => {
+    var isServer = function isServer() {
+      return typeof window === 'undefined';
+    };
+    var $ = function $(selector) {
+      return document.querySelector(selector);
+    };
+    var detectOS = function detectOS(ua) {
       ua = ua || navigator.userAgent;
-      const ipad = /(iPad).*OS\s([\d_]+)/.test(ua);
-      const iphone = !ipad && /(iPhone\sOS)\s([\d_]+)/.test(ua);
-      const android = /(Android);?[\s/]+([\d.]+)?/.test(ua);
-      const ios = iphone || ipad;
+      var ipad = /(iPad).*OS\s([\d_]+)/.test(ua);
+      var iphone = !ipad && /(iPhone\sOS)\s([\d_]+)/.test(ua);
+      var android = /(Android);?[\s/]+([\d.]+)?/.test(ua);
+      var ios = iphone || ipad;
       return {
-        ios,
-        android
+        ios: ios,
+        android: android
       };
     };
     function getEventListenerOptions(options) {
@@ -31,8 +35,8 @@
         throw new Error('options must be provided');
       }
 
-      let isSupportOptions = false;
-      const listenerOptions = {
+      var isSupportOptions = false;
+      var listenerOptions = {
         get passive() {
           isSupportOptions = true;
           return;
@@ -41,83 +45,86 @@
       };
       /* istanbul ignore next */
 
-      const noop = () => {};
+      var noop = function noop() {};
 
-      const testEvent = '__TUA_BSL_TEST_PASSIVE__';
+      var testEvent = '__TUA_BSL_TEST_PASSIVE__';
       window.addEventListener(testEvent, noop, listenerOptions);
       window.removeEventListener(testEvent, noop, listenerOptions);
-      const {
-        capture
-      } = options;
+      var capture = options.capture;
       /* istanbul ignore next */
 
       return isSupportOptions ? options : typeof capture !== 'undefined' ? capture : false;
     }
 
-    let lockedNum = 0;
-    let initialClientY = 0;
-    let unLockCallback = null;
-    let documentListenerAdded = false;
-    const lockedElements = [];
-    const eventListenerOptions = getEventListenerOptions({
+    var lockedNum = 0;
+    var initialClientY = 0;
+    var initialClientX = 0;
+    var unLockCallback = null;
+    var documentListenerAdded = false;
+    var lockedElements = [];
+    var eventListenerOptions = getEventListenerOptions({
       passive: false
     });
 
-    const setOverflowHiddenPc = () => {
-      const $body = $('body');
-      const bodyStyle = Object.assign({}, $body.style);
-      const scrollBarWidth = window.innerWidth - document.body.clientWidth;
+    var setOverflowHiddenPc = function setOverflowHiddenPc() {
+      var $body = $('body');
+      var bodyStyle = Object.assign({}, $body.style);
+      var scrollBarWidth = window.innerWidth - document.body.clientWidth;
       $body.style.overflow = 'hidden';
       $body.style.boxSizing = 'border-box';
-      $body.style.paddingRight = `${scrollBarWidth}px`;
-      return () => {
-        ['overflow', 'boxSizing', 'paddingRight'].forEach(x => {
+      $body.style.paddingRight = "".concat(scrollBarWidth, "px");
+      return function () {
+        ['overflow', 'boxSizing', 'paddingRight'].forEach(function (x) {
           $body.style[x] = bodyStyle[x] || '';
         });
       };
     };
 
-    const setOverflowHiddenMobile = () => {
-      const $html = $('html');
-      const $body = $('body');
-      const scrollTop = $html.scrollTop || $body.scrollTop;
-      const htmlStyle = Object.assign({}, $html.style);
-      const bodyStyle = Object.assign({}, $body.style);
+    var setOverflowHiddenMobile = function setOverflowHiddenMobile() {
+      var $html = $('html');
+      var $body = $('body');
+      var scrollTop = $html.scrollTop || $body.scrollTop;
+      var htmlStyle = Object.assign({}, $html.style);
+      var bodyStyle = Object.assign({}, $body.style);
       $html.style.height = '100%';
       $html.style.overflow = 'hidden';
-      $body.style.top = `-${scrollTop}px`;
+      $body.style.top = "-".concat(scrollTop, "px");
       $body.style.width = '100%';
       $body.style.height = 'auto';
       $body.style.position = 'fixed';
       $body.style.overflow = 'hidden';
-      return () => {
+      return function () {
         $html.style.height = htmlStyle.height || '';
         $html.style.overflow = htmlStyle.overflow || '';
-        ['top', 'width', 'height', 'overflow', 'position'].forEach(x => {
+        ['top', 'width', 'height', 'overflow', 'position'].forEach(function (x) {
           $body.style[x] = bodyStyle[x] || '';
         });
         window.scrollTo(0, scrollTop);
       };
     };
 
-    const preventDefault = event => {
+    var preventDefault = function preventDefault(event) {
       if (!event.cancelable) return;
       event.preventDefault();
     };
 
-    const handleScroll = (event, targetElement) => {
-      const clientY = event.targetTouches[0].clientY - initialClientY;
-
+    var handleScroll = function handleScroll(event, targetElement) {
       if (targetElement) {
-        const {
-          scrollTop,
-          scrollHeight,
-          clientHeight
-        } = targetElement;
-        const isOnTop = clientY > 0 && scrollTop === 0;
-        const isOnBottom = clientY < 0 && scrollTop + clientHeight + 1 >= scrollHeight;
+        var scrollTop = targetElement.scrollTop,
+            scrollLeft = targetElement.scrollLeft,
+            scrollWidth = targetElement.scrollWidth,
+            scrollHeight = targetElement.scrollHeight,
+            clientWidth = targetElement.clientWidth,
+            clientHeight = targetElement.clientHeight;
+        var clientX = event.targetTouches[0].clientX - initialClientX;
+        var clientY = event.targetTouches[0].clientY - initialClientY;
+        var isVertical = Math.abs(clientY) > Math.abs(clientX);
+        var isOnTop = clientY > 0 && scrollTop === 0;
+        var isOnLeft = clientX > 0 && scrollLeft === 0;
+        var isOnRight = clientX < 0 && scrollLeft + clientWidth + 1 >= scrollWidth;
+        var isOnBottom = clientY < 0 && scrollTop + clientHeight + 1 >= scrollHeight;
 
-        if (isOnTop || isOnBottom) {
+        if (isVertical && (isOnTop || isOnBottom) || !isVertical && (isOnLeft || isOnRight)) {
           return preventDefault(event);
         }
       }
@@ -126,24 +133,25 @@
       return true;
     };
 
-    const checkTargetElement = targetElement => {
+    var checkTargetElement = function checkTargetElement(targetElement) {
       if (targetElement) return;
       if (targetElement === null) return;
-      console.warn(`If scrolling is also required in the floating layer, ` + `the target element must be provided.`);
+      console.warn("If scrolling is also required in the floating layer, " + "the target element must be provided.");
     };
 
-    const lock = targetElement => {
+    var lock = function lock(targetElement) {
       if (isServer()) return;
       checkTargetElement(targetElement);
 
       if (detectOS().ios) {
         // iOS
         if (targetElement && lockedElements.indexOf(targetElement) === -1) {
-          targetElement.ontouchstart = event => {
+          targetElement.ontouchstart = function (event) {
             initialClientY = event.targetTouches[0].clientY;
+            initialClientX = event.targetTouches[0].clientX;
           };
 
-          targetElement.ontouchmove = event => {
+          targetElement.ontouchmove = function (event) {
             if (event.targetTouches.length !== 1) return;
             handleScroll(event, targetElement);
           };
@@ -162,7 +170,7 @@
       lockedNum += 1;
     };
 
-    const unlock = targetElement => {
+    var unlock = function unlock(targetElement) {
       if (isServer()) return;
       checkTargetElement(targetElement);
       lockedNum -= 1;
@@ -175,7 +183,7 @@
 
 
       if (targetElement) {
-        const index = lockedElements.indexOf(targetElement);
+        var index = lockedElements.indexOf(targetElement);
 
         if (index !== -1) {
           targetElement.ontouchmove = null;
