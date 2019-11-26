@@ -117,6 +117,8 @@ const lock = (targetElement?: HTMLElement) => {
     if (detectOS().ios) {
         // iOS
         if (targetElement && lockedElements.indexOf(targetElement) === -1) {
+            unLockCallback = setOverflowHiddenMobile();
+            
             targetElement.ontouchstart = (event) => {
                 initialClientY = event.targetTouches[0].clientY
                 initialClientX = event.targetTouches[0].clientX
@@ -161,6 +163,9 @@ const unlock = (targetElement?: HTMLElement) => {
 
     // iOS
     if (targetElement) {
+        if (typeof unLockCallback === 'function')
+            unLockCallback()
+        
         const index = lockedElements.indexOf(targetElement)
 
         if (index !== -1) {
