@@ -7,6 +7,7 @@ import {
 
 type OverflowHiddenPcStyleType = 'overflow' | 'boxSizing' | 'paddingRight'
 type OverflowHiddenMobileStyleType = 'top' | 'width' | 'height' | 'overflow' | 'position'
+type Nullable<T> = T | null;
 
 let lockedNum = 0
 let initialClientY = 0
@@ -98,7 +99,7 @@ const handleScroll = (event: TouchEvent, targetElement: HTMLElement) => {
     return true
 }
 
-const checkTargetElement = (targetElement?: HTMLElement) => {
+const checkTargetElement = (targetElement?: Nullable<HTMLElement>) => {
     if (targetElement) return
     if (targetElement === null) return
     if (process.env.NODE_ENV === 'production') return
@@ -109,7 +110,7 @@ const checkTargetElement = (targetElement?: HTMLElement) => {
     )
 }
 
-const lock = (targetElement?: HTMLElement) => {
+const lock = (targetElement?: Nullable<HTMLElement>) => {
     if (isServer()) return
 
     checkTargetElement(targetElement)
@@ -144,7 +145,7 @@ const lock = (targetElement?: HTMLElement) => {
     lockedNum += 1
 }
 
-const unlock = (targetElement?: HTMLElement) => {
+const unlock = (targetElement?: Nullable<HTMLElement>) => {
     if (isServer()) return
 
     checkTargetElement(targetElement)
