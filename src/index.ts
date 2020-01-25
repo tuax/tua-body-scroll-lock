@@ -7,7 +7,7 @@ import {
 
 type OverflowHiddenPcStyleType = 'overflow' | 'boxSizing' | 'paddingRight'
 type OverflowHiddenMobileStyleType = 'top' | 'width' | 'height' | 'overflow' | 'position'
-type Nullable<T> = T | null;
+type Nullable<T> = T | null
 
 let lockedNum = 0
 let initialClientY = 0
