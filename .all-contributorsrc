@@ -63,7 +63,17 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "magic-akari",
+      "name": "阿卡琳",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/7829098?v=4",
+      "profile": "https://github.com/magic-akari",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
