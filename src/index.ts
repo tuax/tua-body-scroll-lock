@@ -7,7 +7,7 @@ import {
 
 type OverflowHiddenPcStyleType = 'overflow' | 'boxSizing' | 'paddingRight'
 type OverflowHiddenMobileStyleType = 'top' | 'width' | 'height' | 'overflow' | 'position'
-type Nullable<T> = T | null
+type Nullable<T> = T | Array<T> | null
 
 let lockedNum = 0
 let initialClientY = 0
@@ -117,19 +117,25 @@ const lock = (targetElement?: Nullable<HTMLElement>) => {
 
     if (detectOS().ios) {
         // iOS
-        if (targetElement && lockedElements.indexOf(targetElement) === -1) {
-            targetElement.ontouchstart = (event) => {
-                initialClientY = event.targetTouches[0].clientY
-                initialClientX = event.targetTouches[0].clientX
-            }
+        if (targetElement) {
+            const elementArray = Array.isArray(targetElement) ? targetElement : [targetElement]
 
-            targetElement.ontouchmove = (event) => {
-                if (event.targetTouches.length !== 1) return
+            elementArray.forEach((element: HTMLElement) => {
+                if (element && lockedElements.indexOf(element) === -1) {
+                    element.ontouchstart = (event) => {
+                        initialClientY = event.targetTouches[0].clientY
+                        initialClientX = event.targetTouches[0].clientX
+                    }
 
-                handleScroll(event, targetElement)
-            }
+                    element.ontouchmove = (event) => {
+                        if (event.targetTouches.length !== 1) return
 
-            lockedElements.push(targetElement)
+                        handleScroll(event, element)
+                    }
+
+                    lockedElements.push(element)
+                }
+            })
         }
 
         if (!documentListenerAdded) {
@@ -162,13 +168,18 @@ const unlock = (targetElement?: Nullable<HTMLElement>) => {
 
     // iOS
     if (targetElement) {
-        const index = lockedElements.indexOf(targetElement)
+        const elementArray = Array.isArray(targetElement) ? targetElement : [targetElement]
 
-        if (index !== -1) {
-            targetElement.ontouchmove = null
-            targetElement.ontouchstart = null
-            lockedElements.splice(index, 1)
-        }
+        elementArray.forEach((element: HTMLElement) => {
+            const index = lockedElements.indexOf(element)
+
+            if (index !== -1) {
+                element.ontouchmove = null
+                element.ontouchstart = null
+                lockedElements.splice(index, 1)
+            }
+        })
+
     }
 
     if (documentListenerAdded) {
