@@ -136,8 +136,13 @@ unlock()
 
 ```js
 import { lock, unlock } from 'tua-body-scroll-lock'
+const elementOne = document.querySelector('#elementOne')
+const elementTwo = document.querySelector('#elementTwo')
 
-const targetElement = document.querySelector('#someElementId')
+// 只有一个目标元素
+const targetElement = elementOne
+// 多个目标元素
+const targetElement = [elementOne, elementTwo]
 
 lock(targetElement)
 unlock(targetElement)
