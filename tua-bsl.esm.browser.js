@@ -1,6 +1,6 @@
 /**
- * tua-body-scroll-lock v1.0.0
- * (c) 2019 Evinma, BuptStEve
+ * tua-body-scroll-lock v1.1.0-0
+ * (c) 2020 Evinma, BuptStEve
  * @license MIT
  */
 
@@ -107,31 +107,36 @@ const handleScroll = (event, targetElement) => {
     event.stopPropagation();
     return true;
 };
-const checkTargetElement = (targetElement) => {
-    if (targetElement)
+const checkTargetElement = (targetElements) => {
+    if (targetElements)
         return;
-    if (targetElement === null)
+    if (targetElements === null)
         return;
     console.warn(`If scrolling is also required in the floating layer, ` +
-        `the target element must be provided.`);
+        `the targetElements must be provided.`);
 };
-const lock = (targetElement) => {
+const lock = (targetElements) => {
     if (isServer())
         return;
-    checkTargetElement(targetElement);
+    checkTargetElement(targetElements);
     if (detectOS().ios) {
         // iOS
-        if (targetElement && lockedElements.indexOf(targetElement) === -1) {
-            targetElement.ontouchstart = (event) => {
-                initialClientY = event.targetTouches[0].clientY;
-                initialClientX = event.targetTouches[0].clientX;
-            };
-            targetElement.ontouchmove = (event) => {
-                if (event.targetTouches.length !== 1)
-                    return;
-                handleScroll(event, targetElement);
-            };
-            lockedElements.push(targetElement);
+        if (targetElements) {
+            const elementArray = Array.isArray(targetElements) ? targetElements : [targetElements];
+            elementArray.forEach((element) => {
+                if (element && lockedElements.indexOf(element) === -1) {
+                    element.ontouchstart = (event) => {
+                        initialClientY = event.targetTouches[0].clientY;
+                        initialClientX = event.targetTouches[0].clientX;
+                    };
+                    element.ontouchmove = (event) => {
+                        if (event.targetTouches.length !== 1)
+                            return;
+                        handleScroll(event, element);
+                    };
+                    lockedElements.push(element);
+                }
+            });
         }
         if (!documentListenerAdded) {
             document.addEventListener('touchmove', preventDefault, eventListenerOptions);
@@ -145,10 +150,10 @@ const lock = (targetElement) => {
     }
     lockedNum += 1;
 };
-const unlock = (targetElement) => {
+const unlock = (targetElements) => {
     if (isServer())
         return;
-    checkTargetElement(targetElement);
+    checkTargetElement(targetElements);
     lockedNum -= 1;
     if (lockedNum > 0)
         return;
@@ -158,13 +163,16 @@ const unlock = (targetElement) => {
         return;
     }
     // iOS
-    if (targetElement) {
-        const index = lockedElements.indexOf(targetElement);
-        if (index !== -1) {
-            targetElement.ontouchmove = null;
-            targetElement.ontouchstart = null;
-            lockedElements.splice(index, 1);
-        }
+    if (targetElements) {
+        const elementArray = Array.isArray(targetElements) ? targetElements : [targetElements];
+        elementArray.forEach((element) => {
+            const index = lockedElements.indexOf(element);
+            if (index !== -1) {
+                element.ontouchmove = null;
+                element.ontouchstart = null;
+                lockedElements.splice(index, 1);
+            }
+        });
     }
     if (documentListenerAdded) {
         document.removeEventListener('touchmove', preventDefault, eventListenerOptions);

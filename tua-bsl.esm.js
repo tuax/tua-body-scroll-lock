@@ -1,6 +1,6 @@
 /**
- * tua-body-scroll-lock v1.0.0
- * (c) 2019 Evinma, BuptStEve
+ * tua-body-scroll-lock v1.1.0-0
+ * (c) 2020 Evinma, BuptStEve
  * @license MIT
  */
 
@@ -127,31 +127,36 @@ var handleScroll = function handleScroll(event, targetElement) {
   return true;
 };
 
-var checkTargetElement = function checkTargetElement(targetElement) {
-  if (targetElement) return;
-  if (targetElement === null) return;
+var checkTargetElement = function checkTargetElement(targetElements) {
+  if (targetElements) return;
+  if (targetElements === null) return;
   if (process.env.NODE_ENV === 'production') return;
-  console.warn("If scrolling is also required in the floating layer, " + "the target element must be provided.");
+  console.warn("If scrolling is also required in the floating layer, " + "the targetElements must be provided.");
 };
 
-var lock = function lock(targetElement) {
+var lock = function lock(targetElements) {
   if (isServer()) return;
-  checkTargetElement(targetElement);
+  checkTargetElement(targetElements);
 
   if (detectOS().ios) {
     // iOS
-    if (targetElement && lockedElements.indexOf(targetElement) === -1) {
-      targetElement.ontouchstart = function (event) {
-        initialClientY = event.targetTouches[0].clientY;
-        initialClientX = event.targetTouches[0].clientX;
-      };
+    if (targetElements) {
+      var elementArray = Array.isArray(targetElements) ? targetElements : [targetElements];
+      elementArray.forEach(function (element) {
+        if (element && lockedElements.indexOf(element) === -1) {
+          element.ontouchstart = function (event) {
+            initialClientY = event.targetTouches[0].clientY;
+            initialClientX = event.targetTouches[0].clientX;
+          };
 
-      targetElement.ontouchmove = function (event) {
-        if (event.targetTouches.length !== 1) return;
-        handleScroll(event, targetElement);
-      };
+          element.ontouchmove = function (event) {
+            if (event.targetTouches.length !== 1) return;
+            handleScroll(event, element);
+          };
 
-      lockedElements.push(targetElement);
+          lockedElements.push(element);
+        }
+      });
     }
 
     if (!documentListenerAdded) {
@@ -165,9 +170,9 @@ var lock = function lock(targetElement) {
   lockedNum += 1;
 };
 
-var unlock = function unlock(targetElement) {
+var unlock = function unlock(targetElements) {
   if (isServer()) return;
-  checkTargetElement(targetElement);
+  checkTargetElement(targetElements);
   lockedNum -= 1;
   if (lockedNum > 0) return;
 
@@ -177,14 +182,17 @@ var unlock = function unlock(targetElement) {
   } // iOS
 
 
-  if (targetElement) {
-    var index = lockedElements.indexOf(targetElement);
+  if (targetElements) {
+    var elementArray = Array.isArray(targetElements) ? targetElements : [targetElements];
+    elementArray.forEach(function (element) {
+      var index = lockedElements.indexOf(element);
 
-    if (index !== -1) {
-      targetElement.ontouchmove = null;
-      targetElement.ontouchstart = null;
-      lockedElements.splice(index, 1);
-    }
+      if (index !== -1) {
+        element.ontouchmove = null;
+        element.ontouchstart = null;
+        lockedElements.splice(index, 1);
+      }
+    });
   }
 
   if (documentListenerAdded) {

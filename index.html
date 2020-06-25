@@ -38,11 +38,12 @@
           <button id="modalBtn">click me to show dialog two</button>
         </h2>
         <div id="targetOne" class="target"></div>
+        <div id="targetTwo" class="target"></div>
       </div>
 
       <div id="modalTwo" class="modal">
         <h2>dialog two with scroll-x</h2>
-        <div id="targetTwo" class="target">
+        <div id="targetThree" class="target">
           <p>1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950</p>
           <p>1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950</p>
         </div>
@@ -58,6 +59,7 @@
       var $modalTwo = $('#modalTwo')
       var $targetOne = $('#targetOne')
       var $targetTwo = $('#targetTwo')
+      var $targetThree = $('#targetThree')
 
       // add content
       var someText = ''
@@ -66,14 +68,15 @@
       }
       $('#list').innerHTML = someText
       $targetOne.innerHTML = someText
+      $targetTwo.innerHTML = someText
 
       $('#btn').onclick = function () {
         $modalOne.style.display = 'block'
-        bodyScrollLock.lock($targetOne)
+        bodyScrollLock.lock([$targetOne, $targetTwo])
       }
       $('#modalBtn').onclick = function () {
         $modalTwo.style.display = 'block'
-        bodyScrollLock.lock($targetTwo)
+        bodyScrollLock.lock($targetThree)
       }
 
       $modalOne.onclick = function (event) {
@@ -81,13 +84,13 @@
         if (event.target.id === 'modalBtn') return
 
         $modalOne.style.display = 'none'
-        bodyScrollLock.unlock($targetOne)
+        bodyScrollLock.unlock([$targetOne, $targetTwo])
       }
       $modalTwo.onclick = function (event) {
-        if (event.target.id === 'targetTwo') return
+        if (event.target.id === 'targetThree') return
 
         $modalTwo.style.display = 'none'
-        bodyScrollLock.unlock($targetTwo)
+        bodyScrollLock.unlock($targetThree)
       }
     </script>
     <style>
@@ -166,6 +169,16 @@
 
         color: #000;
         background-color: #fff;
+      }
+      #targetOne {
+        height: 30%;
+
+        color: blue;
+      }
+      #targetTwo {
+        height: 30%;
+
+        color: red;
       }
     </style>
   </body>
