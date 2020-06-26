@@ -1,3 +1,3 @@
-declare const lock: (targetElements?: HTMLElement[] | undefined) => void;
-declare const unlock: (targetElements?: HTMLElement[] | undefined) => void;
+declare const lock: (targetElement?: HTMLElement | HTMLElement[] | null | undefined) => void;
+declare const unlock: (targetElement?: HTMLElement | HTMLElement[] | null | undefined) => void;
 export { lock, unlock };

@@ -133,20 +133,20 @@
       return true;
     };
 
-    var checkTargetElement = function checkTargetElement(targetElements) {
-      if (targetElements) return;
-      if (targetElements === null) return;
-      console.warn("If scrolling is also required in the floating layer, " + "the targetElements must be provided.");
+    var checkTargetElement = function checkTargetElement(targetElement) {
+      if (targetElement) return;
+      if (targetElement === null) return;
+      console.warn("If scrolling is also required in the floating layer, " + "the target element must be provided.");
     };
 
-    var lock = function lock(targetElements) {
+    var lock = function lock(targetElement) {
       if (isServer()) return;
-      checkTargetElement(targetElements);
+      checkTargetElement(targetElement);
 
       if (detectOS().ios) {
         // iOS
-        if (targetElements) {
-          var elementArray = Array.isArray(targetElements) ? targetElements : [targetElements];
+        if (targetElement) {
+          var elementArray = Array.isArray(targetElement) ? targetElement : [targetElement];
           elementArray.forEach(function (element) {
             if (element && lockedElements.indexOf(element) === -1) {
               element.ontouchstart = function (event) {
@@ -175,9 +175,9 @@
       lockedNum += 1;
     };
 
-    var unlock = function unlock(targetElements) {
+    var unlock = function unlock(targetElement) {
       if (isServer()) return;
-      checkTargetElement(targetElements);
+      checkTargetElement(targetElement);
       lockedNum -= 1;
       if (lockedNum > 0) return;
 
@@ -187,8 +187,8 @@
       } // iOS
 
 
-      if (targetElements) {
-        var elementArray = Array.isArray(targetElements) ? targetElements : [targetElements];
+      if (targetElement) {
+        var elementArray = Array.isArray(targetElement) ? targetElement : [targetElement];
         elementArray.forEach(function (element) {
           var index = lockedElements.indexOf(element);
 

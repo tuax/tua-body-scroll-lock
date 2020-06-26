@@ -107,22 +107,22 @@ const handleScroll = (event, targetElement) => {
     event.stopPropagation();
     return true;
 };
-const checkTargetElement = (targetElements) => {
-    if (targetElements)
+const checkTargetElement = (targetElement) => {
+    if (targetElement)
         return;
-    if (targetElements === null)
+    if (targetElement === null)
         return;
     console.warn(`If scrolling is also required in the floating layer, ` +
-        `the targetElements must be provided.`);
+        `the target element must be provided.`);
 };
-const lock = (targetElements) => {
+const lock = (targetElement) => {
     if (isServer())
         return;
-    checkTargetElement(targetElements);
+    checkTargetElement(targetElement);
     if (detectOS().ios) {
         // iOS
-        if (targetElements) {
-            const elementArray = Array.isArray(targetElements) ? targetElements : [targetElements];
+        if (targetElement) {
+            const elementArray = Array.isArray(targetElement) ? targetElement : [targetElement];
             elementArray.forEach((element) => {
                 if (element && lockedElements.indexOf(element) === -1) {
                     element.ontouchstart = (event) => {
@@ -150,10 +150,10 @@ const lock = (targetElements) => {
     }
     lockedNum += 1;
 };
-const unlock = (targetElements) => {
+const unlock = (targetElement) => {
     if (isServer())
         return;
-    checkTargetElement(targetElements);
+    checkTargetElement(targetElement);
     lockedNum -= 1;
     if (lockedNum > 0)
         return;
@@ -163,8 +163,8 @@ const unlock = (targetElements) => {
         return;
     }
     // iOS
-    if (targetElements) {
-        const elementArray = Array.isArray(targetElements) ? targetElements : [targetElements];
+    if (targetElement) {
+        const elementArray = Array.isArray(targetElement) ? targetElement : [targetElement];
         elementArray.forEach((element) => {
             const index = lockedElements.indexOf(element);
             if (index !== -1) {
