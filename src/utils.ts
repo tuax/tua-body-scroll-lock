@@ -1,7 +1,5 @@
 export const isServer = () => typeof window === 'undefined'
 
-export const $ = (selector: string) => <HTMLElement>document.querySelector(selector)
-
 export interface DetectOSResult { ios: boolean, android: boolean }
 export const detectOS = (ua?: string): DetectOSResult => {
     ua = ua || navigator.userAgent

@@ -1,5 +1,4 @@
 import {
-    $,
     isServer,
     detectOS,
     getEventListenerOptions,
@@ -19,9 +18,9 @@ const lockedElements: HTMLElement[] = []
 const eventListenerOptions = getEventListenerOptions({ passive: false })
 
 const setOverflowHiddenPc = () => {
-    const $body = $('body')
+    const $body = document.body
     const bodyStyle = { ...$body.style }
-    const scrollBarWidth = window.innerWidth - document.body.clientWidth
+    const scrollBarWidth = window.innerWidth - $body.clientWidth
 
     $body.style.overflow = 'hidden'
     $body.style.boxSizing = 'border-box'
@@ -35,8 +34,8 @@ const setOverflowHiddenPc = () => {
 }
 
 const setOverflowHiddenMobile = () => {
-    const $html = $('html')
-    const $body = $('body')
+    const $html = document.documentElement
+    const $body = document.body
     const scrollTop = $html.scrollTop || $body.scrollTop
     const htmlStyle = { ...$html.style }
     const bodyStyle = { ...$body.style }
