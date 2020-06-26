@@ -120,7 +120,7 @@ const lock = (targetElement?: Nullable<HTMLElement>) => {
         if (targetElement) {
             const elementArray = Array.isArray(targetElement) ? targetElement : [targetElement]
 
-            elementArray.forEach((element: HTMLElement) => {
+            elementArray.forEach((element) => {
                 if (element && lockedElements.indexOf(element) === -1) {
                     element.ontouchstart = (event) => {
                         initialClientY = event.targetTouches[0].clientY
@@ -170,7 +170,7 @@ const unlock = (targetElement?: Nullable<HTMLElement>) => {
     if (targetElement) {
         const elementArray = Array.isArray(targetElement) ? targetElement : [targetElement]
 
-        elementArray.forEach((element: HTMLElement) => {
+        elementArray.forEach((element) => {
             const index = lockedElements.indexOf(element)
 
             if (index !== -1) {

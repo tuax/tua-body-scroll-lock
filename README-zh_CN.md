@@ -139,13 +139,15 @@ import { lock, unlock } from 'tua-body-scroll-lock'
 const elementOne = document.querySelector('#elementOne')
 const elementTwo = document.querySelector('#elementTwo')
 
-// 只有一个目标元素
+// 一个目标元素
 const targetElement = elementOne
 // 多个目标元素
-const targetElement = [elementOne, elementTwo]
+const targetElements = [elementOne, elementTwo]
 
 lock(targetElement)
+lock(targetElements)
 unlock(targetElement)
+unlock(targetElements)
 ```
 
 > PC 端和安卓端不需要传 targetElement。
