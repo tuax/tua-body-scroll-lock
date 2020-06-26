@@ -30,7 +30,7 @@
     </header>
 
     <section class="content">
-      <button id="btn">click me to show dialog one</button>
+      <button id="btn">click me to <br />show dialog one</button>
 
       <div id="modalOne" class="modal">
         <h2>
@@ -44,8 +44,7 @@
       <div id="modalTwo" class="modal">
         <h2>dialog two with scroll-x</h2>
         <div id="targetThree" class="target">
-          <p>1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950</p>
-          <p>1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950</p>
+          <p>123456789101112131415161718192021222324252627282930</p>
         </div>
       </div>
 
@@ -64,11 +63,12 @@
       // add content
       var someText = ''
       for (var i = 0; i < 50; i++) {
-        someText += `<p>${i}</p>`
+        someText += `<p>${i} scroll me~</p>`
       }
       $('#list').innerHTML = someText
       $targetOne.innerHTML = someText
       $targetTwo.innerHTML = someText
+      $targetThree.innerHTML += someText
 
       $('#btn').onclick = function () {
         $modalOne.style.display = 'block'
@@ -120,7 +120,7 @@
 
       #btn {
         position: fixed;
-        top: 80px;
+        top: 150px;
         left: 20px;
       }
       #list {
@@ -152,6 +152,7 @@
       }
       h2 {
         width: 80%;
+        max-width: 300px;
         margin: 0 auto;
 
         color: #000;
@@ -162,6 +163,7 @@
         -webkit-overflow-scrolling: touch;
 
         width: 80%;
+        max-width: 300px;
         height: 60%;
         margin: 0 auto;
 
@@ -174,6 +176,7 @@
         height: 30%;
 
         color: blue;
+        border-bottom: 1px dashed black;
       }
       #targetTwo {
         height: 30%;

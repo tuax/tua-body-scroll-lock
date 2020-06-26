@@ -4,6 +4,7 @@ coverage
 .DS_Store
 node_modules
 docs/.vuepress/dist/
+.history/
 
 yarn.lock
 package-lock.json

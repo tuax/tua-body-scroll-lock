@@ -139,13 +139,15 @@ import { lock, unlock } from 'tua-body-scroll-lock'
 const elementOne = document.querySelector('#elementOne')
 const elementTwo = document.querySelector('#elementTwo')
 
-// only one targetElement
+// one targetElement
 const targetElement = elementOne
-// multiple targetElement
-const targetElement = [elementOne, elementTwo]
+// multiple targetElements
+const targetElements = [elementOne, elementTwo]
 
 lock(targetElement)
+lock(targetElements)
 unlock(targetElement)
+unlock(targetElements)
 ```
 
 > The `targetElement` is not required on the PC and Android.
