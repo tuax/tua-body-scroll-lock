@@ -2,18 +2,12 @@
 * @jest-environment jsdom-thirteen
 */
 import {
-    $,
     isServer,
     detectOS,
     getEventListenerOptions,
 } from '@/utils'
 
 describe('utils', () => {
-
-    it('$', () => {
-        expect($('body').tagName).toBe('BODY')
-    })
-
     it(`should detect server`, () => {
         expect(isServer()).toBe(false)
     })
