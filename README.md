@@ -152,6 +152,39 @@ unlock(targetElements)
 
 > The `targetElement` is not required on the PC and Android.
 
+### clearBodyLocks
+In the SPA, if you called `lock`, but forgot to call `unlock` before jumping to other pages, that is too bad. Because the operation of the page is not restored, such as forbid `touchmove`, `clearBodyLocks` is used to clear all side effects. Sure, you can also call `unlock`, but if you have called `lock` multiple times, you must call `unlock` multiple times, which is very unfriendly.
+#### [demo.vue](https://codepen.io/evinma/pen/OJNJdoy)
+```js
+<template>
+  // some element
+</template>
+<script>
+import { lock, unlock, clearBodyLocks } from 'tua-body-scroll-lock';
+
+export default {
+  name: 'demo',
+  data () {
+    return {}
+  },
+  methods: {
+    showDialog () {
+      // Disable body scroll
+      lock()
+    },
+    hideDialog () {
+      // Enable body scroll
+      unlock()
+    }
+  },
+  beforeDestroy () {
+    // If forgot to call unlock before jumping to other pages, `clearBodyLocks` can clean all side effect.
+    clearBodyLocks()
+  }
+}
+</script>
+```
+
 ## Demo
 
 ![bodyScrollLock](./tua-bsl.png)

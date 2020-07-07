@@ -152,6 +152,40 @@ unlock(targetElements)
 
 > PC 端和安卓端不需要传 targetElement。
 
+### clearBodyLocks
+在单页应用中，如果调用过`lock`，但是在跳转其他路由下的页面前忘记调用`unlock`，这是很糟糕的。因为对页面的操作都没有恢复，比如ios中禁止了`touchmove`；`clearBodyLocks`就是用来清除所有的副作用。当前你也可以调用`unlock`，但是如果之前调用过多次`lock`，那么就必须要调用多次`unlock`，这样很不友好。
+#### [demo.vue](https://codepen.io/evinma/pen/OJNJdoy)
+```js
+<template>
+  // some element
+</template>
+<script>
+import { lock, unlock, clearBodyLocks } from 'tua-body-scroll-lock';
+
+export default {
+  name: 'demo',
+  data () {
+    return {}
+  },
+  methods: {
+    showDialog () {
+      // 禁止滑动
+      lock()
+    },
+    hideDialog () {
+      // 开始滑动
+      unlock()
+    }
+  },
+  beforeDestroy () {
+    // 在跳转其他路由下的页面前忘记调用`unlock`，`clearBodyLocks`可以清除所有的副作用。
+    clearBodyLocks()
+  }
+}
+</script>
+```
+
+
 ## Demo
 
 ![bodyScrollLock](./tua-bsl.png)

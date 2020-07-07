@@ -187,4 +187,33 @@ const unlock = (targetElement?: Nullable<HTMLElement>) => {
     }
 }
 
-export { lock, unlock }
+const clearBodyLocks = () => {
+    if (isServer()) return
+
+    lockedNum = 0
+    if (
+        !detectOS().ios &&
+        typeof unLockCallback === 'function'
+    ) {
+        unLockCallback()
+        return
+    }
+    // IOS
+    if (lockedElements.length) {
+        // clear events
+        let element = lockedElements.pop()
+        while (element) {
+            element.ontouchmove = null
+            element.ontouchstart = null
+
+            element = lockedElements.pop()
+        }
+    }
+
+    if (documentListenerAdded) {
+        document.removeEventListener('touchmove', preventDefault, eventListenerOptions)
+        documentListenerAdded = false
+    }
+}
+
+export { lock, unlock, clearBodyLocks }
