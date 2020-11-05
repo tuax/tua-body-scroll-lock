@@ -1,5 +1,4 @@
 export declare const isServer: () => boolean;
-export declare const $: (selector: string) => HTMLElement;
 export interface DetectOSResult {
     ios: boolean;
     android: boolean;

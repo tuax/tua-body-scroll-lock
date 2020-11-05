@@ -1,5 +1,5 @@
 /**
- * tua-body-scroll-lock v1.1.0
+ * tua-body-scroll-lock v1.2.0
  * (c) 2020 Evinma, BuptStEve
  * @license MIT
  */
@@ -12,9 +12,6 @@
 
     var isServer = function isServer() {
       return typeof window === 'undefined';
-    };
-    var $ = function $(selector) {
-      return document.querySelector(selector);
     };
     var detectOS = function detectOS(ua) {
       ua = ua || navigator.userAgent;
@@ -67,9 +64,9 @@
     });
 
     var setOverflowHiddenPc = function setOverflowHiddenPc() {
-      var $body = $('body');
+      var $body = document.body;
       var bodyStyle = Object.assign({}, $body.style);
-      var scrollBarWidth = window.innerWidth - document.body.clientWidth;
+      var scrollBarWidth = window.innerWidth - $body.clientWidth;
       $body.style.overflow = 'hidden';
       $body.style.boxSizing = 'border-box';
       $body.style.paddingRight = "".concat(scrollBarWidth, "px");
@@ -81,8 +78,8 @@
     };
 
     var setOverflowHiddenMobile = function setOverflowHiddenMobile() {
-      var $html = $('html');
-      var $body = $('body');
+      var $html = document.documentElement;
+      var $body = document.body;
       var scrollTop = $html.scrollTop || $body.scrollTop;
       var htmlStyle = Object.assign({}, $html.style);
       var bodyStyle = Object.assign({}, $body.style);
@@ -206,6 +203,34 @@
       }
     };
 
+    var clearBodyLocks = function clearBodyLocks() {
+      if (isServer()) return;
+      lockedNum = 0;
+
+      if (!detectOS().ios && typeof unLockCallback === 'function') {
+        unLockCallback();
+        return;
+      } // IOS
+
+
+      if (lockedElements.length) {
+        // clear events
+        var element = lockedElements.pop();
+
+        while (element) {
+          element.ontouchmove = null;
+          element.ontouchstart = null;
+          element = lockedElements.pop();
+        }
+      }
+
+      if (documentListenerAdded) {
+        document.removeEventListener('touchmove', preventDefault, eventListenerOptions);
+        documentListenerAdded = false;
+      }
+    };
+
+    exports.clearBodyLocks = clearBodyLocks;
     exports.lock = lock;
     exports.unlock = unlock;
 

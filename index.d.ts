@@ -1,3 +1,4 @@
 declare const lock: (targetElement?: HTMLElement | HTMLElement[] | null | undefined) => void;
 declare const unlock: (targetElement?: HTMLElement | HTMLElement[] | null | undefined) => void;
-export { lock, unlock };
+declare const clearBodyLocks: () => void;
+export { lock, unlock, clearBodyLocks };

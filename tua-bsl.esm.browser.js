@@ -1,11 +1,10 @@
 /**
- * tua-body-scroll-lock v1.1.0
+ * tua-body-scroll-lock v1.2.0
  * (c) 2020 Evinma, BuptStEve
  * @license MIT
  */
 
 const isServer = () => typeof window === 'undefined';
-const $ = (selector) => document.querySelector(selector);
 const detectOS = (ua) => {
     ua = ua || navigator.userAgent;
     const ipad = /(iPad).*OS\s([\d_]+)/.test(ua);
@@ -50,9 +49,9 @@ let documentListenerAdded = false;
 const lockedElements = [];
 const eventListenerOptions = getEventListenerOptions({ passive: false });
 const setOverflowHiddenPc = () => {
-    const $body = $('body');
+    const $body = document.body;
     const bodyStyle = Object.assign({}, $body.style);
-    const scrollBarWidth = window.innerWidth - document.body.clientWidth;
+    const scrollBarWidth = window.innerWidth - $body.clientWidth;
     $body.style.overflow = 'hidden';
     $body.style.boxSizing = 'border-box';
     $body.style.paddingRight = `${scrollBarWidth}px`;
@@ -63,8 +62,8 @@ const setOverflowHiddenPc = () => {
     };
 };
 const setOverflowHiddenMobile = () => {
-    const $html = $('html');
-    const $body = $('body');
+    const $html = document.documentElement;
+    const $body = document.body;
     const scrollTop = $html.scrollTop || $body.scrollTop;
     const htmlStyle = Object.assign({}, $html.style);
     const bodyStyle = Object.assign({}, $body.style);
@@ -179,5 +178,29 @@ const unlock = (targetElement) => {
         documentListenerAdded = false;
     }
 };
+const clearBodyLocks = () => {
+    if (isServer())
+        return;
+    lockedNum = 0;
+    if (!detectOS().ios &&
+        typeof unLockCallback === 'function') {
+        unLockCallback();
+        return;
+    }
+    // IOS
+    if (lockedElements.length) {
+        // clear events
+        let element = lockedElements.pop();
+        while (element) {
+            element.ontouchmove = null;
+            element.ontouchstart = null;
+            element = lockedElements.pop();
+        }
+    }
+    if (documentListenerAdded) {
+        document.removeEventListener('touchmove', preventDefault, eventListenerOptions);
+        documentListenerAdded = false;
+    }
+};
 
-export { lock, unlock };
+export { clearBodyLocks, lock, unlock };
