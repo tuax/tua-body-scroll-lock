@@ -57,7 +57,10 @@ const setOverflowHiddenMobile = () => {
             $body.style[x] = bodyStyle[x] || ''
         })
 
-        window.scrollTo(0, scrollTop)
+        window.scrollTo({
+            top: scrollTop,
+            behavior: 'instant'
+        })
     }
 }
 
