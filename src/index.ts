@@ -16,6 +16,7 @@ let documentListenerAdded = false
 
 const lockedElements: HTMLElement[] = []
 const eventListenerOptions = getEventListenerOptions({ passive: false })
+const supportsNativeSmoothScroll = !isServer && 'scrollBehavior' in document.documentElement.style
 
 const setOverflowHiddenPc = () => {
     const $body = document.body
@@ -57,10 +58,12 @@ const setOverflowHiddenMobile = () => {
             $body.style[x] = bodyStyle[x] || ''
         })
 
-        window.scrollTo({
-            top: scrollTop,
-            behavior: 'instant'
-        })
+        supportsNativeSmoothScroll
+          ? window.scrollTo({
+              top: scrollTop,
+              behavior: 'instant'
+            })
+          : window.scrollTo(0, scrollTop)
     }
 }
 
