@@ -61,8 +61,7 @@ const setOverflowHiddenMobile = () => {
         supportsNativeSmoothScroll
             ? window.scrollTo({
                 top: scrollTop,
-                // @ts-ignore
-                behavior: 'instant',
+                behavior: 'auto',
             })
             : window.scrollTo(0, scrollTop)
     }
