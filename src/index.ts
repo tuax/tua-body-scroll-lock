@@ -16,7 +16,7 @@ let documentListenerAdded = false
 
 const lockedElements: HTMLElement[] = []
 const eventListenerOptions = getEventListenerOptions({ passive: false })
-const supportsNativeSmoothScroll = !isServer && 'scrollBehavior' in document.documentElement.style
+const supportsNativeSmoothScroll = !isServer() && 'scrollBehavior' in document.documentElement.style
 
 const setOverflowHiddenPc = () => {
     const $body = document.body
