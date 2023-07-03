@@ -1,6 +1,7 @@
 {
     "name": "tua-body-scroll-lock",
     "version": "1.2.1",
+    "packageManager": "pnpm@^7",
     "description": "🔐Body scroll locking that just works with everything",
     "main": "dist/tua-bsl.umd.js",
     "module": "dist/tua-bsl.mjs",
@@ -26,10 +27,9 @@
         "test:unit:tdd": "cross-env NODE_ENV=test jest --watch",
         "prebuild": "concurrently npm:clean npm:test",
         "build": "npm run lint && cross-env NODE_ENV=production rollup -c && cp index.html dist/index.html",
-        "next": "npm --no-git-tag-version version prerelease",
-        "next:m": "npm --no-git-tag-version version preminor",
-        "pub": "npm run build && npm publish",
-        "pub:n": "npm run build && npm publish --tag next",
+        "prepublishOnly": "npm run build",
+        "pub": "bumpp && npm publish",
+        "pub:n": "bumpp && npm publish --tag next",
         "deploy": "npm run build && gh-pages -d dist"
     },
     "files": [
@@ -61,6 +61,7 @@
         "all-contributors-cli": "^6.26.0",
         "babel-eslint": "^10.1.0",
         "babel-jest": "^29.5.0",
+        "bumpp": "^9.1.1",
         "concurrently": "^8.2.0",
         "cross-env": "^7.0.3",
         "eslint": "^8.44.0",
