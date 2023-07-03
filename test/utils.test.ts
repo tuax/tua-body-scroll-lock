@@ -16,6 +16,7 @@ describe('utils', () => {
         const iPad = 'Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1'
         const iPhone = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1'
         const android = 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Mobile Safari/537.36'
+        const macOS = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
 
         expect(detectOS().ios).toBe(false)
         expect(detectOS().android).toBe(false)
@@ -28,6 +29,9 @@ describe('utils', () => {
 
         expect(detectOS(android).ios).toBe(false)
         expect(detectOS(android).android).toBe(true)
+
+        expect(detectOS(macOS).ios).toBe(false)
+        expect(detectOS(macOS).android).toBe(false)
     })
 
     it('should detect getEventListenerOptions', () => {
