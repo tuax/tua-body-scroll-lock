@@ -11,7 +11,7 @@ type Nullable<T> = T | Array<T> | null
 let lockedNum = 0
 let initialClientY = 0
 let initialClientX = 0
-let unLockCallback: any = null
+let unLockCallback: null | (() => void) = null
 let documentListenerAdded = false
 
 const lockedElements: HTMLElement[] = []
@@ -19,16 +19,20 @@ const eventListenerOptions = getEventListenerOptions({ passive: false })
 const supportsNativeSmoothScroll = !isServer() && 'scrollBehavior' in document.documentElement.style
 
 const setOverflowHiddenPc = () => {
+    const $html = document.documentElement
     const $body = document.body
+    const htmlStyle = { ...$html.style }
     const bodyStyle = { ...$body.style }
-    const scrollBarWidth = window.innerWidth - $body.clientWidth
 
-    $body.style.overflow = 'hidden'
-    $body.style.boxSizing = 'border-box'
-    $body.style.paddingRight = `${scrollBarWidth}px`
+    ;[$html, $body].forEach(element => {
+        element.style.overflow = 'hidden'
+        element.style.boxSizing = 'border-box'
+        element.style.paddingRight = `${window.innerWidth - element.clientWidth}px`
+    })
 
     return () => {
         ['overflow', 'boxSizing', 'paddingRight'].forEach((x: OverflowHiddenPcStyleType) => {
+            $html.style[x] = htmlStyle[x] || ''
             $body.style[x] = bodyStyle[x] || ''
         })
     }
