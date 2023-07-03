@@ -1,6 +1,5 @@
 module.exports = {
     verbose: false,
-    testURL: 'http://localhost',
     collectCoverage: true,
     collectCoverageFrom: ['src/utils.ts'],
     transform: {
@@ -12,4 +11,7 @@ module.exports = {
     },
     moduleFileExtensions: ['js', 'ts', 'tsx'],
     snapshotSerializers: [],
+    testEnvironmentOptions: {
+        url: 'http://localhost',
+    },
 }

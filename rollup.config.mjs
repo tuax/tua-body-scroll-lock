@@ -1,11 +1,10 @@
-import babel from 'rollup-plugin-babel'
-import replace from 'rollup-plugin-replace'
-import { eslint } from 'rollup-plugin-eslint'
-import { terser } from 'rollup-plugin-terser'
+import babel from '@rollup/plugin-babel'
+import replace from '@rollup/plugin-replace'
+import eslint from '@rollup/plugin-eslint'
+import terser from '@rollup/plugin-terser'
 import { DEFAULT_EXTENSIONS } from '@babel/core'
 import typescript from 'rollup-plugin-typescript2'
-
-const pkg = require('./package.json')
+import pkg from './package.json' assert { type: 'json' }
 
 const banner =
 `/**
@@ -27,7 +26,7 @@ const configMap = {
         env: 'development',
     },
     umdProd: {
-        file: `dist/tua-bsl.umd.min.js`,
+        file: pkg.jsdelivr,
         format: 'umd',
         env: 'production',
     },
@@ -52,7 +51,6 @@ const genConfig = (opts) => {
         input: 'src/index.ts',
         plugins: [
             typescript({
-                cacheRoot: `${require('os').tmpdir()}/.rpt2_cache`,
                 useTsconfigDeclarationDir: true,
             }),
             eslint({ include: '**/*.js' }),
@@ -67,17 +65,19 @@ const genConfig = (opts) => {
 
     if (opts.env) {
         config.plugins.push(replace({
-            'process.env.NODE_ENV': JSON.stringify(opts.env),
+            preventAssignment: true,
+            values: {
+                'process.env.NODE_ENV': JSON.stringify(opts.env),
+            },
         }))
     }
     if (opts.transpile !== false) {
-        config.plugins.push(babel({ extensions }))
+        config.plugins.push(babel({ babelHelpers: 'bundled', extensions }))
     }
 
     if (isProd) {
         config.plugins.push(terser({
             output: {
-                /* eslint-disable */
                 ascii_only: true,
             },
         }))
