@@ -22,11 +22,12 @@ export function getEventListenerOptions (options: AddEventListenerOptions): AddE
     const listenerOptions = <AddEventListenerOptions>{
         get passive () {
             isSupportOptions = true
-            return
+            return undefined
         },
     }
 
     /* istanbul ignore next */
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const noop = () => {}
     const testEvent = '__TUA_BSL_TEST_PASSIVE__'
     window.addEventListener(testEvent, noop, listenerOptions)

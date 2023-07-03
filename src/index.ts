@@ -28,7 +28,7 @@ const setOverflowHiddenPc = () => {
     $body.style.paddingRight = `${scrollBarWidth}px`
 
     return () => {
-        ;['overflow', 'boxSizing', 'paddingRight'].forEach((x: OverflowHiddenPcStyleType) => {
+        ['overflow', 'boxSizing', 'paddingRight'].forEach((x: OverflowHiddenPcStyleType) => {
             $body.style[x] = bodyStyle[x] || ''
         })
     }
@@ -58,12 +58,9 @@ const setOverflowHiddenMobile = () => {
             $body.style[x] = bodyStyle[x] || ''
         })
 
+        const scrollToOptions = { top: scrollTop, behavior: 'instant' }
         supportsNativeSmoothScroll
-            ? window.scrollTo({
-                top: scrollTop,
-                // @ts-ignore
-                behavior: 'instant',
-            })
+            ? window.scrollTo(scrollToOptions as unknown as ScrollToOptions)
             : window.scrollTo(0, scrollTop)
     }
 }
@@ -111,8 +108,8 @@ const checkTargetElement = (targetElement?: Nullable<HTMLElement>) => {
     if (process.env.NODE_ENV === 'production') return
 
     console.warn(
-        `If scrolling is also required in the floating layer, ` +
-        `the target element must be provided.`
+        'If scrolling is also required in the floating layer, ' +
+        'the target element must be provided.',
     )
 }
 
@@ -185,7 +182,6 @@ const unlock = (targetElement?: Nullable<HTMLElement>) => {
                 lockedElements.splice(index, 1)
             }
         })
-
     }
 
     if (documentListenerAdded) {

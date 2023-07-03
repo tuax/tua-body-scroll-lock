@@ -21,8 +21,8 @@ module.exports = {
         '@typescript-eslint',
     ],
     rules: {
-        'semi': 'off',
-        'indent': ['error', 4],
+        semi: 'off',
+        indent: ['error', 4],
         'promise/param-names': 'off',
         'comma-dangle': ['error', 'always-multiline'],
         '@typescript-eslint/semi': ['error', 'never'],
@@ -30,8 +30,8 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-member-accessibility': 'off',
         '@typescript-eslint/member-delimiter-style': ['error', {
-            'multiline': { 'delimiter': 'none' },
-            'singleline': { 'delimiter': 'comma' },
+            multiline: { delimiter: 'none' },
+            singleline: { delimiter: 'comma' },
         }],
     },
 }
