@@ -3,9 +3,7 @@ module.exports = {
     parserOptions: {
         parser: '@typescript-eslint/parser',
         sourceType: 'module',
-        ecmaFeatures: {
-            legacyDecorators: true,
-        },
+        project: 'tsconfig.eslint.json',
     },
     env: {
         es6: true,
