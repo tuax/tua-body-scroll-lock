@@ -3,16 +3,16 @@
     "version": "1.3.0-beta.0",
     "packageManager": "pnpm@^7",
     "description": "🔐Body scroll locking that just works with everything",
-    "main": "dist/tua-bsl.umd.js",
-    "module": "dist/tua-bsl.mjs",
-    "unpkg": "dist/tua-bsl.umd.min.js",
-    "jsdelivr": "dist/tua-bsl.umd.min.js",
-    "typings": "dist/index.d.ts",
+    "main": "./dist/tua-bsl.umd.js",
+    "module": "./dist/tua-bsl.mjs",
+    "unpkg": "./dist/tua-bsl.umd.min.js",
+    "jsdelivr": "./dist/tua-bsl.umd.min.js",
+    "typings": "./dist/index.d.ts",
     "exports": {
         ".": {
-            "types": "dist/index.d.ts",
-            "import": "dist/tua-bsl.mjs",
-            "require": "dist/tua-bsl.umd.js"
+            "types": "./dist/index.d.ts",
+            "import": "./dist/tua-bsl.mjs",
+            "require": "./dist/tua-bsl.umd.js"
         }
     },
     "scripts": {
@@ -28,8 +28,9 @@
         "prebuild": "concurrently npm:clean npm:test",
         "build": "npm run lint && cross-env NODE_ENV=production rollup -c && cp index.html dist/index.html",
         "prepublishOnly": "npm run build",
-        "pub": "bumpp && npm publish",
-        "pub:n": "bumpp && npm publish --tag next",
+        "push:current": "git config --local push.default current",
+        "pub": "npm run push:current && bumpp && npm publish",
+        "pub:n": "npm run push:current && bumpp && npm publish --tag next",
         "deploy": "npm run build && gh-pages -d dist"
     },
     "files": [
