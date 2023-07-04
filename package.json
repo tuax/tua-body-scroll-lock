@@ -21,7 +21,7 @@
         "clean": "rimraf dist/*",
         "type-check": "tsc --noEmit",
         "type-check:watch": "npm run type-check -- --watch",
-        "lint": "eslint --fix ./",
+        "lint": "eslint ./ --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
         "start": "rollup -c -w",
         "test": "npm run type-check && cross-env NODE_ENV=test jest",
         "test:unit:tdd": "cross-env NODE_ENV=test jest --watch",

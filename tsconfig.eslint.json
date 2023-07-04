@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",
+    "include": [
+      "src/**/*",
+      "test/**/*",
+      ".eslintrc.cjs",
+      "jest.config.cjs",
+      "babel.config.cjs",
+      "rollup.config.mjs",
+      "commitlint.config.cjs",
+    ]
+  }
