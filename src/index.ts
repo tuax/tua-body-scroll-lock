@@ -20,20 +20,15 @@ const supportsNativeSmoothScroll = !isServer() && 'scrollBehavior' in document.d
 
 const setOverflowHiddenPc = () => {
     const $html = document.documentElement
-    const $body = document.body
     const htmlStyle = { ...$html.style }
-    const bodyStyle = { ...$body.style }
 
-    ;[$html, $body].forEach(element => {
-        element.style.overflow = 'hidden'
-        element.style.boxSizing = 'border-box'
-        element.style.paddingRight = `${window.innerWidth - element.clientWidth}px`
-    })
+    $html.style.overflow = 'hidden'
+    $html.style.boxSizing = 'border-box'
+    $html.style.paddingRight = `${window.innerWidth - $html.clientWidth}px`
 
     return () => {
         ['overflow', 'boxSizing', 'paddingRight'].forEach((x: OverflowHiddenPcStyleType) => {
             $html.style[x] = htmlStyle[x] || ''
-            $body.style[x] = bodyStyle[x] || ''
         })
     }
 }
