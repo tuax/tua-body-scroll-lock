@@ -25,8 +25,8 @@
     "start": "rollup -c -w",
     "test": "npm run type-check && cross-env NODE_ENV=test jest",
     "test:unit:tdd": "cross-env NODE_ENV=test jest --watch",
-    "prebuild": "concurrently npm:clean npm:test",
-    "build": "npm run lint && cross-env NODE_ENV=production rollup -c && cp index.html dist/index.html",
+    "prebuild": "concurrently npm:lint npm:clean npm:test",
+    "build": "cross-env NODE_ENV=production rollup -c && cp index.html dist/index.html",
     "prepublishOnly": "npm run build",
     "push:current": "git config --local push.default current",
     "pub": "npm run push:current && bumpp && npm publish",
@@ -41,8 +41,13 @@
     "dist/"
   ],
   "lint-staged": {
-    "{src,test}/**/*.ts": [
+    "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": [
       "eslint --fix"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
     ]
   },
   "devDependencies": {
