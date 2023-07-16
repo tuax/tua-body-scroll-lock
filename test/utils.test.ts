@@ -4,7 +4,7 @@
 import {
   isServer,
   detectOS,
-  getEventListenerOptions
+  getEventListenerOptions,
 } from '@/utils'
 
 describe('utils', () => {

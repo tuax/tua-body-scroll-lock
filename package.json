@@ -23,6 +23,9 @@
     "type-check:watch": "npm run type-check -- --watch",
     "lint": "eslint ./ --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "start": "rollup -c -w",
+    "play:v": "npm -C examples/vanilla run dev",
+    "play:vue": "npm -C examples/vue run dev",
+    "play:react": "npm -C examples/react run dev",
     "test": "npm run type-check && cross-env NODE_ENV=test jest",
     "test:unit:tdd": "cross-env NODE_ENV=test jest --watch",
     "prebuild": "concurrently npm:lint npm:clean npm:test",
@@ -64,6 +67,7 @@
     "@types/node": "^20.3.3",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
+    "@vue/eslint-config-typescript": "^11.0.3",
     "all-contributors-cli": "^6.26.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^29.5.0",
@@ -76,6 +80,7 @@
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.15.1",
     "gh-pages": "^5.0.0",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
@@ -85,7 +90,8 @@
     "rimraf": "^5.0.1",
     "rollup": "^3.26.0",
     "rollup-plugin-typescript2": "^0.35.0",
-    "typescript": "~5.0"
+    "typescript": "~5.0",
+    "vue-eslint-parser": "^9.3.1"
   },
   "repository": {
     "type": "git",

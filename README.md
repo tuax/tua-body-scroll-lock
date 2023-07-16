@@ -77,18 +77,18 @@ $ yarn add tua-body-scroll-lock
 ```html
 <!-- unpkg -->
 <script type="module">
-    import { lock, unlock } from 'https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js'
+  import { lock, unlock } from 'https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js'
 
-    lock()
-    unlock()
+  lock()
+  unlock()
 </script>
 
 <!-- jsdelivr -->
 <script type="module">
-    import { lock, unlock } from 'https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js'
+  import { lock, unlock } from 'https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js'
 
-    lock()
-    unlock()
+  lock()
+  unlock()
 </script>
 ```
 
@@ -104,18 +104,18 @@ $ yarn add tua-body-scroll-lock
 ```html
 <!-- unpkg -->
 <script type="module">
-    import { lock, unlock } from 'https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js'
+  import { lock, unlock } from 'https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js'
 
-    lock()
-    unlock()
+  lock()
+  unlock()
 </script>
 
 <!-- jsdelivr -->
 <script type="module">
-    import { lock, unlock } from 'https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js'
+  import { lock, unlock } from 'https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js'
 
-    lock()
-    unlock()
+  lock()
+  unlock()
 </script>
 ```
 
@@ -154,6 +154,7 @@ unlock(targetElements)
 
 ### clearBodyLocks
 In the SPA, if you called `lock`, but forgot to call `unlock` before jumping to other pages, that is too bad. Because the operation of the page is not restored, such as forbid `touchmove`, `clearBodyLocks` is used to clear all side effects. Sure, you can also call `unlock`, but if you have called `lock` multiple times, you must call `unlock` multiple times, which is very unfriendly.
+
 #### [demo.vue](https://codepen.io/evinma/pen/OJNJdoy)
 ```js
 <template>

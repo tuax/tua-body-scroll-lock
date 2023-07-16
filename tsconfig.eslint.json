@@ -3,6 +3,7 @@
     "include": [
       "src/**/*",
       "test/**/*",
+      "examples/**/*",
       ".eslintrc.cjs",
       "jest.config.cjs",
       "babel.config.cjs",

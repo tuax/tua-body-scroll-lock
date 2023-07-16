@@ -1,9 +1,10 @@
-import babel from '@rollup/plugin-babel'
-import replace from '@rollup/plugin-replace'
-import eslint from '@rollup/plugin-eslint'
-import terser from '@rollup/plugin-terser'
 import { DEFAULT_EXTENSIONS } from '@babel/core'
+import babel from '@rollup/plugin-babel'
+import eslint from '@rollup/plugin-eslint'
+import replace from '@rollup/plugin-replace'
+import terser from '@rollup/plugin-terser'
 import typescript from 'rollup-plugin-typescript2'
+
 import pkg from './package.json' assert { type: 'json' }
 
 const banner =
@@ -18,30 +19,30 @@ const extensions = [...DEFAULT_EXTENSIONS, 'ts', 'tsx']
 const configMap = {
   esm: {
     file: pkg.module,
-    format: 'esm'
+    format: 'esm',
   },
   umdDev: {
     file: pkg.main,
     format: 'umd',
-    env: 'development'
+    env: 'development',
   },
   umdProd: {
     file: pkg.jsdelivr,
     format: 'umd',
-    env: 'production'
+    env: 'production',
   },
   esmBrowserDev: {
     env: 'development',
     file: 'dist/tua-bsl.esm.browser.js',
     format: 'esm',
-    transpile: false
+    transpile: false,
   },
   esmBrowserProd: {
     env: 'production',
     file: 'dist/tua-bsl.esm.browser.min.js',
     format: 'esm',
-    transpile: false
-  }
+    transpile: false,
+  },
 }
 
 const genConfig = (opts) => {
@@ -51,24 +52,24 @@ const genConfig = (opts) => {
     input: 'src/index.ts',
     plugins: [
       typescript({
-        useTsconfigDeclarationDir: true
+        useTsconfigDeclarationDir: true,
       }),
-      eslint({ include: '**/*.js' })
+      eslint({ include: '**/*.js' }),
     ],
     output: {
       file: opts.file,
       name: 'bodyScrollLock',
       banner,
-      format: opts.format
-    }
+      format: opts.format,
+    },
   }
 
   if (opts.env) {
     config.plugins.push(replace({
       preventAssignment: true,
       values: {
-        'process.env.NODE_ENV': JSON.stringify(opts.env)
-      }
+        'process.env.NODE_ENV': JSON.stringify(opts.env),
+      },
     }))
   }
   if (opts.transpile !== false) {
@@ -78,8 +79,8 @@ const genConfig = (opts) => {
   if (isProd) {
     config.plugins.push(terser({
       output: {
-        ascii_only: true
-      }
+        ascii_only: true,
+      },
     }))
   }
 

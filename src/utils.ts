@@ -23,7 +23,7 @@ export function getEventListenerOptions (options: AddEventListenerOptions): AddE
     get passive () {
       isSupportOptions = true
       return undefined
-    }
+    },
   }
 
   /* istanbul ignore next */

@@ -1,7 +1,7 @@
 import {
   isServer,
   detectOS,
-  getEventListenerOptions
+  getEventListenerOptions,
 } from './utils'
 
 type OverflowHiddenPcStyleType = 'overflow' | 'boxSizing' | 'paddingRight'
@@ -78,7 +78,7 @@ const handleScroll = (event: TouchEvent, targetElement: HTMLElement) => {
       scrollWidth,
       scrollHeight,
       clientWidth,
-      clientHeight
+      clientHeight,
     } = targetElement
     const clientX = event.targetTouches[0].clientX - initialClientX
     const clientY = event.targetTouches[0].clientY - initialClientY
@@ -108,7 +108,7 @@ const checkTargetElement = (targetElement?: Nullable<HTMLElement>) => {
 
   console.warn(
     'If scrolling is also required in the floating layer, ' +
-        'the target element must be provided.'
+        'the target element must be provided.',
   )
 }
 
