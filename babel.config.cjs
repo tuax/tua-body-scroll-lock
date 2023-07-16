@@ -4,19 +4,19 @@ module.exports = {
       presets: [
         [
           '@babel/preset-env',
-          { targets: { node: 'current' } }
+          { targets: { node: 'current' } },
         ],
-        '@babel/typescript'
-      ]
+        '@babel/typescript',
+      ],
     },
     production: {
       presets: [
         [
           '@babel/preset-env',
-          { modules: false }
+          { modules: false },
         ],
-        '@babel/typescript'
-      ]
-    }
-  }
+        '@babel/typescript',
+      ],
+    },
+  },
 }

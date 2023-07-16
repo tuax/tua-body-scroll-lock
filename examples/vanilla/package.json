@@ -1,0 +1,16 @@
+{
+  "name": "examples-vanilla",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "tua-body-scroll-lock": "workspace:*",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.0"
+  }
+}

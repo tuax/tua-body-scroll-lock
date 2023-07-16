@@ -4,10 +4,10 @@
 
 <img src="https://img.shields.io/badge/dependencies-none-green.svg" alt="dependencies">
 <a href="https://www.npmjs.com/package/tua-body-scroll-lock" target="_blank">
-    <img src="https://badgen.net/npm/dm/tua-body-scroll-lock" alt="Downloads per month">
-    <img src="https://img.shields.io/npm/v/tua-body-scroll-lock.svg" alt="Version">
-    <img src="https://img.shields.io/npm/v/tua-body-scroll-lock/next.svg" alt="Next Version">
-    <img src="https://img.shields.io/npm/l/tua-body-scroll-lock.svg" alt="License">
+  <img src="https://badgen.net/npm/dm/tua-body-scroll-lock" alt="Downloads per month">
+  <img src="https://img.shields.io/npm/v/tua-body-scroll-lock.svg" alt="Version">
+  <img src="https://img.shields.io/npm/v/tua-body-scroll-lock/next.svg" alt="Next Version">
+  <img src="https://img.shields.io/npm/l/tua-body-scroll-lock.svg" alt="License">
 </a>
 
 [English](./README.md) | 简体中文
@@ -77,18 +77,18 @@ $ yarn add tua-body-scroll-lock
 ```html
 <!-- unpkg -->
 <script type="module">
-    import { lock, unlock } from 'https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js'
+  import { lock, unlock } from 'https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js'
 
-    lock()
-    unlock()
+  lock()
+  unlock()
 </script>
 
 <!-- jsdelivr -->
 <script type="module">
-    import { lock, unlock } from 'https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js'
+  import { lock, unlock } from 'https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js'
 
-    lock()
-    unlock()
+  lock()
+  unlock()
 </script>
 ```
 
@@ -104,18 +104,18 @@ $ yarn add tua-body-scroll-lock
 ```html
 <!-- unpkg -->
 <script type="module">
-    import { lock, unlock } from 'https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js'
+  import { lock, unlock } from 'https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js'
 
-    lock()
-    unlock()
+  lock()
+  unlock()
 </script>
 
 <!-- jsdelivr -->
 <script type="module">
-    import { lock, unlock } from 'https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js'
+  import { lock, unlock } from 'https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js'
 
-    lock()
-    unlock()
+  lock()
+  unlock()
 </script>
 ```
 
@@ -154,6 +154,7 @@ unlock(targetElements)
 
 ### clearBodyLocks
 在单页应用中，如果调用过`lock`，但是在跳转其他路由下的页面前忘记调用`unlock`，这是很糟糕的。因为对页面的操作都没有恢复，比如ios中禁止了`touchmove`；`clearBodyLocks`就是用来清除所有的副作用。当前你也可以调用`unlock`，但是如果之前调用过多次`lock`，那么就必须要调用多次`unlock`，这样很不友好。
+
 #### [demo.vue](https://codepen.io/evinma/pen/OJNJdoy)
 ```js
 <template>
@@ -184,7 +185,6 @@ export default {
 }
 </script>
 ```
-
 
 ## Demo
 
