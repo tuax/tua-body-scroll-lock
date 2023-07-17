@@ -156,11 +156,16 @@ In the SPA, if you called `lock`, but forgot to call `unlock` before jumping to 
 
 ![bodyScrollLock](./tua-bsl.png)
 
+Please see these examples:
+- [vue](./examples/vue/)
+- [react](./examples/react/)
+- [vanilla](./examples/vanilla/)
+
 platform | link |
 | - | -
 gh-pages | https://tuateam.github.io/tua-body-scroll-lock |
 jsbin | https://jsbin.com/cafiful/edit?output |
-codepen | https://codepen.io/buptsteve/pen/PvNQjP |
+codepen | https://codepen.io/buptsteve-the-encoder/pen/QWJmJxB |
 jsfiddle | https://jsfiddle.net/buptsteve/6u8g3Lf5/ |
 codesandbox | https://codesandbox.io/s/o73z4jy5q9 |
 

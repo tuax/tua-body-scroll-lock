@@ -1,37 +1,26 @@
-<!-- Please don't delete this template -->
+<!-- Thank you for contributing! -->
 
-<!-- PULL REQUEST TEMPLATE -->
-<!-- (Update "[ ]" to "[x]" to check a box) -->
+### Before submitting the PR, please make sure you do the following
 
-**Summary**
+- [ ] Read the [Contributing Guidelines](../CONTRIBUTING.md).
+- [ ] Check that there isn't already a PR that solves the problem the same way to avoid creating a duplicate.
+- [ ] Provide a description in this PR that addresses **what** the PR is solving, or reference the issue that it solves (e.g. `close #123`).
+- [ ] Ideally, include relevant tests that fail without this PR but pass with it.
 
-**What kind of change does this PR introduce?** (check at least one)
+---
 
-- [ ] Bug fix
-- [ ] Feature
-- [ ] Code style update
-- [ ] Refactor
-- [ ] Docs
-- [ ] Build-related changes
-- [ ] Other, please describe:
+### Description
 
-**The PR fulfills these requirements:**
+<!-- Please insert your description here and provide especially info about the "what" this PR is solving -->
 
-- [ ] When resolving a specific issue, it's referenced in the PR's title (e.g. `fix #xxx[,#xxx]`, where "xxx" is the issue number)
+### Additional context
 
-You have tested in the following platforms:
+<!-- e.g. is there anything you'd like reviewers to focus on? -->
 
-- [ ] PC
-- [ ] iOS
-- [ ] Android
+---
 
-Providing a reproduction demo will be better(you can pick a platform below and **fork** the demo):
+<!-- These allow GitHub Copilot to provide summary for your PR, do not remove it -->
 
-* jsbin: https://jsbin.com/cafiful/edit?output
-* codepen: https://codepen.io/buptsteve/pen/PvNQjP
-* jsfiddle: https://jsfiddle.net/buptsteve/6u8g3Lf5/
-* codesandbox: https://codesandbox.io/s/o73z4jy5q9
+copilot:summary
 
-To avoid wasting your time, it's best to open a **feature request issue** first and wait for approval before working on it.
-
-**Other information:**
+copilot:walkthrough
