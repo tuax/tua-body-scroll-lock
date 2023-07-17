@@ -27,18 +27,25 @@ English | [简体中文](./README-zh_CN.md)
 ### Node Package Manager(recommended)
 
 ```bash
-$ npm i -S tua-body-scroll-lock
-# OR
-$ yarn add tua-body-scroll-lock
+pnpm i tua-body-scroll-lock
 ```
 
 ### CDN
-* UMD(`tua-bsl.umd.js`)
-  * unpkg: https://unpkg.com/tua-body-scroll-lock
-  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock
+<details>
+<summary>UMD(`tua-bsl.umd.js`)</summary>
+
+```html
+<!-- unpkg -->
+<script src="https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.js"></script>
+
+<!-- jsdelivr -->
+<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.js"></script>
+```
+
+</details>
 
 <details>
-<summary>example code</summary>
+<summary>Minified UMD(`tua-bsl.umd.min.js`)</summary>
 
 ```html
 <!-- unpkg -->
@@ -50,29 +57,8 @@ $ yarn add tua-body-scroll-lock
 
 </details>
 
-* Minified UMD(`tua-bsl.umd.min.js`)
-  * unpkg: https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.min.js
-  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js
-
 <details>
-<summary>example code</summary>
-
-```html
-<!-- unpkg -->
-<script src="https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.min.js"></script>
-
-<!-- jsdelivr -->
-<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js"></script>
-```
-
-</details>
-
-* ESM in browser(`tua-bsl.esm.browser.js`)
-  * unpkg: https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js
-  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js
-
-<details>
-<summary>example code</summary>
+<summary>ESM in browser(`tua-bsl.esm.browser.js`)</summary>
 
 ```html
 <!-- unpkg -->
@@ -94,12 +80,8 @@ $ yarn add tua-body-scroll-lock
 
 </details>
 
-* Minified ESM in browser(`tua-bsl.esm.browser.min.js`)
-  * unpkg: https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js
-  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js
-
 <details>
-<summary>example code</summary>
+<summary>Minified ESM in browser(`tua-bsl.esm.browser.min.js`)</summary>
 
 ```html
 <!-- unpkg -->
@@ -131,6 +113,21 @@ lock()
 unlock()
 ```
 
+### Options
+#### overflowType: 'hidden' | 'clip'
+
+optional, default: 'hidden'
+
+`clip` is suitable for adapting elements of `position: sticky` in high-version browsers (Chrome 90 +).
+
+> https://caniuse.com/mdn-css_types_overflow_clip
+
+```js
+import { lock } from 'tua-body-scroll-lock'
+
+lock(targetElement, { overflowType: 'clip' })
+```
+
 ### TargetElement needs scrolling（iOS only）
 In some scenarios, when scrolling is prohibited, some elements still need to scroll, at this point, pass the targetElement.
 
@@ -155,38 +152,7 @@ unlock(targetElements)
 ### clearBodyLocks
 In the SPA, if you called `lock`, but forgot to call `unlock` before jumping to other pages, that is too bad. Because the operation of the page is not restored, such as forbid `touchmove`, `clearBodyLocks` is used to clear all side effects. Sure, you can also call `unlock`, but if you have called `lock` multiple times, you must call `unlock` multiple times, which is very unfriendly.
 
-#### [demo.vue](https://codepen.io/evinma/pen/OJNJdoy)
-```js
-<template>
-  // some element
-</template>
-<script>
-import { lock, unlock, clearBodyLocks } from 'tua-body-scroll-lock';
-
-export default {
-  name: 'demo',
-  data () {
-    return {}
-  },
-  methods: {
-    showDialog () {
-      // Disable body scroll
-      lock()
-    },
-    hideDialog () {
-      // Enable body scroll
-      unlock()
-    }
-  },
-  beforeDestroy () {
-    // If forgot to call unlock before jumping to other pages, `clearBodyLocks` can clean all side effect.
-    clearBodyLocks()
-  }
-}
-</script>
-```
-
-## Demo
+## Examples
 
 ![bodyScrollLock](./tua-bsl.png)
 

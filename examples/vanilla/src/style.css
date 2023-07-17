@@ -5,25 +5,17 @@
   user-select: none;
 }
 
-html {
-  padding-right: 50px;
-}
-
 body {
   text-align: center;
 }
 
 header {
-  position: fixed;
+  position: sticky;
   top: 0;
   right: 0;
   left: 0;
 
   background: #fff;
-}
-
-.content {
-  padding-top: 70px;
 }
 
 #btn {
@@ -34,6 +26,7 @@ header {
 
 #list {
   margin: 0 20px;
+  padding-right: 50px;
 }
 
 #modalTwo > h2 {
