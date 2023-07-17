@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import HeaderPart from './HeaderPart.vue'
 import ModalOne from './ModalOne.vue'
 import ModalTwo from './ModalTwo.vue'
 
@@ -10,6 +11,8 @@ const showModalTwo = ref(false)
 </script>
 
 <template>
+  <HeaderPart/>
+
   <button id="btn" @click="showModalOne = true">
     click me to <br />show dialog one
   </button>

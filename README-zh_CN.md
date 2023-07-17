@@ -156,11 +156,16 @@ unlock(targetElements)
 
 ![bodyScrollLock](./tua-bsl.png)
 
+请查看这些示例项目
+- [vue](./examples/vue/)
+- [react](./examples/react/)
+- [vanilla](./examples/vanilla/)
+
 平台 | 链接 |
 | - | -
 gh-pages | https://tuateam.github.io/tua-body-scroll-lock |
 jsbin | https://jsbin.com/cafiful/edit?output |
-codepen | https://codepen.io/buptsteve/pen/PvNQjP |
+codepen | https://codepen.io/buptsteve-the-encoder/pen/QWJmJxB |
 jsfiddle | https://jsfiddle.net/buptsteve/6u8g3Lf5/ |
 codesandbox | https://codesandbox.io/s/o73z4jy5q9 |
 

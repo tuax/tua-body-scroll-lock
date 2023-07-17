@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { HeaderPart } from './HeaderPart'
 import { ModalOne } from './ModalOne'
 import { ModalTwo } from './ModalTwo'
 
@@ -9,6 +10,8 @@ function App () {
 
   return (
     <>
+      <HeaderPart/>
+
       <button id="btn" onClick={() => setShowModalOne(true)}>click me to <br />show dialog one</button>
 
       { showModalOne &&
