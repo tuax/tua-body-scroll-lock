@@ -1,6 +1,6 @@
 /**
- * tua-body-scroll-lock v1.2.0
- * (c) 2020 Evinma, BuptStEve
+ * tua-body-scroll-lock v1.3.1
+ * (c) 2023 Evinma, BuptStEve
  * @license MIT
  */
 
@@ -24,10 +24,11 @@ function getEventListenerOptions(options) {
     const listenerOptions = {
         get passive() {
             isSupportOptions = true;
-            return;
+            return undefined;
         },
     };
     /* istanbul ignore next */
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const noop = () => { };
     const testEvent = '__TUA_BSL_TEST_PASSIVE__';
     window.addEventListener(testEvent, noop, listenerOptions);
@@ -48,16 +49,18 @@ let unLockCallback = null;
 let documentListenerAdded = false;
 const lockedElements = [];
 const eventListenerOptions = getEventListenerOptions({ passive: false });
+const supportsNativeSmoothScroll = !isServer() && 'scrollBehavior' in document.documentElement.style;
 const setOverflowHiddenPc = () => {
-    const $body = document.body;
-    const bodyStyle = Object.assign({}, $body.style);
-    const scrollBarWidth = window.innerWidth - $body.clientWidth;
-    $body.style.overflow = 'hidden';
-    $body.style.boxSizing = 'border-box';
-    $body.style.paddingRight = `${scrollBarWidth}px`;
+    const $html = document.documentElement;
+    const htmlStyle = Object.assign({}, $html.style);
+    const scrollBarWidth = window.innerWidth - $html.clientWidth;
+    const previousPaddingRight = parseInt(window.getComputedStyle($html).paddingRight, 10);
+    $html.style.overflow = 'hidden';
+    $html.style.boxSizing = 'border-box';
+    $html.style.paddingRight = `${scrollBarWidth + previousPaddingRight}px`;
     return () => {
         ['overflow', 'boxSizing', 'paddingRight'].forEach((x) => {
-            $body.style[x] = bodyStyle[x] || '';
+            $html.style[x] = htmlStyle[x] || '';
         });
     };
 };
@@ -80,7 +83,10 @@ const setOverflowHiddenMobile = () => {
         ['top', 'width', 'height', 'overflow', 'position'].forEach((x) => {
             $body.style[x] = bodyStyle[x] || '';
         });
-        window.scrollTo(0, scrollTop);
+        const scrollToOptions = { top: scrollTop, behavior: 'instant' };
+        supportsNativeSmoothScroll
+            ? window.scrollTo(scrollToOptions)
+            : window.scrollTo(0, scrollTop);
     };
 };
 const preventDefault = (event) => {
@@ -111,8 +117,8 @@ const checkTargetElement = (targetElement) => {
         return;
     if (targetElement === null)
         return;
-    console.warn(`If scrolling is also required in the floating layer, ` +
-        `the target element must be provided.`);
+    console.warn('If scrolling is also required in the floating layer, ' +
+        'the target element must be provided.');
 };
 const lock = (targetElement) => {
     if (isServer())
