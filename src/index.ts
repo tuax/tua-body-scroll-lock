@@ -4,9 +4,11 @@ import {
   getEventListenerOptions,
 } from './utils'
 
-type OverflowHiddenPcStyleType = 'overflow' | 'boxSizing' | 'paddingRight'
-type OverflowHiddenMobileStyleType = 'top' | 'width' | 'height' | 'overflow' | 'position'
 type Nullable<T> = T | Array<T> | null
+
+export interface BSLOptions {
+  overflowType?: 'hidden' | 'clip'
+}
 
 let lockedNum = 0
 let initialClientY = 0
@@ -29,13 +31,13 @@ const setOverflowHiddenPc = () => {
   $html.style.paddingRight = `${scrollBarWidth + previousPaddingRight}px`
 
   return () => {
-    ['overflow', 'boxSizing', 'paddingRight'].forEach((x: OverflowHiddenPcStyleType) => {
+    (['overflow', 'boxSizing', 'paddingRight'] as const).forEach((x) => {
       $html.style[x] = htmlStyle[x] || ''
     })
   }
 }
 
-const setOverflowHiddenMobile = () => {
+const setOverflowHiddenMobile = (options?: BSLOptions) => {
   const $html = document.documentElement
   const $body = document.body
   const scrollTop = $html.scrollTop || $body.scrollTop
@@ -49,13 +51,13 @@ const setOverflowHiddenMobile = () => {
   $body.style.width = '100%'
   $body.style.height = 'auto'
   $body.style.position = 'fixed'
-  $body.style.overflow = 'hidden'
+  $body.style.overflow = options?.overflowType || 'hidden'
 
   return () => {
     $html.style.height = htmlStyle.height || ''
     $html.style.overflow = htmlStyle.overflow || ''
 
-    ;['top', 'width', 'height', 'overflow', 'position'].forEach((x: OverflowHiddenMobileStyleType) => {
+    ;(['top', 'width', 'height', 'overflow', 'position'] as const).forEach((x) => {
       $body.style[x] = bodyStyle[x] || ''
     })
 
@@ -114,7 +116,7 @@ const checkTargetElement = (targetElement?: Nullable<HTMLElement>) => {
   )
 }
 
-const lock = (targetElement?: Nullable<HTMLElement>) => {
+const lock = (targetElement?: Nullable<HTMLElement>, options?: BSLOptions) => {
   if (isServer()) return
 
   checkTargetElement(targetElement)
@@ -148,7 +150,7 @@ const lock = (targetElement?: Nullable<HTMLElement>) => {
     }
   } else if (lockedNum <= 0) {
     unLockCallback = detectOS().android
-      ? setOverflowHiddenMobile()
+      ? setOverflowHiddenMobile(options)
       : setOverflowHiddenPc()
   }
 
@@ -164,7 +166,7 @@ const unlock = (targetElement?: Nullable<HTMLElement>) => {
   if (lockedNum > 0) return
   if (
     !detectOS().ios &&
-        typeof unLockCallback === 'function'
+    typeof unLockCallback === 'function'
   ) {
     unLockCallback()
     return
@@ -197,7 +199,7 @@ const clearBodyLocks = () => {
   lockedNum = 0
   if (
     !detectOS().ios &&
-        typeof unLockCallback === 'function'
+    typeof unLockCallback === 'function'
   ) {
     unLockCallback()
     return
