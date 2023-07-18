@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import HeaderPart from './HeaderPart.vue'
 import ModalOne from './ModalOne.vue'
 import ModalTwo from './ModalTwo.vue'
 
@@ -10,31 +11,32 @@ const showModalTwo = ref(false)
 </script>
 
 <template>
-  <section class="content">
-    <button id="btn" @click="showModalOne = true">
-      click me to <br />show dialog one
-    </button>
+  <HeaderPart/>
 
-    <ModalOne v-model:visible="showModalOne" @click-btn="showModalTwo = true"/>
+  <button id="btn" @click="showModalOne = true">
+    click me to <br />show dialog one
+  </button>
 
-    <ModalTwo v-model:visible="showModalTwo"/>
+  <ModalOne v-model:visible="showModalOne" @click-btn="showModalTwo = true"/>
 
-    <div style="margin: 0 20px;">
-      <p v-for="i in 50" :key="i">{{i}} scroll me~</p>
-    </div>
-  </section>
+  <ModalTwo v-model:visible="showModalTwo"/>
+
+  <div id="list">
+    <p v-for="i in 150" :key="i">{{i}} scroll me~</p>
+  </div>
 </template>
 
 <style>
-
-.content {
-  padding-top: 70px;
-}
 
 #btn {
   position: fixed;
   top: 150px;
   left: 20px;
+}
+
+#list {
+  margin: 0 20px;
+  padding-right: 50px;
 }
 
 button {

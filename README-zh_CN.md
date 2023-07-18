@@ -27,18 +27,25 @@
 ### Node Package Manager(recommended)
 
 ```bash
-$ npm i -S tua-body-scroll-lock
-# OR
-$ yarn add tua-body-scroll-lock
+pnpm i tua-body-scroll-lock
 ```
 
 ### CDN
-* UMD(`tua-bsl.umd.js`)
-  * unpkg: https://unpkg.com/tua-body-scroll-lock
-  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock
+<details>
+<summary>UMD(`tua-bsl.umd.js`)</summary>
+
+```html
+<!-- unpkg -->
+<script src="https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.js"></script>
+
+<!-- jsdelivr -->
+<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.js"></script>
+```
+
+</details>
 
 <details>
-<summary>example code</summary>
+<summary>压缩版本的 UMD(`tua-bsl.umd.min.js`)</summary>
 
 ```html
 <!-- unpkg -->
@@ -50,29 +57,8 @@ $ yarn add tua-body-scroll-lock
 
 </details>
 
-* Minified UMD(`tua-bsl.umd.min.js`)
-  * unpkg: https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.min.js
-  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js
-
 <details>
-<summary>example code</summary>
-
-```html
-<!-- unpkg -->
-<script src="https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.umd.min.js"></script>
-
-<!-- jsdelivr -->
-<script src="https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.umd.min.js"></script>
-```
-
-</details>
-
-* ESM in browser(`tua-bsl.esm.browser.js`)
-  * unpkg: https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js
-  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.js
-
-<details>
-<summary>example code</summary>
+<summary>ESM in browser(`tua-bsl.esm.browser.js`)</summary>
 
 ```html
 <!-- unpkg -->
@@ -94,12 +80,8 @@ $ yarn add tua-body-scroll-lock
 
 </details>
 
-* Minified ESM in browser(`tua-bsl.esm.browser.min.js`)
-  * unpkg: https://unpkg.com/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js
-  * jsdelivr: https://cdn.jsdelivr.net/npm/tua-body-scroll-lock/dist/tua-bsl.esm.browser.min.js
-
 <details>
-<summary>example code</summary>
+<summary>压缩版本的 ESM in browser(`tua-bsl.esm.browser.min.js`)</summary>
 
 ```html
 <!-- unpkg -->
@@ -131,6 +113,21 @@ lock()
 unlock()
 ```
 
+### 选项
+#### overflowType: 'hidden' | 'clip'
+
+可选，默认值: 'hidden'
+
+`clip` 适合在高版本浏览器中（Chrome 90+）适配 `position: sticky` 的元素。
+
+> https://caniuse.com/mdn-css_types_overflow_clip
+
+```js
+import { lock } from 'tua-body-scroll-lock'
+
+lock(targetElement, { overflowType: 'clip' })
+```
+
 ### 目标元素需要滚动（iOS only）
 在某些场景下，禁止滚动穿透时，仍然有些元素需要滚动行为，此时传入目标 DOM 元素即可。
 
@@ -155,46 +152,20 @@ unlock(targetElements)
 ### clearBodyLocks
 在单页应用中，如果调用过`lock`，但是在跳转其他路由下的页面前忘记调用`unlock`，这是很糟糕的。因为对页面的操作都没有恢复，比如ios中禁止了`touchmove`；`clearBodyLocks`就是用来清除所有的副作用。当前你也可以调用`unlock`，但是如果之前调用过多次`lock`，那么就必须要调用多次`unlock`，这样很不友好。
 
-#### [demo.vue](https://codepen.io/evinma/pen/OJNJdoy)
-```js
-<template>
-  // some element
-</template>
-<script>
-import { lock, unlock, clearBodyLocks } from 'tua-body-scroll-lock';
-
-export default {
-  name: 'demo',
-  data () {
-    return {}
-  },
-  methods: {
-    showDialog () {
-      // 禁止滑动
-      lock()
-    },
-    hideDialog () {
-      // 开始滑动
-      unlock()
-    }
-  },
-  beforeDestroy () {
-    // 在跳转其他路由下的页面前忘记调用`unlock`，`clearBodyLocks`可以清除所有的副作用。
-    clearBodyLocks()
-  }
-}
-</script>
-```
-
-## Demo
+## 示例
 
 ![bodyScrollLock](./tua-bsl.png)
+
+请查看这些示例项目
+- [vue](./examples/vue/)
+- [react](./examples/react/)
+- [vanilla](./examples/vanilla/)
 
 平台 | 链接 |
 | - | -
 gh-pages | https://tuateam.github.io/tua-body-scroll-lock |
 jsbin | https://jsbin.com/cafiful/edit?output |
-codepen | https://codepen.io/buptsteve/pen/PvNQjP |
+codepen | https://codepen.io/buptsteve-the-encoder/pen/QWJmJxB |
 jsfiddle | https://jsfiddle.net/buptsteve/6u8g3Lf5/ |
 codesandbox | https://codesandbox.io/s/o73z4jy5q9 |
 

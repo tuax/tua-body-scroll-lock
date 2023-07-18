@@ -10,7 +10,7 @@ const targetTwoRef = ref<HTMLElement>()
 
 watch(() => props.visible, () => {
   if (props.visible) {
-    lock([targetOneRef.value!, targetTwoRef.value!])
+    lock([targetOneRef.value!, targetTwoRef.value!], { overflowType: 'clip' })
   } else {
     unlock([targetOneRef.value!, targetTwoRef.value!])
   }
