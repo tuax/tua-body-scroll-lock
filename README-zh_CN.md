@@ -15,14 +15,6 @@
 ## 介绍
 `tua-body-scroll-lock` 解决了所有场景下滚动穿透的问题。
 
-### 为什么不用 [body-scroll-lock(BSL)](https://github.com/willmcpo/body-scroll-lock)？
-* 低版本安卓下失效
-* PC 端滚轮行为失效
-* iOS 端触摸非 `targetElement` 时失效
-* 使用时必须传 `targetElement`（即使并不需要）
-
-[😱BSL 居然不能用？不妨自己试试这个用了 BSL 的 demo](https://codepen.io/buptsteve/pen/EJoKQK)
-
 ## 安装
 ### Node Package Manager(recommended)
 

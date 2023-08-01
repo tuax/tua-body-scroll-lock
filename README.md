@@ -15,14 +15,6 @@ English | [简体中文](./README-zh_CN.md)
 ## Introduction
 `tua-body-scroll-lock` enables body scroll locking for everything.
 
-### Why not [body-scroll-lock(BSL)](https://github.com/willmcpo/body-scroll-lock)?
-* Doesn't work on Android webview
-* Doesn't work on PC with mouse wheel
-* Doesn't work on iOS, if you touch somewhere instead of `targetElement`
-* Must pass `targetElement`, even if it's not necessary
-
-[😱Can't believe it? Please try this demo with BSL yourself.](https://codepen.io/buptsteve/pen/EJoKQK)
-
 ## Install
 ### Node Package Manager(recommended)
 
