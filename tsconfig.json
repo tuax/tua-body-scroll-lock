@@ -1,29 +1,29 @@
 {
-    "compilerOptions": {
-        "strict": true,
-        "pretty": true,
-        "target": "es6",
-        "module": "esnext",
-        "baseUrl": ".",
-        "declaration": true,
-        "diagnostics": true,
-        "skipLibCheck": true,
-        "noEmitOnError": true,
-        "noUnusedLocals": true,
-        "declarationDir": "dist",
-        "noUnusedParameters": true,
-        "strictFunctionTypes": false,
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
-        "strictPropertyInitialization": false,
-        "lib": [
-            "dom",
-            "es2015"
-        ],
-        "paths":{
-            "@/*": ["src/*"]
-        }
-    },
-    "include": ["src"],
-    "exclude": ["node_modules", "dist"]
+  "compilerOptions": {
+    "strict": true,
+    "pretty": true,
+    "target": "es6",
+    "module": "esnext",
+    "baseUrl": ".",
+    "declaration": true,
+    "diagnostics": true,
+    "skipLibCheck": true,
+    "noEmitOnError": true,
+    "noUnusedLocals": true,
+    "declarationDir": "dist",
+    "noUnusedParameters": true,
+    "strictFunctionTypes": false,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "paths":{
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,3 +1,5 @@
+import { Nullable } from './types'
+
 export const isServer = () => typeof window === 'undefined'
 
 export interface DetectOSResult { ios: boolean, android: boolean }
@@ -41,4 +43,26 @@ export function getEventListenerOptions (options: AddEventListenerOptions): AddE
     : typeof capture !== 'undefined'
       ? capture
       : false
+}
+
+export function noticeRequiredTargetElement (targetElement?: Nullable<HTMLElement>): boolean {
+  if (targetElement) return false
+  if (targetElement === null) return false
+  /* istanbul ignore if */
+  if (process.env.NODE_ENV === 'production') return false
+
+  /* istanbul ignore if */
+  if (process.env.NODE_ENV !== 'test') {
+    console.warn(
+      'If scrolling is also required in the floating layer, ' +
+      'the target element must be provided.',
+    )
+  }
+  return true
+}
+
+export function preventEventDefault (event: TouchEvent) {
+  if (!event.cancelable) return
+
+  event.preventDefault()
 }

@@ -5,6 +5,7 @@ import {
   isServer,
   detectOS,
   getEventListenerOptions,
+  noticeRequiredTargetElement,
 } from '@/utils'
 
 describe('utils', () => {
@@ -38,5 +39,12 @@ describe('utils', () => {
     expect(getEventListenerOptions).toThrow('options must be provided')
     const options = { passive: false, once: true, capture: true }
     expect(getEventListenerOptions(options)).toMatchObject(options)
+  })
+
+  it('should notice user required targetElement param', () => {
+    expect(noticeRequiredTargetElement(null)).toBe(false)
+    expect(noticeRequiredTargetElement(document.querySelector('div'))).toBe(false)
+
+    expect(noticeRequiredTargetElement()).toBe(true)
   })
 })
