@@ -27,5 +27,6 @@ export interface BSLOptions {
 declare global {
     interface Window {
         __BSL_LOCK_STATE__?: LockState;
+        __BSL_PREVENT_DEFAULT__?: (event: TouchEvent) => void;
     }
 }

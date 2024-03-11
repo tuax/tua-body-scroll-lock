@@ -7,4 +7,7 @@ export interface DetectOSResult {
 export declare const detectOS: (ua?: string) => DetectOSResult;
 export declare function getEventListenerOptions(options: AddEventListenerOptions): AddEventListenerOptions | boolean;
 export declare function noticeRequiredTargetElement(targetElement?: Nullable<HTMLElement>): boolean;
-export declare function preventEventDefault(event: TouchEvent): void;
+/**
+ * Get global function that calls preventDefault
+ */
+export declare function getPreventEventDefault(): (event: TouchEvent) => void;

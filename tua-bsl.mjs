@@ -52,9 +52,18 @@ function noticeRequiredTargetElement(targetElement) {
   }
   return true;
 }
-function preventEventDefault(event) {
-  if (!event.cancelable) return;
-  event.preventDefault();
+/**
+ * Get global function that calls preventDefault
+ */
+function getPreventEventDefault() {
+  if ('__BSL_PREVENT_DEFAULT__' in window) {
+    return window.__BSL_PREVENT_DEFAULT__;
+  }
+  window.__BSL_PREVENT_DEFAULT__ = function (event) {
+    if (!event.cancelable) return;
+    event.preventDefault();
+  };
+  return window.__BSL_PREVENT_DEFAULT__;
 }
 
 var initialLockState = {
@@ -95,7 +104,7 @@ function handleScroll(event, targetElement, initialClientPos) {
     var isOnRight = clientX < 0 && scrollLeft + clientWidth + 1 >= scrollWidth;
     var isOnBottom = clientY < 0 && scrollTop + clientHeight + 1 >= scrollHeight;
     if (isVertical && (isOnTop || isOnBottom) || !isVertical && (isOnLeft || isOnRight)) {
-      return preventEventDefault(event);
+      return getPreventEventDefault()(event);
     }
   }
   event.stopPropagation();
@@ -178,7 +187,7 @@ function lock(targetElement, options) {
       });
     }
     if (!lockState.documentListenerAdded) {
-      document.addEventListener('touchmove', preventEventDefault, eventListenerOptions);
+      document.addEventListener('touchmove', getPreventEventDefault(), eventListenerOptions);
       lockState.documentListenerAdded = true;
     }
   } else if (lockState.lockedNum <= 0) {
@@ -209,7 +218,7 @@ function unlock(targetElement, options) {
     });
   }
   if (lockState.documentListenerAdded) {
-    document.removeEventListener('touchmove', preventEventDefault, eventListenerOptions);
+    document.removeEventListener('touchmove', getPreventEventDefault(), eventListenerOptions);
     lockState.documentListenerAdded = false;
   }
 }
@@ -232,7 +241,7 @@ function clearBodyLocks(options) {
     }
   }
   if (lockState.documentListenerAdded) {
-    document.removeEventListener('touchmove', preventEventDefault, eventListenerOptions);
+    document.removeEventListener('touchmove', getPreventEventDefault(), eventListenerOptions);
     lockState.documentListenerAdded = false;
   }
 }
