@@ -1,3 +1,4 @@
+import { Nullable } from './types';
 export declare const isServer: () => boolean;
 export interface DetectOSResult {
     ios: boolean;
@@ -5,3 +6,5 @@ export interface DetectOSResult {
 }
 export declare const detectOS: (ua?: string) => DetectOSResult;
 export declare function getEventListenerOptions(options: AddEventListenerOptions): AddEventListenerOptions | boolean;
+export declare function noticeRequiredTargetElement(targetElement?: Nullable<HTMLElement>): boolean;
+export declare function preventEventDefault(event: TouchEvent): void;
