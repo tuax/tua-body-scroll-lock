@@ -9,9 +9,15 @@ export function ModalOne (props: {
   const targetTwoRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    lock([targetOneRef.current!, targetTwoRef.current!], { overflowType: 'clip' })
+    lock(
+      [targetOneRef.current!, targetTwoRef.current!],
+      { overflowType: 'clip', useGlobalLockState: true },
+    )
     return () => {
-      unlock([targetOneRef.current!, targetTwoRef.current!])
+      unlock(
+        [targetOneRef.current!, targetTwoRef.current!],
+        { useGlobalLockState: true },
+      )
     }
   }, [])
 

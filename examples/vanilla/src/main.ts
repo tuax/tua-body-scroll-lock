@@ -1,5 +1,5 @@
 import './style.css'
-import { lock, unlock } from 'tua-body-scroll-lock'
+import { type BSLOptions, lock, unlock } from 'tua-body-scroll-lock'
 
 import { name } from '../package.json'
 
@@ -21,6 +21,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </header>
 
   <button id="btn">click me to <br />show dialog one</button>
+
+  <button id="clearBtn">
+    click me to <br />clear all body locks
+  </button>
 
   <div id="modalOne" class="modal">
     <h2>
@@ -51,12 +55,12 @@ const $targetThree = $<HTMLElement>('#targetThree')!
 // show modals
 $('#btn')!.addEventListener('click', () => {
   $modalOne.style.display = 'block'
-  lock([$targetOne, $targetTwo], { overflowType: 'clip' })
+  lock([$targetOne, $targetTwo], { overflowType: 'clip', useGlobalLockState: true })
 })
 
 $('#modalBtn')!.addEventListener('click', () => {
   $modalTwo.style.display = 'block'
-  lock($targetThree)
+  lock($targetThree, { useGlobalLockState: true })
 })
 
 // hide modals
@@ -64,12 +68,24 @@ $modalOne.addEventListener('click', (event) => {
   if (['modalBtn', 'targetOne'].includes((event.target as HTMLElement).id)) return
 
   $modalOne.style.display = 'none'
-  unlock([$targetOne, $targetTwo])
+  unlock([$targetOne, $targetTwo], { useGlobalLockState: true })
 })
 
 $modalTwo.addEventListener('click', (event) => {
   if ((event.target as HTMLElement).id === 'targetThree') return
 
   $modalTwo.style.display = 'none'
-  unlock($targetThree)
+  unlock($targetThree, { useGlobalLockState: true })
+})
+
+declare global {
+  interface Window {
+    bodyScrollLock: {
+      clearBodyLocks: (options?: BSLOptions) => void;
+    };
+  }
+}
+
+$('#clearBtn')!.addEventListener('click', () => {
+  window.bodyScrollLock.clearBodyLocks({ useGlobalLockState: true })
 })

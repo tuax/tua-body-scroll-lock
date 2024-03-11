@@ -140,6 +140,12 @@ import { lock } from 'tua-body-scroll-lock'
 lock(targetElement, { overflowType: 'clip' })
 ```
 
+#### useGlobalLockState: boolean
+
+可选，默认值: false
+
+是否为页面上所有 BSL 实例共享 `lockState` 的状态。在你的页面上有多个 BSL 实例时很有用。
+
 ### 目标元素需要滚动（iOS only）
 在某些场景下，禁止滚动穿透时，仍然有些元素需要滚动行为，此时传入目标 DOM 元素即可。
 

@@ -1,7 +1,7 @@
 module.exports = {
   verbose: false,
   collectCoverage: true,
-  collectCoverageFrom: ['src/utils.ts'],
+  collectCoverageFrom: ['src'],
   transform: {
     '^.+\\.[j|t]sx?$': 'babel-jest',
   },

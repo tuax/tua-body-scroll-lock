@@ -10,9 +10,15 @@ const targetTwoRef = ref<HTMLElement>()
 
 watch(() => props.visible, () => {
   if (props.visible) {
-    lock([targetOneRef.value!, targetTwoRef.value!], { overflowType: 'clip' })
+    lock(
+      [targetOneRef.value!, targetTwoRef.value!],
+      { overflowType: 'clip', useGlobalLockState: true },
+    )
   } else {
-    unlock([targetOneRef.value!, targetTwoRef.value!])
+    unlock(
+      [targetOneRef.value!, targetTwoRef.value!],
+      { useGlobalLockState: true },
+    )
   }
 })
 
@@ -22,7 +28,7 @@ watch(() => props.visible, () => {
   <div class="modal" v-show="props.visible" @click="emits('update:visible', false)">
     <h2>
       dialog one
-      <button @click="emits('clickBtn')">click me to show dialog two</button>
+      <button @click.stop="emits('clickBtn')">click me to show dialog two</button>
     </h2>
 
     <div id="targetOne" ref="targetOneRef" class="target" @click.stop>
