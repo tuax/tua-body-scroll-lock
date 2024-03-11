@@ -7,9 +7,9 @@ export function ModalTwo (props: {
   const targetThree = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    lock(targetThree.current!)
+    lock(targetThree.current!, { useGlobalLockState: true })
     return () => {
-      unlock(targetThree.current!)
+      unlock(targetThree.current!, { useGlobalLockState: true })
     }
   }, [])
 

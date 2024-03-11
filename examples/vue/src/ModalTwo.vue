@@ -9,9 +9,9 @@ const targetThreeRef = ref<HTMLElement>()
 
 watch(() => props.visible, () => {
   if (props.visible) {
-    lock(targetThreeRef.value!)
+    lock(targetThreeRef.value!, { useGlobalLockState: true })
   } else {
-    unlock(targetThreeRef.value!)
+    unlock(targetThreeRef.value!, { useGlobalLockState: true })
   }
 })
 

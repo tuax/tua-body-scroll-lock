@@ -61,8 +61,18 @@ export function noticeRequiredTargetElement (targetElement?: Nullable<HTMLElemen
   return true
 }
 
-export function preventEventDefault (event: TouchEvent) {
-  if (!event.cancelable) return
+/**
+ * Get global function that calls preventDefault
+ */
+export function getPreventEventDefault () {
+  if ('__BSL_PREVENT_DEFAULT__' in window) {
+    return window.__BSL_PREVENT_DEFAULT__!
+  }
 
-  event.preventDefault()
+  window.__BSL_PREVENT_DEFAULT__ = function (event: TouchEvent) {
+    if (!event.cancelable) return
+
+    event.preventDefault()
+  }
+  return window.__BSL_PREVENT_DEFAULT__
 }

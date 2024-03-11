@@ -13,7 +13,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/tua-bsl.mjs",
       "require": "./dist/tua-bsl.umd.js"
-    }
+    },
+    "./dist/*": "./dist/*"
   },
   "scripts": {
     "cov": "open coverage/lcov-report/index.html",

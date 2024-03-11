@@ -31,6 +31,7 @@
 
     <section class="content">
       <button id="btn">click me to <br />show dialog one</button>
+      <button id="clearBtn">click me to <br />clear all body locks</button>
 
       <div id="modalOne" class="modal">
         <h2>
@@ -52,7 +53,9 @@
     </section>
 
     <script src="./tua-bsl.umd.js"></script>
-    <script>
+    <script type="module">
+      import { lock, unlock } from './tua-bsl.mjs'
+
       var $ = document.querySelector.bind(document)
       var $modalOne = $('#modalOne')
       var $modalTwo = $('#modalTwo')
@@ -72,11 +75,11 @@
 
       $('#btn').onclick = function () {
         $modalOne.style.display = 'block'
-        bodyScrollLock.lock([$targetOne, $targetTwo])
+        lock([$targetOne, $targetTwo], { useGlobalLockState: true })
       }
       $('#modalBtn').onclick = function () {
         $modalTwo.style.display = 'block'
-        bodyScrollLock.lock($targetThree)
+        lock($targetThree, { useGlobalLockState: true })
       }
 
       $modalOne.onclick = function (event) {
@@ -84,14 +87,17 @@
         if (event.target.id === 'modalBtn') return
 
         $modalOne.style.display = 'none'
-        bodyScrollLock.unlock([$targetOne, $targetTwo])
+        unlock([$targetOne, $targetTwo], { useGlobalLockState: true })
       }
       $modalTwo.onclick = function (event) {
         if (event.target.id === 'targetThree') return
 
         $modalTwo.style.display = 'none'
-        bodyScrollLock.unlock($targetThree)
+        unlock($targetThree, { useGlobalLockState: true })
       }
+      $('#clearBtn').addEventListener('click', () => {
+        window.bodyScrollLock.clearBodyLocks({ useGlobalLockState: true })
+      })
     </script>
     <style>
       * {
@@ -182,6 +188,12 @@
         height: 30%;
 
         color: red;
+      }
+      #clearBtn {
+        position: fixed;
+        bottom: 150px;
+        left: 20px;
+        z-index: 1;
       }
     </style>
   </body>

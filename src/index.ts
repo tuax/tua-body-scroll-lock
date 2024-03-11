@@ -1,10 +1,11 @@
+import { getLockState } from './getLockState'
 import { handleScroll } from './handleScroll'
 import { setOverflowHiddenMobile, setOverflowHiddenPc } from './setOverflowHidden'
 import type { BSLOptions, Nullable } from './types'
 import {
   isServer,
   detectOS,
-  preventEventDefault,
+  getPreventEventDefault,
   getEventListenerOptions,
   noticeRequiredTargetElement,
 } from './utils'
@@ -16,68 +17,59 @@ function lock (targetElement?: Nullable<HTMLElement>, options?: BSLOptions) {
 
   noticeRequiredTargetElement(targetElement)
 
+  const lockState = getLockState(options)
+
   if (detectOS().ios) {
     // iOS
     if (targetElement) {
       const elementArray = Array.isArray(targetElement) ? targetElement : [targetElement]
 
       elementArray.forEach((element) => {
-        if (element && lock.lockedElements.indexOf(element) === -1) {
+        if (element && lockState.lockedElements.indexOf(element) === -1) {
           element.ontouchstart = (event) => {
             const { clientX, clientY } = event.targetTouches[0]
-            lock.initialClientPos = { clientX, clientY }
+            lockState.initialClientPos = { clientX, clientY }
           }
 
           element.ontouchmove = (event) => {
             if (event.targetTouches.length !== 1) return
 
-            handleScroll(event, element, lock.initialClientPos)
+            handleScroll(event, element, lockState.initialClientPos)
           }
 
-          lock.lockedElements.push(element)
+          lockState.lockedElements.push(element)
         }
       })
     }
 
-    if (!lock.documentListenerAdded) {
-      document.addEventListener('touchmove', preventEventDefault, eventListenerOptions)
-      lock.documentListenerAdded = true
+    if (!lockState.documentListenerAdded) {
+      document.addEventListener('touchmove', getPreventEventDefault(), eventListenerOptions)
+      lockState.documentListenerAdded = true
     }
-  } else if (lock.lockedNum <= 0) {
-    lock.unLockCallback = detectOS().android
+  } else if (lockState.lockedNum <= 0) {
+    lockState.unLockCallback = detectOS().android
       ? setOverflowHiddenMobile(options)
       : setOverflowHiddenPc()
   }
 
-  lock.lockedNum += 1
+  lockState.lockedNum += 1
 }
 
-lock.lockedNum = 0
-lock.lockedElements = [] as HTMLElement[]
-
-lock.unLockCallback = null as null | (() => void)
-
-/** Only add document listener once */
-lock.documentListenerAdded = false
-
-lock.initialClientPos = {
-  clientX: 0,
-  clientY: 0,
-}
-
-function unlock (targetElement?: Nullable<HTMLElement>) {
+function unlock (targetElement?: Nullable<HTMLElement>, options?: BSLOptions) {
   if (isServer()) return
 
   noticeRequiredTargetElement(targetElement)
 
-  lock.lockedNum -= 1
-  if (lock.lockedNum > 0) return
+  const lockState = getLockState(options)
+
+  lockState.lockedNum -= 1
+  if (lockState.lockedNum > 0) return
 
   if (
     !detectOS().ios &&
-    typeof lock.unLockCallback === 'function'
+    typeof lockState.unLockCallback === 'function'
   ) {
-    lock.unLockCallback()
+    lockState.unLockCallback()
     return
   }
 
@@ -86,50 +78,52 @@ function unlock (targetElement?: Nullable<HTMLElement>) {
     const elementArray = Array.isArray(targetElement) ? targetElement : [targetElement]
 
     elementArray.forEach((element) => {
-      const index = lock.lockedElements.indexOf(element)
+      const index = lockState.lockedElements.indexOf(element)
 
       if (index !== -1) {
         element.ontouchmove = null
         element.ontouchstart = null
-        lock.lockedElements.splice(index, 1)
+        lockState.lockedElements.splice(index, 1)
       }
     })
   }
 
-  if (lock.documentListenerAdded) {
-    document.removeEventListener('touchmove', preventEventDefault, eventListenerOptions)
-    lock.documentListenerAdded = false
+  if (lockState.documentListenerAdded) {
+    document.removeEventListener('touchmove', getPreventEventDefault(), eventListenerOptions)
+    lockState.documentListenerAdded = false
   }
 }
 
-function clearBodyLocks () {
+function clearBodyLocks (options?: BSLOptions) {
   if (isServer()) return
 
-  lock.lockedNum = 0
+  const lockState = getLockState(options)
+
+  lockState.lockedNum = 0
 
   if (
     !detectOS().ios &&
-    typeof lock.unLockCallback === 'function'
+    typeof lockState.unLockCallback === 'function'
   ) {
-    lock.unLockCallback()
+    lockState.unLockCallback()
     return
   }
 
   // iOS
-  if (lock.lockedElements.length) {
+  if (lockState.lockedElements.length) {
     // clear events
-    let element = lock.lockedElements.pop()
+    let element = lockState.lockedElements.pop()
     while (element) {
       element.ontouchmove = null
       element.ontouchstart = null
 
-      element = lock.lockedElements.pop()
+      element = lockState.lockedElements.pop()
     }
   }
 
-  if (lock.documentListenerAdded) {
-    document.removeEventListener('touchmove', preventEventDefault, eventListenerOptions)
-    lock.documentListenerAdded = false
+  if (lockState.documentListenerAdded) {
+    document.removeEventListener('touchmove', getPreventEventDefault(), eventListenerOptions)
+    lockState.documentListenerAdded = false
   }
 }
 

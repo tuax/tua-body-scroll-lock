@@ -1,4 +1,4 @@
-import { preventEventDefault } from './utils'
+import { getPreventEventDefault } from './utils'
 
 export function handleScroll (
   event: TouchEvent,
@@ -27,7 +27,7 @@ export function handleScroll (
       (isVertical && (isOnTop || isOnBottom)) ||
       (!isVertical && (isOnLeft || isOnRight))
     ) {
-      return preventEventDefault(event)
+      return getPreventEventDefault()(event)
     }
   }
 

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { GlobalClearBtn } from './GlobalClearBtn'
 import { HeaderPart } from './HeaderPart'
 import { ModalOne } from './ModalOne'
 import { ModalTwo } from './ModalTwo'
@@ -10,7 +11,8 @@ function App () {
 
   return (
     <>
-      <HeaderPart/>
+      <HeaderPart />
+      <GlobalClearBtn />
 
       <button id="btn" onClick={() => setShowModalOne(true)}>click me to <br />show dialog one</button>
 

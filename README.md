@@ -138,6 +138,12 @@ import { lock } from 'tua-body-scroll-lock'
 lock(targetElement, { overflowType: 'clip' })
 ```
 
+#### useGlobalLockState: boolean
+
+optional, default: false
+
+Whether to use global `lockState` for every BSL. It's useful when your page have multiple BSL instances.
+
 ### TargetElement needs scrolling（iOS only）
 In some scenarios, when scrolling is prohibited, some elements still need to scroll, at this point, pass the targetElement.
 
