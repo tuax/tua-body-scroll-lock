@@ -8,6 +8,7 @@ import ModalTwo from './ModalTwo.vue'
 
 const showModalOne = ref(false)
 const showModalTwo = ref(false)
+const useGlobalLockState = ref(false)
 
 </script>
 
@@ -15,13 +16,17 @@ const showModalTwo = ref(false)
   <HeaderPart/>
   <GlobalClearBtn/>
 
+  <div id="input" @click="useGlobalLockState = !useGlobalLockState">
+    useGlobalLockState: <input v-model="useGlobalLockState" type="checkbox" />
+  </div>
+
   <button id="btn" @click="showModalOne = true">
     click me to <br />show dialog one
   </button>
 
-  <ModalOne v-model:visible="showModalOne" @click-btn="showModalTwo = true"/>
+  <ModalOne v-model:visible="showModalOne" :useGlobalLockState="useGlobalLockState" @click-btn="showModalTwo = true"/>
 
-  <ModalTwo v-model:visible="showModalTwo"/>
+  <ModalTwo v-model:visible="showModalTwo" :useGlobalLockState="useGlobalLockState"/>
 
   <div id="list">
     <p v-for="i in 150" :key="i">{{i}} scroll me~</p>
@@ -30,15 +35,22 @@ const showModalTwo = ref(false)
 
 <style>
 
-#btn {
+#input {
   position: fixed;
   top: 150px;
+  left: 20px;
+}
+
+#btn {
+  position: fixed;
+  top: 200px;
   left: 20px;
 }
 
 #list {
   margin: 0 20px;
   padding-right: 50px;
+  text-indent: 100px;
 }
 
 button {

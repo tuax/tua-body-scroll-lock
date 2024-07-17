@@ -50,7 +50,6 @@ export function noticeRequiredTargetElement (targetElement?: Nullable<HTMLElemen
   if (targetElement === null) return false
   /* istanbul ignore if */
   if (process.env.NODE_ENV === 'production') return false
-
   /* istanbul ignore if */
   if (process.env.NODE_ENV !== 'test') {
     console.warn(
@@ -75,4 +74,9 @@ export function getPreventEventDefault () {
     event.preventDefault()
   }
   return window.__BSL_PREVENT_DEFAULT__
+}
+
+export function toArray<T> (x?: Nullable<T>): T[] {
+  if (!x) return []
+  return Array.isArray(x) ? x : [x]
 }

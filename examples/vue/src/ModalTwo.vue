@@ -2,17 +2,23 @@
 import { lock, unlock } from 'tua-body-scroll-lock'
 import { ref, watch } from 'vue'
 
-const props = defineProps<{ visible: boolean }>()
+import { printLockedNum } from './utils'
+
+const props = defineProps<{
+  visible: boolean,
+  useGlobalLockState: boolean,
+}>()
 const emits = defineEmits<{(e: 'update:visible', v: boolean): void}>()
 
 const targetThreeRef = ref<HTMLElement>()
 
 watch(() => props.visible, () => {
   if (props.visible) {
-    lock(targetThreeRef.value!, { useGlobalLockState: true })
+    lock(targetThreeRef.value!, { useGlobalLockState: props.useGlobalLockState })
   } else {
-    unlock(targetThreeRef.value!, { useGlobalLockState: true })
+    unlock(targetThreeRef.value!, { useGlobalLockState: props.useGlobalLockState })
   }
+  printLockedNum()
 })
 
 </script>

@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^10.11.0",
+    "radash": "^12.1.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {

@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import { useEventListener } from '@vueuse/core'
+import { throttle } from 'radash'
 import { lock, unlock } from 'tua-body-scroll-lock'
 import { ref, watch } from 'vue'
 
-const props = defineProps<{ visible: boolean }>()
+import { printLockedNum } from './utils'
+
+const props = defineProps<{
+  visible: boolean,
+  useGlobalLockState: boolean,
+}>()
 const emits = defineEmits<{(e: 'clickBtn'): void, (e: 'update:visible', v: boolean): void}>()
 
 const targetOneRef = ref<HTMLElement>()
@@ -12,15 +19,18 @@ watch(() => props.visible, () => {
   if (props.visible) {
     lock(
       [targetOneRef.value!, targetTwoRef.value!],
-      { overflowType: 'clip', useGlobalLockState: true },
+      { overflowType: 'clip', useGlobalLockState: props.useGlobalLockState },
     )
   } else {
     unlock(
       [targetOneRef.value!, targetTwoRef.value!],
-      { useGlobalLockState: true },
+      { useGlobalLockState: props.useGlobalLockState },
     )
   }
+  printLockedNum()
 })
+
+useEventListener(window, 'scroll', throttle({ interval: 300 }, printLockedNum))
 
 </script>
 
