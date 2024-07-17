@@ -12,7 +12,12 @@ const initialLockState: LockState = {
   },
 }
 
-export function getLockState (options?: BSLOptions) {
+/**
+ * get current lockState
+ * @param options
+ * @returns lockState
+ */
+export function getLockState (options?: BSLOptions): LockState {
   if (isServer()) return initialLockState
 
   /** use local lockState */
