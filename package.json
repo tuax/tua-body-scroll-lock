@@ -1,6 +1,6 @@
 {
   "name": "tua-body-scroll-lock",
-  "version": "1.5.0",
+  "version": "1.5.1-beta.1",
   "packageManager": "pnpm@^7",
   "description": "🔐Body scroll locking that just works with everything",
   "main": "./dist/tua-bsl.umd.js",
