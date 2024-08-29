@@ -1,5 +1,5 @@
 /**
- * tua-body-scroll-lock v1.4.1
+ * tua-body-scroll-lock v1.5.1-beta.1
  * (c) 2024 Evinma, BuptStEve
  * @license MIT
  */
@@ -65,6 +65,10 @@ function getPreventEventDefault() {
   };
   return window.__BSL_PREVENT_DEFAULT__;
 }
+function toArray(x) {
+  if (!x) return [];
+  return Array.isArray(x) ? x : [x];
+}
 
 var initialLockState = {
   lockedNum: 0,
@@ -76,6 +80,11 @@ var initialLockState = {
     clientY: 0
   }
 };
+/**
+ * get current lockState
+ * @param options
+ * @returns lockState
+ */
 function getLockState(options) {
   if (isServer()) return initialLockState;
   /** use local lockState */
@@ -156,83 +165,72 @@ function setOverflowHiddenMobile(options) {
   };
 }
 
-var eventListenerOptions = getEventListenerOptions({
-  passive: false
-});
+/**
+ * lock body scroll
+ * @param targetElement the element(s) still needs scrolling（iOS only）
+ * @param options
+ */
 function lock(targetElement, options) {
   if (isServer()) return;
   noticeRequiredTargetElement(targetElement);
+  var detectRes = detectOS();
   var lockState = getLockState(options);
-  if (detectOS().ios) {
-    // iOS
-    if (targetElement) {
-      var elementArray = Array.isArray(targetElement) ? targetElement : [targetElement];
-      elementArray.forEach(function (element) {
-        if (element && lockState.lockedElements.indexOf(element) === -1) {
-          element.ontouchstart = function (event) {
-            var _event$targetTouches$ = event.targetTouches[0],
-              clientX = _event$targetTouches$.clientX,
-              clientY = _event$targetTouches$.clientY;
-            lockState.initialClientPos = {
-              clientX: clientX,
-              clientY: clientY
-            };
-          };
-          element.ontouchmove = function (event) {
-            if (event.targetTouches.length !== 1) return;
-            handleScroll(event, element, lockState.initialClientPos);
-          };
-          lockState.lockedElements.push(element);
-        }
-      });
-    }
-    if (!lockState.documentListenerAdded) {
-      document.addEventListener('touchmove', getPreventEventDefault(), eventListenerOptions);
-      lockState.documentListenerAdded = true;
-    }
+  if (detectRes.ios) {
+    toArray(targetElement).filter(function (e) {
+      return lockState.lockedElements.indexOf(e) === -1;
+    }).forEach(function (element) {
+      element.ontouchstart = function (event) {
+        var _event$targetTouches$ = event.targetTouches[0],
+          clientX = _event$targetTouches$.clientX,
+          clientY = _event$targetTouches$.clientY;
+        lockState.initialClientPos = {
+          clientX: clientX,
+          clientY: clientY
+        };
+      };
+      element.ontouchmove = function (event) {
+        handleScroll(event, element, lockState.initialClientPos);
+      };
+      lockState.lockedElements.push(element);
+    });
+    addTouchMoveListener(lockState);
   } else if (lockState.lockedNum <= 0) {
-    lockState.unLockCallback = detectOS().android ? setOverflowHiddenMobile(options) : setOverflowHiddenPc();
+    lockState.unLockCallback = detectRes.android ? setOverflowHiddenMobile(options) : setOverflowHiddenPc();
   }
   lockState.lockedNum += 1;
 }
+/**
+ * unlock body scroll
+ * @param targetElement the element(s) still needs scrolling（iOS only）
+ * @param options
+ */
 function unlock(targetElement, options) {
   if (isServer()) return;
   noticeRequiredTargetElement(targetElement);
   var lockState = getLockState(options);
   lockState.lockedNum -= 1;
   if (lockState.lockedNum > 0) return;
-  if (!detectOS().ios && typeof lockState.unLockCallback === 'function') {
-    lockState.unLockCallback();
-    return;
-  }
-  // iOS
-  if (targetElement) {
-    var elementArray = Array.isArray(targetElement) ? targetElement : [targetElement];
-    elementArray.forEach(function (element) {
-      var index = lockState.lockedElements.indexOf(element);
-      if (index !== -1) {
-        element.ontouchmove = null;
-        element.ontouchstart = null;
-        lockState.lockedElements.splice(index, 1);
-      }
-    });
-  }
-  if (lockState.documentListenerAdded) {
-    document.removeEventListener('touchmove', getPreventEventDefault(), eventListenerOptions);
-    lockState.documentListenerAdded = false;
-  }
+  if (unlockByCallback(lockState)) return;
+  toArray(targetElement).forEach(function (element) {
+    var index = lockState.lockedElements.indexOf(element);
+    if (index !== -1) {
+      element.ontouchmove = null;
+      element.ontouchstart = null;
+      lockState.lockedElements.splice(index, 1);
+    }
+  });
+  removeTouchMoveListener(lockState);
 }
+/**
+ * clear all body locks
+ * @param options
+ */
 function clearBodyLocks(options) {
   if (isServer()) return;
   var lockState = getLockState(options);
   lockState.lockedNum = 0;
-  if (!detectOS().ios && typeof lockState.unLockCallback === 'function') {
-    lockState.unLockCallback();
-    return;
-  }
-  // iOS
+  if (unlockByCallback(lockState)) return;
   if (lockState.lockedElements.length) {
-    // clear events
     var element = lockState.lockedElements.pop();
     while (element) {
       element.ontouchmove = null;
@@ -240,10 +238,28 @@ function clearBodyLocks(options) {
       element = lockState.lockedElements.pop();
     }
   }
-  if (lockState.documentListenerAdded) {
-    document.removeEventListener('touchmove', getPreventEventDefault(), eventListenerOptions);
-    lockState.documentListenerAdded = false;
-  }
+  removeTouchMoveListener(lockState);
+}
+function unlockByCallback(lockState) {
+  if (detectOS().ios) return false;
+  if (typeof lockState.unLockCallback !== 'function') return false;
+  lockState.unLockCallback();
+  return true;
+}
+function addTouchMoveListener(lockState) {
+  if (!detectOS().ios) return;
+  if (lockState.documentListenerAdded) return;
+  document.addEventListener('touchmove', getPreventEventDefault(), getEventListenerOptions({
+    passive: false
+  }));
+  lockState.documentListenerAdded = true;
+}
+function removeTouchMoveListener(lockState) {
+  if (!lockState.documentListenerAdded) return;
+  document.removeEventListener('touchmove', getPreventEventDefault(), getEventListenerOptions({
+    passive: false
+  }));
+  lockState.documentListenerAdded = false;
 }
 
-export { clearBodyLocks, lock, unlock };
+export { clearBodyLocks, getLockState, lock, unlock };

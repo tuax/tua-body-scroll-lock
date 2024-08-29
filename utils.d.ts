@@ -11,3 +11,4 @@ export declare function noticeRequiredTargetElement(targetElement?: Nullable<HTM
  * Get global function that calls preventDefault
  */
 export declare function getPreventEventDefault(): (event: TouchEvent) => void;
+export declare function toArray<T>(x?: Nullable<T>): T[];
