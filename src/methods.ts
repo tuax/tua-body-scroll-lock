@@ -33,8 +33,6 @@ export function lock (targetElement?: Nullable<HTMLElement>, options?: BSLOption
         }
 
         element.ontouchmove = (event) => {
-          if (event.targetTouches.length !== 1) return
-
           handleScroll(event, element, lockState.initialClientPos)
         }
 
