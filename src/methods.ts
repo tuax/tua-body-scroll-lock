@@ -25,7 +25,7 @@ export function lock (targetElement?: Nullable<HTMLElement>, options?: BSLOption
 
   if (detectRes.ios) {
     toArray(targetElement)
-      .filter(e => lockState.lockedElements.indexOf(e) === -1)
+      .filter(e => e && lockState.lockedElements.indexOf(e) === -1)
       .forEach((element) => {
         element.ontouchstart = (event) => {
           const { clientX, clientY } = event.targetTouches[0]
