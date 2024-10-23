@@ -68,7 +68,7 @@ export function unlock (targetElement?: Nullable<HTMLElement>, options?: BSLOpti
   toArray(targetElement).forEach((element) => {
     const index = lockState.lockedElements.indexOf(element)
 
-    if (index !== -1) {
+    if (element && index !== -1) {
       element.ontouchmove = null
       element.ontouchstart = null
       lockState.lockedElements.splice(index, 1)
