@@ -81,8 +81,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "hustlelikeaboss",
+      "name": "David Q. Jin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25436661?v=4",
+      "profile": "https://github.com/hustlelikeaboss",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "commitType": "docs"
 }
