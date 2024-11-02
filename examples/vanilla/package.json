@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "tua-body-scroll-lock": "workspace:*",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.0"
+    "typescript": "^5.6.3",
+    "vite": "^4.5.5"
   }
 }
