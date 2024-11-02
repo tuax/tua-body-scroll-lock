@@ -1,6 +1,6 @@
 import type { BSLOptions } from './types'
 
-export function setOverflowHiddenPc () {
+export function setOverflowForPc () {
   const $html = document.documentElement
   const htmlStyle = { ...$html.style }
   const scrollBarWidth = window.innerWidth - $html.clientWidth
@@ -17,7 +17,7 @@ export function setOverflowHiddenPc () {
   }
 }
 
-export function setOverflowHiddenMobile (options?: BSLOptions) {
+export function setOverflowForMobile (options?: BSLOptions) {
   const $html = document.documentElement
   const $body = document.body
   const scrollTop = $html.scrollTop || $body.scrollTop

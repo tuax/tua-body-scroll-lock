@@ -1,6 +1,6 @@
 import { getLockState } from './getLockState'
 import { handleScroll } from './handleScroll'
-import { setOverflowHiddenMobile, setOverflowHiddenPc } from './setOverflowHidden'
+import { setOverflowForMobile, setOverflowForPc } from './setOverflow'
 import type { BSLOptions, LockState, Nullable } from './types'
 import {
   isServer,
@@ -42,8 +42,8 @@ export function lock (targetElement?: Nullable<HTMLElement>, options?: BSLOption
     addTouchMoveListener(lockState)
   } else if (lockState.lockedNum <= 0) {
     lockState.unLockCallback = detectRes.android
-      ? setOverflowHiddenMobile(options)
-      : setOverflowHiddenPc()
+      ? setOverflowForMobile(options)
+      : setOverflowForPc()
   }
 
   lockState.lockedNum += 1
