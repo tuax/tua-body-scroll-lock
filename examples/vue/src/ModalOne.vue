@@ -19,12 +19,18 @@ watch(() => props.visible, () => {
   if (props.visible) {
     lock(
       [targetOneRef.value!, targetTwoRef.value!],
-      { overflowType: 'clip', useGlobalLockState: props.useGlobalLockState },
+      {
+        overflowType: 'clip',
+        setOverflowForIOS: true,
+        useGlobalLockState: props.useGlobalLockState,
+      },
     )
   } else {
     unlock(
       [targetOneRef.value!, targetTwoRef.value!],
-      { useGlobalLockState: props.useGlobalLockState },
+      {
+        useGlobalLockState: props.useGlobalLockState,
+      },
     )
   }
   printLockedNum()

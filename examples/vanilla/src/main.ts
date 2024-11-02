@@ -55,7 +55,11 @@ const $targetThree = $<HTMLElement>('#targetThree')!
 // show modals
 $('#btn')!.addEventListener('click', () => {
   $modalOne.style.display = 'block'
-  lock([$targetOne, $targetTwo], { overflowType: 'clip', useGlobalLockState: true })
+  lock([$targetOne, $targetTwo], {
+    overflowType: 'clip',
+    setOverflowForIOS: true,
+    useGlobalLockState: true,
+  })
 })
 
 $('#modalBtn')!.addEventListener('click', () => {

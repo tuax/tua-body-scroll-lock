@@ -11,7 +11,11 @@ export function ModalOne (props: {
   useEffect(() => {
     lock(
       [targetOneRef.current!, targetTwoRef.current!],
-      { overflowType: 'clip', useGlobalLockState: true },
+      {
+        overflowType: 'clip',
+        setOverflowForIOS: true,
+        useGlobalLockState: true,
+      },
     )
     return () => {
       unlock(
