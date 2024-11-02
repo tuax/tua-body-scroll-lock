@@ -14,6 +14,12 @@ export interface LockState {
 
 export interface BSLOptions {
   /**
+   * optional, default: false
+   *
+   * Used to prevent mouse scroll events in iOS simulator.
+   */
+  setOverflowForIOS?: boolean,
+  /**
    * optional, default: 'hidden'
    *
    * `clip` is suitable for adapting elements of `position: sticky` in high-version browsers (Chrome 90 +).

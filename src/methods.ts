@@ -40,6 +40,10 @@ export function lock (targetElement?: Nullable<HTMLElement>, options?: BSLOption
       })
 
     addTouchMoveListener(lockState)
+
+    if (options?.setOverflowForIOS) {
+      lockState.unLockCallback = setOverflowForPc()
+    }
   } else if (lockState.lockedNum <= 0) {
     lockState.unLockCallback = detectRes.android
       ? setOverflowForMobile(options)
@@ -63,7 +67,9 @@ export function unlock (targetElement?: Nullable<HTMLElement>, options?: BSLOpti
   lockState.lockedNum -= 1
 
   if (lockState.lockedNum > 0) return
-  if (unlockByCallback(lockState)) return
+
+  lockState.unLockCallback?.()
+  if (!detectOS().ios) return
 
   toArray(targetElement).forEach((element) => {
     const index = lockState.lockedElements.indexOf(element)
@@ -88,7 +94,8 @@ export function clearBodyLocks (options?: BSLOptions): void {
   const lockState = getLockState(options)
   lockState.lockedNum = 0
 
-  if (unlockByCallback(lockState)) return
+  lockState.unLockCallback?.()
+  if (!detectOS().ios) return
 
   if (lockState.lockedElements.length) {
     let element = lockState.lockedElements.pop()
@@ -100,14 +107,6 @@ export function clearBodyLocks (options?: BSLOptions): void {
   }
 
   removeTouchMoveListener(lockState)
-}
-
-export function unlockByCallback (lockState: LockState): boolean {
-  if (detectOS().ios) return false
-  if (typeof lockState.unLockCallback !== 'function') return false
-
-  lockState.unLockCallback()
-  return true
 }
 
 export function addTouchMoveListener (lockState: LockState) {

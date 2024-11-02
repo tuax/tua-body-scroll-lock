@@ -14,7 +14,6 @@
 ## 介绍
 `tua-body-scroll-lock` 解决了所有场景下滚动穿透的问题。
 
-
 - <a href="https://stackblitz.com/edit/js-vixsu9?file=index.js">
   <img
     width="160"
@@ -127,6 +126,13 @@ unlock()
 ```
 
 ### 选项
+#### setOverflowForIOS: boolean（iOS lock only）
+
+版本: `1.6.0+`
+可选，默认值: `false`
+
+适用于在 iOS 模拟器中阻止鼠标滚动事件。
+
 #### overflowType: 'hidden' | 'clip'
 
 可选，默认值: 'hidden'

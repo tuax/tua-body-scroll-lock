@@ -125,6 +125,13 @@ unlock()
 ```
 
 ### Options
+#### setOverflowForIOS: boolean (iOS lock only)
+
+Version: `1.6.0+`
+Optional, default: `false`
+
+Used to prevent mouse scroll events in iOS simulator.
+
 #### overflowType: 'hidden' | 'clip'
 
 optional, default: 'hidden'
@@ -145,7 +152,7 @@ optional, default: false
 
 Whether to use global `lockState` for every BSL. It's useful when your page have multiple BSL instances.
 
-### TargetElement needs scrolling（iOS only）
+### TargetElement needs scrolling (iOS only)
 In some scenarios, when scrolling is prohibited, some elements still need to scroll, at this point, pass the targetElement.
 
 ```js
