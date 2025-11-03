@@ -1,14 +1,18 @@
 import type { BSLOptions } from './types'
 
-export function setOverflowForPc () {
+export function setOverflowForPc (options?: BSLOptions) {
   const $html = document.documentElement
   const htmlStyle = { ...$html.style }
-  const scrollBarWidth = window.innerWidth - $html.clientWidth
-  const previousPaddingRight = parseInt(window.getComputedStyle($html).paddingRight, 10)
+  const withPaddingRight = options?.withPaddingRight ?? true
 
   $html.style.overflow = 'hidden'
   $html.style.boxSizing = 'border-box'
-  $html.style.paddingRight = `${scrollBarWidth + previousPaddingRight}px`
+
+  if (withPaddingRight) {
+    const scrollBarWidth = window.innerWidth - $html.clientWidth
+    const previousPaddingRight = parseInt(window.getComputedStyle($html).paddingRight, 10)
+    $html.style.paddingRight = `${scrollBarWidth + previousPaddingRight}px`
+  }
 
   return () => {
     (['overflow', 'boxSizing', 'paddingRight'] as const).forEach((x) => {

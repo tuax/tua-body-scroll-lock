@@ -31,6 +31,12 @@ export interface BSLOptions {
    * Whether to use global `lockState` for every BSL. It's useful when your page have multiple BSL instances.
    */
   useGlobalLockState?: boolean,
+  /**
+   * optional, default: true
+   *
+   * Whether to add padding-right to the html element when lock body scroll on PC.
+   */
+  withPaddingRight?: boolean,
 }
 
 declare global {
