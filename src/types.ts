@@ -37,6 +37,18 @@ export interface BSLOptions {
    * Whether to add padding-right to the html element when lock body scroll on PC.
    */
   withPaddingRight?: boolean,
+  /**
+   * optional, default: false
+   *
+   * Whether the target element is using flex-direction: column-reverse.
+   */
+  isColumnReverse?: boolean;
+  /**
+   * optional, default: false
+   *
+   * Whether the target element is using flex-direction: row-reverse.
+   */
+  isRowReverse?: boolean;
 }
 
 declare global {
