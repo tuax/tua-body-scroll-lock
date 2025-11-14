@@ -34,8 +34,8 @@ export function lock (targetElement?: Nullable<HTMLElement>, options?: BSLOption
 
         element.ontouchmove = (event) => {
           handleScroll(event, element, lockState.initialClientPos, {
-            isRowReverse: options?.isRowReverse,
-            isColumnReverse: options?.isColumnReverse,
+            reverseRow: options?.reverseRow,
+            reverseColumn: options?.reverseColumn,
           })
         }
 

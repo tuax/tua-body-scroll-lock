@@ -42,13 +42,13 @@ export interface BSLOptions {
    *
    * Whether the target element is using flex-direction: column-reverse.
    */
-  isColumnReverse?: boolean;
+  reverseColumn?: boolean,
   /**
    * optional, default: false
    *
    * Whether the target element is using flex-direction: row-reverse.
    */
-  isRowReverse?: boolean;
+  reverseRow?: boolean,
 }
 
 declare global {

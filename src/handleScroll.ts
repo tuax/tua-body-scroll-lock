@@ -4,9 +4,9 @@ export function handleScroll (
   event: TouchEvent,
   targetElement: HTMLElement,
   initialClientPos: { clientX: number; clientY: number },
-  options: { isColumnReverse?: boolean; isRowReverse?: boolean } = {
-    isColumnReverse: false,
-    isRowReverse: false,
+  options: { reverseColumn?: boolean; reverseRow?: boolean } = {
+    reverseColumn: false,
+    reverseRow: false,
   },
 ) {
   if (targetElement) {
@@ -19,7 +19,7 @@ export function handleScroll (
       clientHeight,
     } = targetElement
 
-    const { isColumnReverse = false, isRowReverse = false } = options
+    const { reverseColumn = false, reverseRow = false } = options
 
     const clientX = event.targetTouches[0].clientX - initialClientPos.clientX
     const clientY = event.targetTouches[0].clientY - initialClientPos.clientY
@@ -27,7 +27,7 @@ export function handleScroll (
 
     let isOnTop, isOnBottom, isOnLeft, isOnRight
 
-    if (isColumnReverse) {
+    if (reverseColumn) {
       isOnTop = clientY > 0 && scrollTop + clientHeight + 1 >= scrollHeight
       isOnBottom = clientY < 0 && scrollTop === 0
     } else {
@@ -35,7 +35,7 @@ export function handleScroll (
       isOnBottom = clientY < 0 && scrollTop + clientHeight + 1 >= scrollHeight
     }
 
-    if (isRowReverse) {
+    if (reverseRow) {
       isOnLeft = clientX > 0 && scrollLeft + clientWidth + 1 >= scrollWidth
       isOnRight = clientX < 0 && scrollLeft === 0
     } else {
