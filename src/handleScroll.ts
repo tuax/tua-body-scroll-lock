@@ -41,7 +41,7 @@ export function handleScroll (
 
     if (reversed.column) {
       // In column-reverse, scrolling down (clientY < 0) when at max scrollTop means at visual top
-      isOnTop = clientY < 0 && scrollTop + clientHeight + 1 >= scrollHeight
+      isOnTop = clientY > 0 && Math.abs(scrollTop) + clientHeight + 1 >= scrollHeight
       isOnBottom = clientY < 0 && scrollTop === 0
     } else {
       // Normal behavior
@@ -56,7 +56,7 @@ export function handleScroll (
 
     if (reversed.row) {
       // In row-reverse, scrolling right (clientX < 0) when at max scrollLeft means at visual left
-      isOnLeft = clientX < 0 && scrollLeft + clientWidth + 1 >= scrollWidth
+      isOnLeft = clientX > 0 && Math.abs(scrollLeft) + clientWidth + 1 >= scrollWidth
       isOnRight = clientX < 0 && scrollLeft === 0
     } else {
       // Normal behavior
