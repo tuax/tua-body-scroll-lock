@@ -4,13 +4,13 @@ export function setOverflowForPc (options?: BSLOptions) {
   const $html = document.documentElement
   const htmlStyle = { ...$html.style }
   const withPaddingRight = options?.withPaddingRight ?? true
+  const scrollBarWidth = window.innerWidth - $html.clientWidth
+  const previousPaddingRight = parseInt(window.getComputedStyle($html).paddingRight, 10)
 
   $html.style.overflow = 'hidden'
   $html.style.boxSizing = 'border-box'
 
   if (withPaddingRight) {
-    const scrollBarWidth = window.innerWidth - $html.clientWidth
-    const previousPaddingRight = parseInt(window.getComputedStyle($html).paddingRight, 10)
     $html.style.paddingRight = `${scrollBarWidth + previousPaddingRight}px`
   }
 
