@@ -42,12 +42,12 @@ export function lock (targetElement?: Nullable<HTMLElement>, options?: BSLOption
     addTouchMoveListener(lockState)
 
     if (options?.setOverflowForIOS) {
-      lockState.unLockCallback = setOverflowForPc()
+      lockState.unLockCallback = setOverflowForPc(options)
     }
   } else if (lockState.lockedNum <= 0) {
     lockState.unLockCallback = detectRes.android
       ? setOverflowForMobile(options)
-      : setOverflowForPc()
+      : setOverflowForPc(options)
   }
 
   lockState.lockedNum += 1
